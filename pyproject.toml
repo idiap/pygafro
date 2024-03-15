@@ -1,0 +1,62 @@
+#
+# SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
+#
+# SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+#
+
+[build-system]
+requires = [
+  "scikit-build-core>=0.3.3",
+]
+build-backend = "scikit_build_core.build"
+
+
+[project]
+name = "pygafro"
+version = "1.0.0"
+description="Geometric algebra tools targeted towards robotics applications"
+readme = "README.md"
+authors = [
+  { name = "Philip Abbet", email = "philip.abbet@idiap.ch" },
+  { name = "Tobias Loew", email = "tobias.loew@idiap.ch" },
+]
+requires-python = ">=3.7"
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+]
+dependencies = [
+  "numpy>=1.23.0",
+]
+
+
+[tool.scikit-build]
+wheel.expand-macos-universal-tags = true
+cmake.targets = ["_pygafro"]
+sdist.exclude = [
+  ".gitignore",
+  ".gitlab-ci.yml",
+  ".gitmodules",
+  ".git",
+  ".pre-commit-config.yaml",
+]
+
+
+[tool.isort]
+multi_line_output=3
+include_trailing_comma=true
+force_grid_wrap=0
+use_parentheses=true
+ensure_newline_before_comments=true
+line_length=88
+force_single_line=true
+order_by_type=true
+lines_between_types=1
