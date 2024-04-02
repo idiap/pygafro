@@ -1,0 +1,31 @@
+name: Publish
+run-name: Publish package on PyPI
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish-on-pypi:
+    name: Publish package on PyPI
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+
+    - name: Install the Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install twine build
+
+    - name: Build the source package
+      run: python3 -m build --sdist
+
+    - name: Upload to PyPI
+      run: twine upload dist/pygafro-*.tar.gz
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_KEY }}
