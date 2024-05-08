@@ -11,17 +11,57 @@ Please visit https://gitlab.com/gafro in order to find the entire *gafro* softwa
 
 ## Installation using pip
 
+Requirements:
+
+* ```Eigen 3.4+```
+
+Due to the template-based nature of *gafro* (see **Differences between *gafro* and *pygafro***
+below), the compilation of pygafro can take a long time. Additionally, **using ```clang```
+instead of ```gcc```** is highly recommended: ```gcc``` requires more memory resources when
+compiling *pygafro*, which can become problematic on lower-end computers.
+
+### Using the default compiler of your computer
+
+	pip install pygafro
+
+### Forcing the usage of *clang*
+
+(assuming that ```clang``` is installed at ```/usr/bin/clang```)
+
+	export CC=/usr/bin/clang
+	export CXX=/usr/bin/clang++
 	pip install pygafro
 
 ## Installation from source
 
 (works either in a conda or virtual environment)
 
-**Note:** Tests are run automatically after the compilation, and requires ```numpy``` to be installed.
+Requirements:
 
+* ```Eigen 3.4+```
+* ```numpy```
+
+Due to the template-based nature of *gafro* (see **Differences between *gafro* and *pygafro***
+below), the compilation of pygafro can take a long time. Additionally, **using ```clang```
+instead of ```gcc```** is highly recommended: ```gcc``` requires more memory resources when
+compiling *pygafro*, which can become problematic on lower-end computers.
+
+### Using the default compiler of your computer
+
+	git clone --recurse-submodules https://github.com/idiap/pygafro.git
 	mkdir build && cd build
 	cmake ..
-	make
+	make # or for example "make -j4" if you have enough resources
+	make install
+
+### Forcing the usage of *clang*
+
+(assuming that ```clang``` is installed at ```/usr/bin/clang```)
+
+	git clone --recurse-submodules https://github.com/idiap/pygafro.git
+	mkdir build && cd build
+	cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_C_COMPILER=/usr/bin/clang ..
+	make # or for example "make -j4" if you have enough resources
 	make install
 
 ## Usage
