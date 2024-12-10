@@ -1,0 +1,24 @@
+<!--
+SPDX-FileCopyrightText: 2024 Idiap Research Institute <contact@idiap.ch>
+
+SPDX-FileContributor: Jeremy Maceiras  <jeremy.maceiras@idiap.ch>
+
+SPDX-License-Identifier: GPL-3.0-only
+-->
+
+<package format="2">
+  <name>pygafro</name>
+  <version>1.0.2</version>
+  <description>pygafro package</description>
+  <maintainer email="philip.abbet@idiap.ch">Philip Abbet</maintainer>
+  <author email="philip.abbet@idiap.ch">Philip Abbet</author>
+
+  <license>GPLv3</license>
+
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+
+  <export>
+    <build_type>cmake</build_type>
+  </export>
+
+</package>

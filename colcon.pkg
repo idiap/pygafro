@@ -1,0 +1,3 @@
+{
+    "hooks": ["share/pygafro/hook/ament_prefix_path.dsv", "share/pygafro/hook/python_path.dsv"]
+}

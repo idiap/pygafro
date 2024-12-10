@@ -1,3 +1,12 @@
+<!--
+ SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
+
+ SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
+
+ SPDX-License-Identifier: GPL-3.0-only
+-->
+
+
 # Geometric Algebra For RObotics in Python
 
 This library provides a geometric algebra tools targeted towards robotics applications.
@@ -49,6 +58,7 @@ compiling *pygafro*, which can become problematic on lower-end computers.
 ### Using the default compiler of your computer
 
 	git clone --recurse-submodules https://github.com/idiap/pygafro.git
+	cd pygafro
 	mkdir build && cd build
 	cmake ..
 	make # or for example "make -j4" if you have enough resources
@@ -59,6 +69,7 @@ compiling *pygafro*, which can become problematic on lower-end computers.
 (assuming that ```clang``` is installed at ```/usr/bin/clang```)
 
 	git clone --recurse-submodules https://github.com/idiap/pygafro.git
+	cd pygafro
 	mkdir build && cd build
 	cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_C_COMPILER=/usr/bin/clang ..
 	make # or for example "make -j4" if you have enough resources
@@ -142,12 +153,3 @@ If you use *gafro* in your research, please cite the
 	  journal = {IEEE Transactions on Robotics},
 	  doi = {10.1109/TRO.2023.3277282}
 	}
-
-
-<!--
- SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
-
- SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
-
- SPDX-License-Identifier: GPL-3.0-only
--->

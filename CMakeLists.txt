@@ -19,28 +19,41 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 
 
+set(Python_FIND_STRATEGY "LOCATION")
 set(PYTHON_VERSION 3 CACHE STRING "Python version")
 set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
 
-cmake_policy(SET CMP0148 OLD)
-
-find_package(PythonInterp ${PYTHON_VERSION} REQUIRED)
-find_package(PythonLibs ${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR} REQUIRED)
-
+find_package(Python REQUIRED COMPONENTS Interpreter Development ${_pybind11_quiet})
 
 set(PACKAGE_NAME "pygafro")
 set(LIBRARY_NAME "_${PACKAGE_NAME}")
 SET(PYTHON_MODULE_EXTENSION ".so")
 
-set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/dist-packages")
+
+set(PYTHON_SITE_PACKAGES_REL_INSTALL_DIR "lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/dist-packages")
+set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES_REL_INSTALL_DIR}")
 
 if(DEFINED ENV{VIRTUAL_ENV})
     message(STATUS "VIRTUAL ENV INSTALLATION DETECTED")
-    set(PYTHON_SITE_PACKAGES_INSTALL_DIR "$ENV{VIRTUAL_ENV}/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")
+    set(PYTHON_SITE_PACKAGES_INSTALL_DIR "$ENV{VIRTUAL_ENV}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages")
 
 elseif(DEFINED ENV{CONDA_PREFIX})
   message(STATUS "CONDA INSTALLATION DETECTED")
-  set(PYTHON_SITE_PACKAGES_INSTALL_DIR "$ENV{CONDA_PREFIX}/lib/python${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}/site-packages")
+  set(PYTHON_SITE_PACKAGES_INSTALL_DIR "$ENV{CONDA_PREFIX}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages")
+
+elseif(DEFINED ENV{USE_COLCON})
+  message(STATUS "ROS2 INSTALLATION DETECTED")
+  find_package(ament_cmake REQUIRED)
+  find_package(ament_cmake_python REQUIRED)
+  ament_python_install_package(src)
+
+  # https://answers.ros.org/question/394564/colcon-not-adding-python-module-built-with-cmake-to-pythonpath/
+  file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${PROJECT_NAME} "")
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/share/ament_index/resource_index/packages/${PROJECT_NAME} DESTINATION share/ament_index/resource_index/packages)
+  file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/ament_prefix_path.dsv "prepend-non-duplicate;AMENT_PREFIX_PATH;")
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/ament_prefix_path.dsv DESTINATION share/${PROJECT_NAME}/hook)
+  file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/python_path.dsv "prepend-non-duplicate;PYTHONPATH;${PYTHON_SITE_PACKAGES_REL_INSTALL_DIR}")
+  install(FILES ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/python_path.dsv DESTINATION share/${PROJECT_NAME}/hook)
 endif()
 
 message(STATUS "Python package will be installed in: ${PYTHON_SITE_PACKAGES_INSTALL_DIR}")
