@@ -19,11 +19,8 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 
 
-set(Python_FIND_STRATEGY "LOCATION")
-set(PYTHON_VERSION 3 CACHE STRING "Python version")
-set(PYBIND11_PYTHON_VERSION ${PYTHON_VERSION} CACHE STRING "Python version used by PyBind11")
-
-find_package(Python REQUIRED COMPONENTS Interpreter Development ${_pybind11_quiet})
+set(Python3_FIND_STRATEGY "LOCATION")
+find_package(Python3 REQUIRED COMPONENTS Interpreter Development ${_pybind11_quiet})
 
 set(PACKAGE_NAME "pygafro")
 set(LIBRARY_NAME "_${PACKAGE_NAME}")
