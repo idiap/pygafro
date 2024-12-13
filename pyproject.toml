@@ -40,7 +40,7 @@ dependencies = [
 
 [tool.scikit-build]
 wheel.expand-macos-universal-tags = true
-cmake.targets = ["_pygafro"]
+build.targets = ["_pygafro"]
 sdist.exclude = [
   ".gitignore",
   ".github",

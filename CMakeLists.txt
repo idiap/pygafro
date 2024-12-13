@@ -6,7 +6,7 @@
 # SPDX-License-Identifier: GPL-3.0-only
 #
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.15)
 
 project(pygafro)
 
@@ -25,18 +25,10 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter Development ${_pybind11_qui
 set(PACKAGE_NAME "pygafro")
 set(LIBRARY_NAME "_${PACKAGE_NAME}")
 SET(PYTHON_MODULE_EXTENSION ".so")
-set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${Python_SITEARCH}")
+set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${Python3_SITEARCH}")
 
 
-if(DEFINED ENV{VIRTUAL_ENV})
-    message(STATUS "VIRTUAL ENV INSTALLATION DETECTED")
-    set(PYTHON_SITE_PACKAGES_INSTALL_DIR "$ENV{VIRTUAL_ENV}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages")
-
-elseif(DEFINED ENV{CONDA_PREFIX})
-  message(STATUS "CONDA INSTALLATION DETECTED")
-  set(PYTHON_SITE_PACKAGES_INSTALL_DIR "$ENV{CONDA_PREFIX}/lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/site-packages")
-
-elseif(DEFINED ENV{USE_COLCON})
+if(DEFINED ENV{USE_COLCON})
   message(STATUS "ROS2 INSTALLATION DETECTED")
   find_package(ament_cmake REQUIRED)
   find_package(ament_cmake_python REQUIRED)
@@ -49,9 +41,9 @@ elseif(DEFINED ENV{USE_COLCON})
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/ament_prefix_path.dsv DESTINATION share/${PROJECT_NAME}/hook)
   file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/python_path.dsv "prepend-non-duplicate;PYTHONPATH;${PYTHON_SITE_PACKAGES_REL_INSTALL_DIR}")
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/python_path.dsv DESTINATION share/${PROJECT_NAME}/hook)
+else()
+    message(STATUS "Python package will be installed in: ${PYTHON_SITE_PACKAGES_INSTALL_DIR}")
 endif()
-
-message(STATUS "Python package will be installed in: ${PYTHON_SITE_PACKAGES_INSTALL_DIR}")
 
 
 include(cmake/dependencies.cmake)
