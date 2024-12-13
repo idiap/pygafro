@@ -156,8 +156,8 @@ add_dependencies(generate_multivector_multiplications make_generated_directory)
 # Geometric product Caley table
 add_custom_command(
     OUTPUT ${OUTPUT_DIR}/geometricproductcayleytable.py
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${CMAKE_SOURCE_DIR}/dependencies/gafro/src/gafro/algebra/expressions/GeometricProductCayleyTable.hpp ${OUTPUT_DIR} "CayleyTable"
-    DEPENDS generate_caleytable.py helpers.py ${CMAKE_SOURCE_DIR}/dependencies/gafro/src/gafro/algebra/expressions/GeometricProductCayleyTable.hpp
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/GeometricProductCayleyTable.hpp ${OUTPUT_DIR} "CayleyTable"
+    DEPENDS generate_caleytable.py helpers.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/GeometricProductCayleyTable.hpp
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generation of the Geometric product Caley table"
     VERBATIM
@@ -170,8 +170,8 @@ add_dependencies(generate_geometric_product_caley_table make_generated_directory
 # Inner product Caley table
 add_custom_command(
     OUTPUT ${OUTPUT_DIR}/innerproductcayleytable.py
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${CMAKE_SOURCE_DIR}/dependencies/gafro/src/gafro/algebra/expressions/InnerProductCayleyTable.hpp ${OUTPUT_DIR} "InnerProductCayleyTable"
-    DEPENDS generate_caleytable.py helpers.py ${CMAKE_SOURCE_DIR}/dependencies/gafro/src/gafro/algebra/expressions/InnerProductCayleyTable.hpp
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/InnerProductCayleyTable.hpp ${OUTPUT_DIR} "InnerProductCayleyTable"
+    DEPENDS generate_caleytable.py helpers.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/InnerProductCayleyTable.hpp
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generation of the Inner product Caley table"
     VERBATIM
@@ -184,8 +184,8 @@ add_dependencies(generate_inner_product_caley_table make_generated_directory)
 # Outer product Caley table
 add_custom_command(
     OUTPUT ${OUTPUT_DIR}/outerproductcayleytable.py
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${CMAKE_SOURCE_DIR}/dependencies/gafro/src/gafro/algebra/expressions/OuterProductCayleyTable.hpp ${OUTPUT_DIR} "OuterProductCayleyTable"
-    DEPENDS generate_caleytable.py helpers.py ${CMAKE_SOURCE_DIR}/dependencies/gafro/src/gafro/algebra/expressions/OuterProductCayleyTable.hpp
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/OuterProductCayleyTable.hpp ${OUTPUT_DIR} "OuterProductCayleyTable"
+    DEPENDS generate_caleytable.py helpers.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/OuterProductCayleyTable.hpp
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generation of the Outer product Caley table"
     VERBATIM

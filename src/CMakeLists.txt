@@ -9,7 +9,7 @@
 set(DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/pygafro")
 set(GENERATED_DIR ${CMAKE_BINARY_DIR}/generated)
 
-file(COPY "${PROJECT_SOURCE_DIR}/dependencies/gafro_robot_descriptions/assets/" DESTINATION "${DEST_DIR}/assets/")
+file(COPY "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/assets/" DESTINATION "${DEST_DIR}/assets/")
 
 
 set(PYTHON_SRCS
@@ -64,9 +64,9 @@ pybind11_add_module(${LIBRARY_NAME}
     ${MULTIVECTOR_SRCS}
     ${ROTOR_APPLY_METHODS_SRCS}
 
-    ${CMAKE_SOURCE_DIR}/dependencies/gafro_robot_descriptions/src/gafro_robot_descriptions/serialization/FilePath.cpp
-    ${CMAKE_SOURCE_DIR}/dependencies/gafro_robot_descriptions/src/gafro_robot_descriptions/serialization/SystemSerialization.cpp
-    ${CMAKE_SOURCE_DIR}/dependencies/gafro_robot_descriptions/src/gafro_robot_descriptions/serialization/Visual.cpp
+    "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src/gafro_robot_descriptions/serialization/FilePath.cpp"
+    "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src/gafro_robot_descriptions/serialization/SystemSerialization.cpp"
+    "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src/gafro_robot_descriptions/serialization/Visual.cpp"
 )
 
 
@@ -102,9 +102,9 @@ message(STATUS ${gafro_USE_YAML_CPP})
 target_include_directories(${LIBRARY_NAME}
     PRIVATE
         ${CMAKE_BINARY_DIR}/generated
-        ${CMAKE_SOURCE_DIR}/dependencies/gafro/src
-        ${CMAKE_SOURCE_DIR}/dependencies/gafro_robot_descriptions/src
-        ${CMAKE_BINARY_DIR}/dependencies/gafro_robot_descriptions/src
+        ${FETCHCONTENT_BASE_DIR}/gafro-src/src
+        ${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src
+        ${FETCHCONTENT_BASE_DIR}/eigen3-src/
         cpp
 
     PUBLIC

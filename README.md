@@ -57,7 +57,7 @@ compiling *pygafro*, which can become problematic on lower-end computers.
 
 ### Using the default compiler of your computer
 
-	git clone --recurse-submodules https://github.com/idiap/pygafro.git
+	git clone
 	cd pygafro
 	mkdir build && cd build
 	cmake ..
@@ -68,7 +68,7 @@ compiling *pygafro*, which can become problematic on lower-end computers.
 
 (assuming that ```clang``` is installed at ```/usr/bin/clang```)
 
-	git clone --recurse-submodules https://github.com/idiap/pygafro.git
+	git clone
 	cd pygafro
 	mkdir build && cd build
 	cmake -DCMAKE_CXX_COMPILER=/usr/bin/clang++ -DCMAKE_C_COMPILER=/usr/bin/clang ..

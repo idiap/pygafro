@@ -25,10 +25,8 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter Development ${_pybind11_qui
 set(PACKAGE_NAME "pygafro")
 set(LIBRARY_NAME "_${PACKAGE_NAME}")
 SET(PYTHON_MODULE_EXTENSION ".so")
+set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${Python_SITEARCH}")
 
-
-set(PYTHON_SITE_PACKAGES_REL_INSTALL_DIR "lib/python${Python_VERSION_MAJOR}.${Python_VERSION_MINOR}/dist-packages")
-set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${CMAKE_INSTALL_PREFIX}/${PYTHON_SITE_PACKAGES_REL_INSTALL_DIR}")
 
 if(DEFINED ENV{VIRTUAL_ENV})
     message(STATUS "VIRTUAL ENV INSTALLATION DETECTED")
@@ -56,21 +54,8 @@ endif()
 message(STATUS "Python package will be installed in: ${PYTHON_SITE_PACKAGES_INSTALL_DIR}")
 
 
-# Fetch yaml-cpp
-include(FetchContent)
+include(cmake/dependencies.cmake)
 
-option(YAML_BUILD_SHARED_LIBS "Enable yaml-cpp contrib in library" OFF)
-option(YAML_CPP_BUILD_TOOLS "Enable parse tools" OFF)
-
-FetchContent_Declare(
-  yaml-cpp
-  GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
-  GIT_TAG "0.8.0"
-)
-FetchContent_MakeAvailable(yaml-cpp)
-
-
-add_subdirectory(dependencies)
 add_subdirectory(scripts)
 add_subdirectory(src)
 add_subdirectory(tests)

@@ -42,9 +42,6 @@ jobs:
       run: |
         echo "build-output-dir=${{ github.workspace }}/build" >> "$GITHUB_OUTPUT"
 
-    - name: Setup Eigen3
-      uses: kupns-aka-kupa/setup-eigen3@v1
-
     - name: Install the Python dependencies
       run: |
         python3 -m venv /tmp/venv
@@ -93,9 +90,6 @@ jobs:
         PACKAGE_VERSION=$(grep -e "version =" ${{ github.workspace }}/pyproject.toml)
         PACKAGE_VERSION=$(python -c "print('${PACKAGE_VERSION}'.split(' ')[-1].replace('\"', ''))")
         echo "package_version=${PACKAGE_VERSION}" >> "$GITHUB_OUTPUT"
-
-    - name: Setup Eigen3
-      uses: kupns-aka-kupa/setup-eigen3@v1
 
     - name: Install the Python dependencies
       run: python3 -m pip install --upgrade build

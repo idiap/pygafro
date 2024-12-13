@@ -43,6 +43,7 @@ wheel.expand-macos-universal-tags = true
 cmake.targets = ["_pygafro"]
 sdist.exclude = [
   ".gitignore",
+  ".github",
   ".gitlab-ci.yml",
   ".gitmodules",
   ".git",

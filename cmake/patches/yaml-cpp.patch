@@ -1,0 +1,18 @@
+#
+# SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
+#
+# SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
+#
+# SPDX-License-Identifier: GPL-3.0-only
+#
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 46dc180..da25150 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -1,5 +1,5 @@
+ # 3.5 is actually available almost everywhere, but this a good minimum
+-cmake_minimum_required(VERSION 3.4)
++cmake_minimum_required(VERSION 3.11)
+ 
+ # enable MSVC_RUNTIME_LIBRARY target property
+ # see https://cmake.org/cmake/help/latest/policy/CMP0091.html
