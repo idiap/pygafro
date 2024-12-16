@@ -41,6 +41,12 @@ compiling *pygafro*, which can become problematic on lower-end computers.
 	export CXX=/usr/bin/clang++
 	pip install pygafro
 
+## Installation with ROS2
+
+Add PyGafro in your colcon workspace and build it with:
+
+	CC=clang CXX=clang++ USE_COLCON=1 colcon build
+
 ## Installation from source
 
 (works either in a conda or virtual environment)
