@@ -34,14 +34,6 @@ set(MULTIVECTOR_SRCS
     ${OUTPUT_DIR}/multivectors_42.cpp
     ${OUTPUT_DIR}/multivectors_45.cpp
     ${OUTPUT_DIR}/multivectors_48.cpp
-    ${OUTPUT_DIR}/multivectors_51.cpp
-    ${OUTPUT_DIR}/multivectors_54.cpp
-    ${OUTPUT_DIR}/multivectors_57.cpp
-    ${OUTPUT_DIR}/multivectors_60.cpp
-    ${OUTPUT_DIR}/multivectors_63.cpp
-    ${OUTPUT_DIR}/multivectors_66.cpp
-    ${OUTPUT_DIR}/multivectors_69.cpp
-    ${OUTPUT_DIR}/multivectors_72.cpp
 
     CACHE INTERNAL "MULTIVECTOR_SRCS"
 )
@@ -88,6 +80,7 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/geometric_products_2000.cpp
     ${OUTPUT_DIR}/geometric_products_2100.cpp
     ${OUTPUT_DIR}/geometric_products_2200.cpp
+    ${OUTPUT_DIR}/geometric_products_2300.cpp
 
     ${OUTPUT_DIR}/inner_products_0.cpp
     ${OUTPUT_DIR}/inner_products_100.cpp
@@ -112,6 +105,7 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/inner_products_2000.cpp
     ${OUTPUT_DIR}/inner_products_2100.cpp
     ${OUTPUT_DIR}/inner_products_2200.cpp
+    ${OUTPUT_DIR}/inner_products_2300.cpp
 
     ${OUTPUT_DIR}/outer_products_0.cpp
     ${OUTPUT_DIR}/outer_products_100.cpp
@@ -136,6 +130,7 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/outer_products_2000.cpp
     ${OUTPUT_DIR}/outer_products_2100.cpp
     ${OUTPUT_DIR}/outer_products_2200.cpp
+    ${OUTPUT_DIR}/outer_products_2300.cpp
 
     CACHE INTERNAL "MULTIVECTOR_PRODUCTS_SRCS"
 )
@@ -156,8 +151,8 @@ add_dependencies(generate_multivector_multiplications make_generated_directory)
 # Geometric product Caley table
 add_custom_command(
     OUTPUT ${OUTPUT_DIR}/geometricproductcayleytable.py
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/GeometricProductCayleyTable.hpp ${OUTPUT_DIR} "CayleyTable"
-    DEPENDS generate_caleytable.py helpers.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/GeometricProductCayleyTable.hpp
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${CMAKE_CURRENT_SOURCE_DIR}/templates/geometricproductcayleytable.py ${OUTPUT_DIR}
+    DEPENDS generate_caleytable.py helpers.py ${CMAKE_CURRENT_SOURCE_DIR}/templates/geometricproductcayleytable.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generation of the Geometric product Caley table"
     VERBATIM
@@ -170,8 +165,8 @@ add_dependencies(generate_geometric_product_caley_table make_generated_directory
 # Inner product Caley table
 add_custom_command(
     OUTPUT ${OUTPUT_DIR}/innerproductcayleytable.py
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/InnerProductCayleyTable.hpp ${OUTPUT_DIR} "InnerProductCayleyTable"
-    DEPENDS generate_caleytable.py helpers.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/InnerProductCayleyTable.hpp
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${CMAKE_CURRENT_SOURCE_DIR}/templates/innerproductcayleytable.py ${OUTPUT_DIR}
+    DEPENDS generate_caleytable.py helpers.py ${CMAKE_CURRENT_SOURCE_DIR}/templates/innerproductcayleytable.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generation of the Inner product Caley table"
     VERBATIM
@@ -184,8 +179,8 @@ add_dependencies(generate_inner_product_caley_table make_generated_directory)
 # Outer product Caley table
 add_custom_command(
     OUTPUT ${OUTPUT_DIR}/outerproductcayleytable.py
-    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/OuterProductCayleyTable.hpp ${OUTPUT_DIR} "OuterProductCayleyTable"
-    DEPENDS generate_caleytable.py helpers.py ${FETCHCONTENT_BASE_DIR}/gafro-src/src/gafro/algebra/expressions/OuterProductCayleyTable.hpp
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_caleytable.py ${CMAKE_CURRENT_SOURCE_DIR}/templates/outerproductcayleytable.py ${OUTPUT_DIR}
+    DEPENDS generate_caleytable.py helpers.py ${CMAKE_CURRENT_SOURCE_DIR}/templates/outerproductcayleytable.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
     COMMENT "Generation of the Outer product Caley table"
     VERBATIM
@@ -259,7 +254,7 @@ add_custom_command(
     COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_rotor_apply_methods.py ${OUTPUT_DIR}
     DEPENDS generate_rotor_apply_methods.py helpers.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
-    COMMENT "Generation of the motor apply methods"
+    COMMENT "Generation of the rotor apply methods"
     VERBATIM
 )
 
@@ -288,11 +283,55 @@ add_custom_target(generate_manipulators DEPENDS ${MANIPULATORS_SRCS})
 add_dependencies(generate_manipulators make_generated_directory)
 
 
+# Quadrupeds
+set(QUADRUPEDS_SRCS
+    ${OUTPUT_DIR}/quadrupeds.h
+    ${OUTPUT_DIR}/quadrupeds.hpp
+
+    CACHE INTERNAL "QUADRUPEDS_SRCS"
+)
+
+add_custom_command(
+    OUTPUT ${QUADRUPEDS_SRCS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_quadrupeds.py ${OUTPUT_DIR}
+    DEPENDS generate_quadrupeds.py helpers.py templates/quadrupeds.h templates/quadrupeds.hpp
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generation of the Quadruped bindings"
+    VERBATIM
+)
+
+add_custom_target(generate_quadrupeds DEPENDS ${QUADRUPEDS_SRCS})
+add_dependencies(generate_quadrupeds make_generated_directory)
+
+
+# Hands
+set(HANDS_SRCS
+    ${OUTPUT_DIR}/hands.h
+    ${OUTPUT_DIR}/hands.hpp
+
+    CACHE INTERNAL "HANDS_SRCS"
+)
+
+add_custom_command(
+    OUTPUT ${HANDS_SRCS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_hands.py ${OUTPUT_DIR}
+    DEPENDS generate_hands.py helpers.py templates/hands.h templates/hands.hpp
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generation of the Hand bindings"
+    VERBATIM
+)
+
+add_custom_target(generate_hands DEPENDS ${HANDS_SRCS})
+add_dependencies(generate_hands make_generated_directory)
+
+
 add_custom_target(generate_bindings)
 add_dependencies(generate_bindings
     generate_geometric_product_caley_table
     generate_inner_product_caley_table
     generate_manipulators
+    generate_quadrupeds
+    generate_hands
     generate_motor_apply_methods
     generate_multivectors
     generate_multivector_multiplications

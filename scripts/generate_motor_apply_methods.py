@@ -31,7 +31,7 @@ using namespace gafro;
 #include "algebra/motor_utils.hpp"
 
 
-void {function_name}(py::class_<gafro::Motor<double>, Multivector_scalare23e13e12e1ie2ie3ie123i> &c)
+void {function_name}(py::class_<gafro::Motor<double>, Multivector_scalare12e13e23e1ie2ie3ie123i> &c)
 {{
 """
         )
@@ -61,13 +61,13 @@ using namespace gafro;
 
         for i in range(0, count, N):
             output.write(
-                f"void {function_name}_{i}(py::class_<gafro::Motor<double>, Multivector_scalare23e13e12e1ie2ie3ie123i> &);\n"
+                f"void {function_name}_{i}(py::class_<gafro::Motor<double>, Multivector_scalare12e13e23e1ie2ie3ie123i> &);\n"
             )
 
         output.write("\n\n")
 
         output.write(
-            f"void {function_name}(py::class_<gafro::Motor<double>, Multivector_scalare23e13e12e1ie2ie3ie123i> &c)\n"
+            f"void {function_name}(py::class_<gafro::Motor<double>, Multivector_scalare12e13e23e1ie2ie3ie123i> &c)\n"
         )
         output.write("{\n")
 
@@ -77,11 +77,8 @@ using namespace gafro;
         output.write("}\n")
 
 
-multivectors = []
-multivectors.extend(helpers.blades)
-multivectors.extend(helpers.multivectors[: helpers.nb_base_multivectors])
-multivectors.append("".join(helpers.blades))
-
+multivectors = helpers.blades.copy()
+multivectors.extend(helpers.multivectors)
 
 N = 3
 count = len(multivectors)

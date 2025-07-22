@@ -1,16 +1,9 @@
-#
-# SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
-#
-# SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
-#
-# SPDX-License-Identifier: GPL-3.0-only
-#
-diff --git a/CMakeLists.txt b/CMakeLists.txt
+diff --git i/CMakeLists.txt w/CMakeLists.txt
 deleted file mode 100644
-index bb8c393..0000000
---- a/CMakeLists.txt
+index 92237ba..0000000
+--- i/CMakeLists.txt
 +++ /dev/null
-@@ -1,107 +0,0 @@
+@@ -1,101 +0,0 @@
 -cmake_minimum_required(VERSION 3.5)
 -
 -find_program(CCACHE_PROGRAM ccache)
@@ -32,15 +25,17 @@ index bb8c393..0000000
 -set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 -set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 -
--set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_BINARY_DIR}/bin")
--
 -list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 -
 -set(${PROJECT_NAME}_PREFIX_PACKAGE share/${PROJECT_NAME}/cmake)
 -set(${PROJECT_NAME}_PREFIX_INCLUDE include/${PROJECT_NAME})
 -
--set(GAFRO_ROBOT_DESCRIPTIONS_DIRECTORY "${CMAKE_INSTALL_PREFIX}/share/${CMAKE_PROJECT_NAME}/assets/")
--file(COPY "assets/" DESTINATION "${CMAKE_CURRENT_BINARY_DIR}/assets/")
+-if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
+-    set(GAFRO_ROBOT_DESCRIPTIONS_DIRECTORY "${CMAKE_INSTALL_PREFIX}/share/${CMAKE_PROJECT_NAME}/assets/")
+-else()
+-    set(GAFRO_ROBOT_DESCRIPTIONS_DIRECTORY "${CMAKE_BINARY_DIR}/assets/")
+-    file(COPY "assets/" DESTINATION "${GAFRO_ROBOT_DESCRIPTIONS_DIRECTORY}")
+-endif()
 -
 -# Check if yaml-cpp was imported by a project higher in the chain
 -if(yaml-cpp_POPULATED)
@@ -62,6 +57,7 @@ index bb8c393..0000000
 -endif()
 -
 -add_subdirectory(src/${PROJECT_NAME})
+-# add_subdirectory(tests)
 -
 -include(CMakePackageConfigHelpers)
 -
@@ -80,41 +76,32 @@ index bb8c393..0000000
 -configure_file(cmake/${PROJECT_NAME}-packages.cmake "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-packages.cmake")
 -
 -install(TARGETS ${PROJECT_NAME} EXPORT ${PROJECT_NAME}-config-targets
--  LIBRARY DESTINATION lib
--  ARCHIVE DESTINATION lib
--  RUNTIME DESTINATION bin
--  INCLUDES DESTINATION ${${PROJECT_NAME}_PREFIX_INCLUDE}/${PROJECT_NAME}
+-    LIBRARY DESTINATION lib/${PROJECT_NAME}/
+-    ARCHIVE DESTINATION lib/${PROJECT_NAME}/
+-    RUNTIME DESTINATION lib/${PROJECT_NAME}/
+-    INCLUDES DESTINATION ${${PROJECT_NAME}_PREFIX_INCLUDE}
 -)
 -
 -install(
--  FILES 
--    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake" 
--    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
--    "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-packages.cmake"
--  DESTINATION 
--    ${${PROJECT_NAME}_PREFIX_PACKAGE}
--  COMPONENT 
--    Devel
--)
--
--export(EXPORT ${PROJECT_NAME}-config-targets
--  FILE "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-targets.cmake"
--  NAMESPACE ${PROJECT_NAME}::
+-    FILES
+-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config.cmake"
+-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-config-version.cmake"
+-        "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-packages.cmake"
+-    DESTINATION
+-        ${${PROJECT_NAME}_PREFIX_PACKAGE}
 -)
 -
 -install(EXPORT ${PROJECT_NAME}-config-targets
--  FILE ${PROJECT_NAME}-config-targets.cmake
--  NAMESPACE ${PROJECT_NAME}::
--  DESTINATION ${${PROJECT_NAME}_PREFIX_PACKAGE}
+-    FILE ${PROJECT_NAME}-config-targets.cmake
+-    NAMESPACE gafro_robot_descriptions::
+-    DESTINATION ${${PROJECT_NAME}_PREFIX_PACKAGE}
 -)
 -
 -install(
 -    DIRECTORY
--        "${CMAKE_CURRENT_BINARY_DIR}/assets/"
+-        "${CMAKE_CURRENT_LIST_DIR}/assets/"
 -    DESTINATION
 -        "share/${CMAKE_PROJECT_NAME}/assets/"
--    COMPONENT
--        Devel
 -)
 -
 -export(PACKAGE gafro_robot_descriptions)

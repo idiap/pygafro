@@ -31,7 +31,7 @@ using namespace gafro;
 #include "algebra/rotor_utils.hpp"
 
 
-void {function_name}(py::class_<gafro::Rotor<double>, Multivector_scalare23e13e12> &c)
+void {function_name}(py::class_<gafro::Rotor<double>, Multivector_scalare12e13e23> &c)
 {{
 """
         )
@@ -61,13 +61,13 @@ using namespace gafro;
 
         for i in range(0, count, N):
             output.write(
-                f"void {function_name}_{i}(py::class_<gafro::Rotor<double>, Multivector_scalare23e13e12> &);\n"
+                f"void {function_name}_{i}(py::class_<gafro::Rotor<double>, Multivector_scalare12e13e23> &);\n"
             )
 
         output.write("\n\n")
 
         output.write(
-            f"void {function_name}(py::class_<gafro::Rotor<double>, Multivector_scalare23e13e12> &c)\n"
+            f"void {function_name}(py::class_<gafro::Rotor<double>, Multivector_scalare12e13e23> &c)\n"
         )
         output.write("{\n")
 
@@ -77,10 +77,8 @@ using namespace gafro;
         output.write("}\n")
 
 
-multivectors = []
-multivectors.extend(helpers.blades)
-multivectors.extend(helpers.multivectors[: helpers.nb_base_multivectors])
-multivectors.append("".join(helpers.blades))
+multivectors = helpers.blades.copy()
+multivectors.extend(helpers.multivectors)
 
 
 N = 3

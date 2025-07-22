@@ -72,7 +72,7 @@ class TestDefaultPrismaticJoint(unittest.TestCase):
         joint = system.createPrismaticJoint("joint")
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         joint.setFrame(motor)
@@ -310,7 +310,7 @@ class TestDefaultPrismaticJoint(unittest.TestCase):
         joint.setAxis(generator)
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         axis = joint.getCurrentAxis(motor)
@@ -335,7 +335,7 @@ class TestPrismaticJointWith6ParametersFirstConfiguration(unittest.TestCase):
     def test_defaults(self):
         system = System()
         joint = system.createPrismaticJoint(
-            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], 1
+            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], 1
         )
 
         self.assertTrue(joint.getName() == "joint")
@@ -347,7 +347,7 @@ class TestPrismaticJointWith6ParametersFirstConfiguration(unittest.TestCase):
     def test_hasDefaultFrame(self):
         system = System()
         joint = system.createPrismaticJoint(
-            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], 1
+            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], 1
         )
 
         frame = joint.getFrame()
@@ -372,7 +372,7 @@ class TestPrismaticJointWith6ParametersFirstConfiguration(unittest.TestCase):
     def test_hasDefaultAxis(self):
         system = System()
         joint = system.createPrismaticJoint(
-            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], 1
+            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], 1
         )
 
         axis = joint.getAxis()
@@ -431,7 +431,7 @@ class TestPrismaticJointWith6ParametersThirdConfiguration(unittest.TestCase):
     def test_hasDefaultFrame(self):
         system = System()
         joint = system.createPrismaticJoint(
-            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], -3
+            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], -3
         )
 
         frame = joint.getFrame()
@@ -456,7 +456,7 @@ class TestPrismaticJointWith6ParametersThirdConfiguration(unittest.TestCase):
     def test_hasDefaultAxis(self):
         system = System()
         joint = system.createPrismaticJoint(
-            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], -3
+            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], -3
         )
 
         axis = joint.getAxis()

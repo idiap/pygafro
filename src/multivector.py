@@ -19,36 +19,36 @@ from .utils import _getProductBlades
 
 all_blades = [
     "scalar",
-    "e1",
-    "e2",
-    "e3",
-    "ei",
     "e0",
-    "e23",
-    "e13",
-    "e12",
-    "e1i",
-    "e2i",
-    "e3i",
+    "e1",
     "e01",
+    "e2",
     "e02",
-    "e03",
-    "e0i",
-    "e123",
-    "e12i",
-    "e13i",
-    "e23i",
+    "e12",
     "e012",
+    "e3",
+    "e03",
+    "e13",
     "e013",
+    "e23",
     "e023",
-    "e01i",
-    "e02i",
-    "e03i",
-    "e123i",
+    "e123",
     "e0123",
+    "ei",
+    "e0i",
+    "e1i",
+    "e01i",
+    "e2i",
+    "e02i",
+    "e12i",
     "e012i",
-    "e023i",
+    "e3i",
+    "e03i",
+    "e13i",
     "e013i",
+    "e23i",
+    "e023i",
+    "e123i",
     "e0123i",
 ]
 
@@ -209,6 +209,7 @@ class Multivector:
 
         if (len(blades) > 0) and isinstance(blades[0], str):
             blades = [all_blades.index(b) for b in blades]
+            blades.sort()
 
         if mv.blades() != blades:
             return Multivector(blades, mv=mv)
@@ -373,7 +374,7 @@ def _product(a, b, prefix, table):
     function_name = f"{prefix}_{blades1}_{blades2}"
     if hasattr(internals, function_name):
         func = getattr(internals, function_name)
-        bits, params = func(
+        _, params = func(
             a._mv if isinstance(a, Multivector) else a,
             b._mv if isinstance(b, Multivector) else b,
         )
@@ -389,8 +390,8 @@ def _product(a, b, prefix, table):
             Multivector.create(all_blades, mv1), Multivector.create(all_blades, mv2)
         )
 
-        result_blades = _getProductBlades(a.blades(), b.blades(), table)
-        bits = [x in result_blades for x in range(len(params))]
+    result_blades = _getProductBlades(a.blades(), b.blades(), table)
+    bits = [x in result_blades for x in range(len(params))]
 
     blades = [idx for idx, v in enumerate(bits) if v]
     parameters = [params[idx] for idx, v in enumerate(bits) if v]

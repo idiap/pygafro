@@ -70,7 +70,7 @@ class TestTwistCreationFromParameters(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.twist = Twist([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        cls.twist = Twist([3.0, 2.0, 1.0, 4.0, 5.0, 6.0])
 
     def test_blades(self):
         self.assertAlmostEqual(self.twist["e23"], 1.0)
@@ -114,7 +114,7 @@ class TestTwistCreationFromParameters(unittest.TestCase):
 class TestTwistCreationFromTwist(unittest.TestCase):
 
     def test_creation(self):
-        twist1 = Twist([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        twist1 = Twist([3.0, 2.0, 1.0, 4.0, 5.0, 6.0])
         twist2 = Twist(twist1)
 
         self.assertAlmostEqual(twist2["e23"], 1.0)
@@ -145,7 +145,7 @@ class TestTwistTransformByMotor(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.twist = Twist([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        cls.twist = Twist([3.0, 2.0, 1.0, 4.0, 5.0, 6.0])
 
     def test_default(self):
         motor = Motor()
@@ -177,7 +177,7 @@ class TestTwistTransformByMotor(unittest.TestCase):
         self.assertAlmostEqual(twist["e3i"], 6.0)
 
     def test_withRotation(self):
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor)
 
         twist = self.twist.transform(motor)
@@ -193,7 +193,7 @@ class TestTwistTransformByMotor(unittest.TestCase):
 
     def test_withTranslationAndRotation(self):
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(translator, rotor)
 
         twist = self.twist.transform(motor)
@@ -211,8 +211,8 @@ class TestTwistTransformByMotor(unittest.TestCase):
 class TestTwistOperations(unittest.TestCase):
 
     def test_addition(self):
-        twist = Twist([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
-        twist2 = Twist([10.0, 20.0, 30.0, 40.0, 50.0, 60.0])
+        twist = Twist([3.0, 2.0, 1.0, 4.0, 5.0, 6.0])
+        twist2 = Twist([30.0, 20.0, 10.0, 40.0, 50.0, 60.0])
 
         twist += twist2
 
@@ -224,8 +224,8 @@ class TestTwistOperations(unittest.TestCase):
         self.assertAlmostEqual(twist["e3i"], 66.0)
 
     def test_commutation(self):
-        twist = Twist([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
-        wrench = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        twist = Twist([3.0, 2.0, 1.0, 4.0, 5.0, 6.0])
+        wrench = Wrench(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
 
         wrench2 = twist.commute(wrench)
 

@@ -9,80 +9,65 @@
 import itertools
 import os
 
+# Note: the order is very important here
 blades = [
     "scalar",
-    "e1",
-    "e2",
-    "e3",
-    "ei",
     "e0",
-    "e23",
-    "e13",
-    "e12",
-    "e1i",
-    "e2i",
-    "e3i",
+    "e1",
     "e01",
+    "e2",
     "e02",
-    "e03",
-    "e0i",
-    "e123",
-    "e12i",
-    "e13i",
-    "e23i",
+    "e12",
     "e012",
+    "e3",
+    "e03",
+    "e13",
     "e013",
+    "e23",
     "e023",
-    "e01i",
-    "e02i",
-    "e03i",
-    "e123i",
+    "e123",
     "e0123",
+    "ei",
+    "e0i",
+    "e1i",
+    "e01i",
+    "e2i",
+    "e02i",
+    "e12i",
     "e012i",
-    "e023i",
+    "e3i",
+    "e03i",
+    "e13i",
     "e013i",
+    "e23i",
+    "e023i",
+    "e123i",
     "e0123i",
 ]
 
 
 multivectors = [
-    ["e1", "e2", "e3", "ei", "e0"],
+    ["e0", "e1", "e2", "e3", "ei"],
     ["e1", "e2", "e3"],
     ["e123", "e12i", "e13i", "e23i", "e012", "e013", "e023", "e01i", "e02i", "e03i"],
     ["e123i", "e0123", "e012i", "e023i", "e013i"],
     ["e123i", "e012i", "e023i", "e013i"],
-    ["e12i", "e13i", "e23i", "e01i", "e02i", "e03i"],
+    ["e01i", "e02i", "e12i", "e03i", "e13i", "e23i"],
     ["e1i", "e2i", "e3i"],
     ["e23", "e13", "e12", "e01", "e02", "e03"],
     ["e23", "e13", "e12", "e1i", "e2i", "e3i", "e01", "e02", "e03", "e0i"],
     ["e23", "e13", "e12", "e1i", "e2i", "e3i"],
     ["e23", "e13", "e12"],
     ["scalar", "e1i", "e2i", "e3i"],
-    ["scalar", "e23", "e13", "e12", "e1i", "e2i", "e3i", "e123i"],
+    ["scalar", "e12", "e13", "e23", "e1i", "e2i", "e3i", "e123i"],
     ["scalar", "e23", "e13", "e12"],
+    ["scalar", "e01", "e02", "e12", "e03", "e13", "e23", "e0123", "e0i", "e1i", "e2i", "e012i", "e3i", "e013i", "e023i", "e123i"],
 ]
 
+multivectors.append(blades.copy())
 
-nb_base_multivectors = len(multivectors)
-
-
-blades_ranges = [
-    (0, 5),
-    (6, 15),
-    (16, 25),
-    (26, 30),
-    (31, 31),
-]
-
-
-combinations = []
-for k in range(1, len(blades_ranges) + 1):
-    combinations.extend(itertools.combinations(blades_ranges, k))
-
-for combination in combinations:
-    b = [blades[n] for x in combination for n in range(x[0], x[1] + 1)]
-    if (b not in multivectors) and (len(b) > 1):
-        multivectors.append(b)
+for entry in multivectors:
+    entry.sort(key=lambda x: blades.index(x))
 
 
 specific_multivector_classes = [

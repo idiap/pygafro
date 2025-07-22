@@ -12,6 +12,7 @@
 #include "FixedJoint.hpp"
 #include "PrismaticJoint.hpp"
 #include "RevoluteJoint.hpp"
+#include "KinematicChain.hpp"
 #include "Link.hpp"
 
 namespace pygafro

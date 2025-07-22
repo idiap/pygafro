@@ -7,6 +7,7 @@
 #
 
 from ._pygafro import *  # noqa: we need to discover at runtime which Manipulator classes were compiled
+from .multivector import Multivector
 
 
 def createManipulator(system, dof, ee_joint_name):
@@ -36,8 +37,9 @@ def _getEEPrimitiveJacobian(manipulator, position, primitive):
             + ee_motor * primitive * ee_jacobian[i].reverse()
         )
 
-        mv.blades = blades
-        mv.mask = [b in blades for b in mv._mv.blades()]
+        if isinstance(mv, Multivector):
+            mv.blades = blades
+            mv.mask = [b in blades for b in mv._mv.blades()]
 
         jacobian.append(mv)
 

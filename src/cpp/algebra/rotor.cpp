@@ -18,18 +18,18 @@ namespace py = pybind11;
 #include "rotor_utils.hpp"
 
 
-void init_rotor_apply_methods(py::class_<gafro::Rotor<double>, Multivector_scalare23e13e12> &);
+void init_rotor_apply_methods(py::class_<gafro::Rotor<double>, Multivector_scalare12e13e23> &);
 
 
 void init_rotor(py::module &m)
 {
     #include "algebra/types.h"
 
-    py::class_<Rotor, Multivector_scalare23e13e12> rotor(m, "Rotor");
+    py::class_<Rotor, Multivector_scalare12e13e23> rotor(m, "Rotor");
 
     rotor.def(py::init<>())
          .def(py::init<const Rotor::Parameters&>())
-         .def(py::init<const Multivector_scalare23e13e12&>())
+         .def(py::init<const Multivector_scalare12e13e23&>())
          .def(py::init<const Rotor::Generator&, const double&>())
 
          .def_static("fromQuaternion", [](const Eigen::Vector<double, 4>& q) {

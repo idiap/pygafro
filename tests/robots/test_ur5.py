@@ -24,7 +24,7 @@ class TestUR5(unittest.TestCase):
         config = robot.getRandomConfiguration()
 
         self.assertTrue(isinstance(config, np.ndarray))
-        self.assertAlmostEqual(config.shape, (6,))
+        self.assertEqual(config.shape, (6,))
 
     def test_setJointLimits_getMin(self):
         robot = UR5()

@@ -20,10 +20,8 @@ class TestLeapHand(unittest.TestCase):
     def testRandomConfiguration(self):
         robot = LeapHand()
 
-        config = robot.getRandomConfiguration()
-
-        self.assertTrue(isinstance(config, np.ndarray))
-        self.assertAlmostEqual(config.shape, (16,))
+        self.assertEqual(robot.nbFingers, 4)
+        self.assertEqual(robot.dof, 16)
 
 
 if __name__ == "__main__":

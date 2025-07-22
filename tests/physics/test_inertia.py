@@ -48,11 +48,11 @@ class TestInertia(unittest.TestCase):
         self.assertTrue(isinstance(tensor, np.ndarray))
         self.assertTrue(tensor.shape == (6, 6))
 
-        self.assertAlmostEqual(tensor[0, 0], 1.0)
+        self.assertAlmostEqual(tensor[0, 0], 10.0)
         self.assertAlmostEqual(tensor[0, 1], 0.0)
         self.assertAlmostEqual(tensor[0, 2], 0.0)
         self.assertAlmostEqual(tensor[1, 0], 0.0)
-        self.assertAlmostEqual(tensor[1, 1], 1.0)
+        self.assertAlmostEqual(tensor[1, 1], 10.0)
         self.assertAlmostEqual(tensor[1, 2], 0.0)
         self.assertAlmostEqual(tensor[2, 0], 0.0)
         self.assertAlmostEqual(tensor[2, 1], 0.0)
@@ -62,11 +62,11 @@ class TestInertia(unittest.TestCase):
         self.assertAlmostEqual(tensor[3, 4], 0.0)
         self.assertAlmostEqual(tensor[3, 5], 0.0)
         self.assertAlmostEqual(tensor[4, 3], 0.0)
-        self.assertAlmostEqual(tensor[4, 4], 10.0)
+        self.assertAlmostEqual(tensor[4, 4], 1.0)
         self.assertAlmostEqual(tensor[4, 5], 0.0)
         self.assertAlmostEqual(tensor[5, 3], 0.0)
         self.assertAlmostEqual(tensor[5, 4], 0.0)
-        self.assertAlmostEqual(tensor[5, 5], 10.0)
+        self.assertAlmostEqual(tensor[5, 5], 1.0)
 
     def checkElements(self, inertia):
         element = inertia.getElement23()
@@ -138,35 +138,111 @@ class TestInertia(unittest.TestCase):
     def test_creation_from_elements(self):
         elements = [
             Multivector.create(
-                ["e23", "e13", "e12", "e01", "e02", "e03"],
+                ["e01", "e02", "e12", "e03", "e13", "e23"],
                 [1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
             ),
             Multivector.create(
-                ["e23", "e13", "e12", "e01", "e02", "e03"],
+                ["e01", "e02", "e12", "e03", "e13", "e23"],
                 [0.0, 1.0, 0.0, 0.0, 0.0, 0.0],
             ),
             Multivector.create(
-                ["e23", "e13", "e12", "e01", "e02", "e03"],
+                ["e01", "e02", "e12", "e03", "e13", "e23"],
                 [0.0, 0.0, 1.0, 0.0, 0.0, 0.0],
             ),
             Multivector.create(
-                ["e23", "e13", "e12", "e01", "e02", "e03"],
+                ["e01", "e02", "e12", "e03", "e13", "e23"],
                 [0.0, 0.0, 0.0, 10.0, 0.0, 0.0],
             ),
             Multivector.create(
-                ["e23", "e13", "e12", "e01", "e02", "e03"],
+                ["e01", "e02", "e12", "e03", "e13", "e23"],
                 [0.0, 0.0, 0.0, 0.0, 10.0, 0.0],
             ),
             Multivector.create(
-                ["e23", "e13", "e12", "e01", "e02", "e03"],
+                ["e01", "e02", "e12", "e03", "e13", "e23"],
                 [0.0, 0.0, 0.0, 0.0, 0.0, 10.0],
             ),
         ]
 
         inertia = Inertia(elements)
 
-        self.checkTensor(inertia)
-        self.checkElements(inertia)
+        tensor = inertia.getTensor()
+
+        self.assertTrue(isinstance(tensor, np.ndarray))
+        self.assertTrue(tensor.shape == (6, 6))
+
+        self.assertAlmostEqual(tensor[0, 0], 1.0)
+        self.assertAlmostEqual(tensor[0, 1], 0.0)
+        self.assertAlmostEqual(tensor[0, 2], 0.0)
+        self.assertAlmostEqual(tensor[1, 0], 0.0)
+        self.assertAlmostEqual(tensor[1, 1], 1.0)
+        self.assertAlmostEqual(tensor[1, 2], 0.0)
+        self.assertAlmostEqual(tensor[2, 0], 0.0)
+        self.assertAlmostEqual(tensor[2, 1], 0.0)
+        self.assertAlmostEqual(tensor[2, 2], 1.0)
+
+        self.assertAlmostEqual(tensor[3, 3], 10.0)
+        self.assertAlmostEqual(tensor[3, 4], 0.0)
+        self.assertAlmostEqual(tensor[3, 5], 0.0)
+        self.assertAlmostEqual(tensor[4, 3], 0.0)
+        self.assertAlmostEqual(tensor[4, 4], 10.0)
+        self.assertAlmostEqual(tensor[4, 5], 0.0)
+        self.assertAlmostEqual(tensor[5, 3], 0.0)
+        self.assertAlmostEqual(tensor[5, 4], 0.0)
+        self.assertAlmostEqual(tensor[5, 5], 10.0)
+
+        element = inertia.getElement01()
+
+        self.assertAlmostEqual(element["e01"], 1.0)
+        self.assertAlmostEqual(element["e02"], 0.0)
+        self.assertAlmostEqual(element["e12"], 0.0)
+        self.assertAlmostEqual(element["e03"], 0.0)
+        self.assertAlmostEqual(element["e13"], 0.0)
+        self.assertAlmostEqual(element["e23"], 0.0)
+
+        element = inertia.getElement02()
+
+        self.assertAlmostEqual(element["e01"], 0.0)
+        self.assertAlmostEqual(element["e02"], 1.0)
+        self.assertAlmostEqual(element["e12"], 0.0)
+        self.assertAlmostEqual(element["e03"], 0.0)
+        self.assertAlmostEqual(element["e13"], 0.0)
+        self.assertAlmostEqual(element["e23"], 0.0)
+
+        element = inertia.getElement12()
+
+        self.assertAlmostEqual(element["e01"], 0.0)
+        self.assertAlmostEqual(element["e02"], 0.0)
+        self.assertAlmostEqual(element["e12"], 1.0)
+        self.assertAlmostEqual(element["e03"], 0.0)
+        self.assertAlmostEqual(element["e13"], 0.0)
+        self.assertAlmostEqual(element["e23"], 0.0)
+
+        element = inertia.getElement03()
+
+        self.assertAlmostEqual(element["e01"], 0.0)
+        self.assertAlmostEqual(element["e02"], 0.0)
+        self.assertAlmostEqual(element["e12"], 0.0)
+        self.assertAlmostEqual(element["e03"], 10.0)
+        self.assertAlmostEqual(element["e13"], 0.0)
+        self.assertAlmostEqual(element["e23"], 0.0)
+
+        element = inertia.getElement13()
+
+        self.assertAlmostEqual(element["e01"], 0.0)
+        self.assertAlmostEqual(element["e02"], 0.0)
+        self.assertAlmostEqual(element["e12"], 0.0)
+        self.assertAlmostEqual(element["e03"], 0.0)
+        self.assertAlmostEqual(element["e13"], 10.0)
+        self.assertAlmostEqual(element["e23"], 0.0)
+
+        element = inertia.getElement23()
+
+        self.assertAlmostEqual(element["e01"], 0.0)
+        self.assertAlmostEqual(element["e02"], 0.0)
+        self.assertAlmostEqual(element["e12"], 0.0)
+        self.assertAlmostEqual(element["e03"], 0.0)
+        self.assertAlmostEqual(element["e13"], 0.0)
+        self.assertAlmostEqual(element["e23"], 10.0)
 
     def test_addition_of_inertia_inplace_operator(self):
         inertia = Inertia(10.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
@@ -179,28 +255,31 @@ class TestInertia(unittest.TestCase):
         self.assertTrue(isinstance(tensor, np.ndarray))
         self.assertTrue(tensor.shape == (6, 6))
 
-        self.assertAlmostEqual(tensor[0, 0], 11.0)
-        self.assertAlmostEqual(tensor[0, 1], -22.0)
-        self.assertAlmostEqual(tensor[0, 2], 33.0)
-        self.assertAlmostEqual(tensor[1, 0], -22.0)
-        self.assertAlmostEqual(tensor[1, 1], 44.0)
-        self.assertAlmostEqual(tensor[1, 2], -55.0)
-        self.assertAlmostEqual(tensor[2, 0], 33.0)
-        self.assertAlmostEqual(tensor[2, 1], -55.0)
+        self.assertAlmostEqual(tensor[0, 0], 30.0)
+        self.assertAlmostEqual(tensor[1, 1], 30.0)
         self.assertAlmostEqual(tensor[2, 2], 66.0)
-
         self.assertAlmostEqual(tensor[3, 3], 30.0)
-        self.assertAlmostEqual(tensor[3, 4], 0.0)
-        self.assertAlmostEqual(tensor[3, 5], 0.0)
-        self.assertAlmostEqual(tensor[4, 3], 0.0)
-        self.assertAlmostEqual(tensor[4, 4], 30.0)
-        self.assertAlmostEqual(tensor[4, 5], 0.0)
-        self.assertAlmostEqual(tensor[5, 3], 0.0)
-        self.assertAlmostEqual(tensor[5, 4], 0.0)
-        self.assertAlmostEqual(tensor[5, 5], 30.0)
+        self.assertAlmostEqual(tensor[4, 4], 44.0)
+        self.assertAlmostEqual(tensor[5, 5], 11.0)
 
-        for i in range(3):
-            for j in range(3, 6):
+        self.assertAlmostEqual(tensor[4, 2], -55.0)
+        self.assertAlmostEqual(tensor[2, 4], -55.0)
+        self.assertAlmostEqual(tensor[5, 2], 33.0)
+        self.assertAlmostEqual(tensor[2, 5], 33.0)
+        self.assertAlmostEqual(tensor[5, 4], -22.0)
+        self.assertAlmostEqual(tensor[4, 5], -22.0)
+
+        self.assertAlmostEqual(tensor[0, 1], 0.0)
+        self.assertAlmostEqual(tensor[1, 0], 0.0)
+        self.assertAlmostEqual(tensor[3, 2], 0.0)
+        self.assertAlmostEqual(tensor[2, 3], 0.0)
+        self.assertAlmostEqual(tensor[4, 3], 0.0)
+        self.assertAlmostEqual(tensor[3, 4], 0.0)
+        self.assertAlmostEqual(tensor[5, 3], 0.0)
+        self.assertAlmostEqual(tensor[3, 5], 0.0)
+
+        for i in range(2):
+            for j in range(2, 6):
                 self.assertAlmostEqual(tensor[i, j], 0.0)
                 self.assertAlmostEqual(tensor[j, i], 0.0)
 
@@ -215,35 +294,38 @@ class TestInertia(unittest.TestCase):
         self.assertTrue(isinstance(tensor, np.ndarray))
         self.assertTrue(tensor.shape == (6, 6))
 
-        self.assertAlmostEqual(tensor[0, 0], 11.0)
-        self.assertAlmostEqual(tensor[0, 1], -22.0)
-        self.assertAlmostEqual(tensor[0, 2], 33.0)
-        self.assertAlmostEqual(tensor[1, 0], -22.0)
-        self.assertAlmostEqual(tensor[1, 1], 44.0)
-        self.assertAlmostEqual(tensor[1, 2], -55.0)
-        self.assertAlmostEqual(tensor[2, 0], 33.0)
-        self.assertAlmostEqual(tensor[2, 1], -55.0)
+        self.assertAlmostEqual(tensor[0, 0], 30.0)
+        self.assertAlmostEqual(tensor[1, 1], 30.0)
         self.assertAlmostEqual(tensor[2, 2], 66.0)
-
         self.assertAlmostEqual(tensor[3, 3], 30.0)
-        self.assertAlmostEqual(tensor[3, 4], 0.0)
-        self.assertAlmostEqual(tensor[3, 5], 0.0)
-        self.assertAlmostEqual(tensor[4, 3], 0.0)
-        self.assertAlmostEqual(tensor[4, 4], 30.0)
-        self.assertAlmostEqual(tensor[4, 5], 0.0)
-        self.assertAlmostEqual(tensor[5, 3], 0.0)
-        self.assertAlmostEqual(tensor[5, 4], 0.0)
-        self.assertAlmostEqual(tensor[5, 5], 30.0)
+        self.assertAlmostEqual(tensor[4, 4], 44.0)
+        self.assertAlmostEqual(tensor[5, 5], 11.0)
 
-        for i in range(3):
-            for j in range(3, 6):
+        self.assertAlmostEqual(tensor[4, 2], -55.0)
+        self.assertAlmostEqual(tensor[2, 4], -55.0)
+        self.assertAlmostEqual(tensor[5, 2], 33.0)
+        self.assertAlmostEqual(tensor[2, 5], 33.0)
+        self.assertAlmostEqual(tensor[5, 4], -22.0)
+        self.assertAlmostEqual(tensor[4, 5], -22.0)
+
+        self.assertAlmostEqual(tensor[0, 1], 0.0)
+        self.assertAlmostEqual(tensor[1, 0], 0.0)
+        self.assertAlmostEqual(tensor[3, 2], 0.0)
+        self.assertAlmostEqual(tensor[2, 3], 0.0)
+        self.assertAlmostEqual(tensor[4, 3], 0.0)
+        self.assertAlmostEqual(tensor[3, 4], 0.0)
+        self.assertAlmostEqual(tensor[5, 3], 0.0)
+        self.assertAlmostEqual(tensor[3, 5], 0.0)
+
+        for i in range(2):
+            for j in range(2, 6):
                 self.assertAlmostEqual(tensor[i, j], 0.0)
                 self.assertAlmostEqual(tensor[j, i], 0.0)
 
     def test_callOperatorOnTwist(self):
         inertia = Inertia(10.0, 1.0, 0.0, 0.0, 1.0, 0.0, 1.0)
 
-        result = inertia(Twist([1.0, 2.0, 3.0, 4.0, 5.0, 6.0]))
+        result = inertia(Twist([3.0, 2.0, 1.0, 4.0, 5.0, 6.0]))
 
         self.assertTrue(isinstance(result, Wrench))
 
@@ -258,7 +340,7 @@ class TestInertia(unittest.TestCase):
         inertia = Inertia(10.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         result = inertia.transform(motor)
@@ -270,51 +352,51 @@ class TestInertia(unittest.TestCase):
         self.assertTrue(isinstance(tensor, np.ndarray))
         self.assertTrue(tensor.shape == (6, 6))
 
-        self.assertAlmostEqual(tensor[0, 0], 14.0)
-        self.assertAlmostEqual(tensor[0, 1], 2.0)
-        self.assertAlmostEqual(tensor[0, 2], -5.0)
-        self.assertAlmostEqual(tensor[1, 0], 2.0)
-        self.assertAlmostEqual(tensor[1, 1], 11.0)
-        self.assertAlmostEqual(tensor[1, 2], -3.0)
-        self.assertAlmostEqual(tensor[2, 0], -5.0)
-        self.assertAlmostEqual(tensor[2, 1], -3.0)
+        self.assertAlmostEqual(tensor[0, 0], 10.0)
+        self.assertAlmostEqual(tensor[0, 1], 0.0)
+        self.assertAlmostEqual(tensor[0, 2], 0.0)
+        self.assertAlmostEqual(tensor[1, 0], 0.0)
+        self.assertAlmostEqual(tensor[1, 1], 10.0)
+        self.assertAlmostEqual(tensor[1, 2], 0.0)
+        self.assertAlmostEqual(tensor[2, 0], 0.0)
+        self.assertAlmostEqual(tensor[2, 1], 0.0)
         self.assertAlmostEqual(tensor[2, 2], 6.0)
 
         self.assertAlmostEqual(tensor[0, 3], 0.0)
         self.assertAlmostEqual(tensor[0, 4], -10.0)
         self.assertAlmostEqual(tensor[0, 5], 0.0)
-        self.assertAlmostEqual(tensor[1, 3], -10.0)
+        self.assertAlmostEqual(tensor[1, 3], 0.0)
         self.assertAlmostEqual(tensor[1, 4], 0.0)
-        self.assertAlmostEqual(tensor[1, 5], 0.0)
+        self.assertAlmostEqual(tensor[1, 5], -10.0)
         self.assertAlmostEqual(tensor[2, 3], 0.0)
-        self.assertAlmostEqual(tensor[2, 4], 0.0)
-        self.assertAlmostEqual(tensor[2, 5], 0.0)
+        self.assertAlmostEqual(tensor[2, 4], -3.0)
+        self.assertAlmostEqual(tensor[2, 5], -5.0)
 
         self.assertAlmostEqual(tensor[3, 0], 0.0)
-        self.assertAlmostEqual(tensor[3, 1], -10.0)
+        self.assertAlmostEqual(tensor[3, 1], 0.0)
         self.assertAlmostEqual(tensor[3, 2], 0.0)
         self.assertAlmostEqual(tensor[4, 0], -10.0)
         self.assertAlmostEqual(tensor[4, 1], 0.0)
-        self.assertAlmostEqual(tensor[4, 2], 0.0)
+        self.assertAlmostEqual(tensor[4, 2], -3.0)
         self.assertAlmostEqual(tensor[5, 0], 0.0)
-        self.assertAlmostEqual(tensor[5, 1], 0.0)
-        self.assertAlmostEqual(tensor[5, 2], 0.0)
+        self.assertAlmostEqual(tensor[5, 1], -10.0)
+        self.assertAlmostEqual(tensor[5, 2], -5.0)
 
         self.assertAlmostEqual(tensor[3, 3], 10.0)
         self.assertAlmostEqual(tensor[3, 4], 0.0)
         self.assertAlmostEqual(tensor[3, 5], 0.0)
         self.assertAlmostEqual(tensor[4, 3], 0.0)
-        self.assertAlmostEqual(tensor[4, 4], 10.0)
-        self.assertAlmostEqual(tensor[4, 5], 0.0)
+        self.assertAlmostEqual(tensor[4, 4], 11.0)
+        self.assertAlmostEqual(tensor[4, 5], 2.0)
         self.assertAlmostEqual(tensor[5, 3], 0.0)
-        self.assertAlmostEqual(tensor[5, 4], 0.0)
-        self.assertAlmostEqual(tensor[5, 5], 10.0)
+        self.assertAlmostEqual(tensor[5, 4], 2.0)
+        self.assertAlmostEqual(tensor[5, 5], 14.0)
 
     def test_inverseTransform(self):
         inertia = Inertia(10.0, 1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         result = inertia.inverseTransform(motor)
@@ -326,45 +408,45 @@ class TestInertia(unittest.TestCase):
         self.assertTrue(isinstance(tensor, np.ndarray))
         self.assertTrue(tensor.shape == (6, 6))
 
-        self.assertAlmostEqual(tensor[0, 0], 14.0)
-        self.assertAlmostEqual(tensor[0, 1], 2.0)
-        self.assertAlmostEqual(tensor[0, 2], 5.0)
-        self.assertAlmostEqual(tensor[1, 0], 2.0)
-        self.assertAlmostEqual(tensor[1, 1], 11.0)
-        self.assertAlmostEqual(tensor[1, 2], 3.0)
-        self.assertAlmostEqual(tensor[2, 0], 5.0)
-        self.assertAlmostEqual(tensor[2, 1], 3.0)
+        self.assertAlmostEqual(tensor[0, 0], 10.0)
+        self.assertAlmostEqual(tensor[0, 1], 0.0)
+        self.assertAlmostEqual(tensor[0, 2], 0.0)
+        self.assertAlmostEqual(tensor[1, 0], 0.0)
+        self.assertAlmostEqual(tensor[1, 1], 10.0)
+        self.assertAlmostEqual(tensor[1, 2], 0.0)
+        self.assertAlmostEqual(tensor[2, 0], 0.0)
+        self.assertAlmostEqual(tensor[2, 1], 0.0)
         self.assertAlmostEqual(tensor[2, 2], 6.0)
 
         self.assertAlmostEqual(tensor[0, 3], 0.0)
         self.assertAlmostEqual(tensor[0, 4], 10.0)
         self.assertAlmostEqual(tensor[0, 5], 0.0)
-        self.assertAlmostEqual(tensor[1, 3], 10.0)
+        self.assertAlmostEqual(tensor[1, 3], 0.0)
         self.assertAlmostEqual(tensor[1, 4], 0.0)
-        self.assertAlmostEqual(tensor[1, 5], 0.0)
+        self.assertAlmostEqual(tensor[1, 5], 10.0)
         self.assertAlmostEqual(tensor[2, 3], 0.0)
-        self.assertAlmostEqual(tensor[2, 4], 0.0)
-        self.assertAlmostEqual(tensor[2, 5], 0.0)
+        self.assertAlmostEqual(tensor[2, 4], 3.0)
+        self.assertAlmostEqual(tensor[2, 5], 5.0)
 
         self.assertAlmostEqual(tensor[3, 0], 0.0)
-        self.assertAlmostEqual(tensor[3, 1], 10.0)
+        self.assertAlmostEqual(tensor[3, 1], 0.0)
         self.assertAlmostEqual(tensor[3, 2], 0.0)
         self.assertAlmostEqual(tensor[4, 0], 10.0)
         self.assertAlmostEqual(tensor[4, 1], 0.0)
-        self.assertAlmostEqual(tensor[4, 2], 0.0)
+        self.assertAlmostEqual(tensor[4, 2], 3.0)
         self.assertAlmostEqual(tensor[5, 0], 0.0)
-        self.assertAlmostEqual(tensor[5, 1], 0.0)
-        self.assertAlmostEqual(tensor[5, 2], 0.0)
+        self.assertAlmostEqual(tensor[5, 1], 10.0)
+        self.assertAlmostEqual(tensor[5, 2], 5.0)
 
         self.assertAlmostEqual(tensor[3, 3], 10.0)
         self.assertAlmostEqual(tensor[3, 4], 0.0)
         self.assertAlmostEqual(tensor[3, 5], 0.0)
         self.assertAlmostEqual(tensor[4, 3], 0.0)
-        self.assertAlmostEqual(tensor[4, 4], 10.0)
-        self.assertAlmostEqual(tensor[4, 5], 0.0)
+        self.assertAlmostEqual(tensor[4, 4], 11.0)
+        self.assertAlmostEqual(tensor[4, 5], 2.0)
         self.assertAlmostEqual(tensor[5, 3], 0.0)
-        self.assertAlmostEqual(tensor[5, 4], 0.0)
-        self.assertAlmostEqual(tensor[5, 5], 10.0)
+        self.assertAlmostEqual(tensor[5, 4], 2.0)
+        self.assertAlmostEqual(tensor[5, 5], 14.0)
 
 
 if __name__ == "__main__":

@@ -17,6 +17,7 @@
 #include "robots/KinematicChain.hpp"
 #include "robots/Link.hpp"
 #include "robots/Manipulator.hpp"
+#include "robots/Quadruped.hpp"
 #include "robots/PrismaticJoint.hpp"
 #include "robots/RevoluteJoint.hpp"
 #include "robots/System.hpp"
@@ -26,21 +27,15 @@
 namespace py = pybind11;
 
 
-std::unique_ptr<AnymalC> createAnymalC()
-{
-    return std::make_unique<gafro::AnymalC<double>>(getAssetsPath());
-}
-
 std::unique_ptr<Atlas> createAtlas()
 {
     return std::make_unique<gafro::Atlas<double>>(getAssetsPath());
 }
 
-std::unique_ptr<LeapHand> createLeapHand()
+std::unique_ptr<UnitreeG1> createUnitreeG1()
 {
-    return std::make_unique<gafro::LeapHand<double>>(getAssetsPath());
+    return std::make_unique<gafro::UnitreeG1<double>>(getAssetsPath());
 }
-
 
 
 void init_robots(py::module &m)
@@ -137,6 +132,8 @@ void init_robots(py::module &m)
         .def("computeAnalyticJacobian", &pyKinematicChain::computeAnalyticJacobian)
         .def("computeGeometricJacobian", &pyKinematicChain::computeGeometricJacobian)
         .def("computeGeometricJacobianBody", &pyKinematicChain::computeGeometricJacobianBody)
+        .def("computeKinematicChainGeometricJacobianTimeDerivative", &pyKinematicChain::computeKinematicChainGeometricJacobianTimeDerivative)
+        .def("computeMassMatrix", &pyKinematicChain::computeMassMatrix)
         .def("finalize", &pyKinematicChain::finalize);
 
 
@@ -179,19 +176,19 @@ void init_robots(py::module &m)
     #include "manipulators.hpp"
 
 
-    // FrankaEmikaRobot class
-    py::class_<FrankaEmikaRobot, Manipulator_7>(m, "FrankaEmikaRobot")
-        .def(py::init());
+    // Quadruped class
+    #include "quadrupeds.h"
+    #include "quadrupeds.hpp"
 
 
-    // UR5 class
-    py::class_<UR5, Manipulator_6>(m, "UR5")
-        .def(py::init());
+    // Hand class
+    #include "hands.h"
+    #include "hands.hpp"
 
 
     // AnymalC class
-    py::class_<AnymalC, System>(m, "AnymalC")
-        .def(py::init(&createAnymalC));
+    py::class_<AnymalC, Quadruped_3>(m, "AnymalC")
+        .def(py::init());
 
 
     // Atlas class
@@ -199,7 +196,42 @@ void init_robots(py::module &m)
         .def(py::init(&createAtlas));
 
 
+    // FrankaEmikaRobot class
+    py::class_<FrankaEmikaRobot, Manipulator_7>(m, "FrankaEmikaRobot")
+        .def(py::init());
+
+
+    // KukaIIWA7 class
+    py::class_<KukaIIWA7, Manipulator_7>(m, "KukaIIWA7")
+        .def(py::init());
+
+
+    // KukaIIWA14 class
+    py::class_<KukaIIWA14, Manipulator_7>(m, "KukaIIWA14")
+        .def(py::init());
+
+
     // LeapHand class
-    py::class_<LeapHand, System>(m, "LeapHand")
-        .def(py::init(&createLeapHand));
+    py::class_<LeapHand, Hand_4_4_4_4>(m, "LeapHand")
+        .def(py::init());
+
+
+    // Planar3DoF class
+    py::class_<Planar3DoF, Manipulator_3>(m, "Planar3DoF")
+        .def(py::init());
+
+
+    // UFactoryLite6 class
+    py::class_<UFactoryLite6, Manipulator_6>(m, "UFactoryLite6")
+        .def(py::init());
+
+
+    // UnitreeG1 class
+    py::class_<UnitreeG1, System>(m, "UnitreeG1")
+        .def(py::init(&createUnitreeG1));
+
+
+    // UR5 class
+    py::class_<UR5, Manipulator_6>(m, "UR5")
+        .def(py::init());
 }

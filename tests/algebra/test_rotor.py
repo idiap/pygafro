@@ -34,7 +34,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(rotor.angle(), 0.0)
 
     def test_creationFromMultivector_noAngle(self):
-        mv = Multivector.create(["scalar", "e23", "e13", "e12"], [1.0, 1.0, 0.0, 0.0])
+        mv = Multivector.create(["scalar", "e12", "e13", "e23"], [1.0, 0.0, 0.0, 1.0])
         rotor = Rotor(mv)
 
         self.assertAlmostEqual(rotor["scalar"], 1.0)
@@ -45,7 +45,7 @@ class TestRotor(unittest.TestCase):
 
     def test_creationFromMultivector_withAngle(self):
         mv = Multivector.create(
-            ["scalar", "e23", "e13", "e12"], [0.7071067812, -0.7071067812, 0.0, 0.0]
+            ["scalar", "e13", "e12", "e23"], [0.7071067812, 0.0, 0.0, -0.7071067812]
         )
         rotor = Rotor(mv)
 
@@ -56,7 +56,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(rotor.angle(), math.pi / 2.0)
 
     def test_creationFromGenerator(self):
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         self.assertAlmostEqual(rotor["scalar"], 0.7071067812)
@@ -66,7 +66,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(rotor.angle(), math.pi / 2.0)
 
     def test_creationFromParameters_noAngle(self):
-        rotor = Rotor([1.0, 1.0, 0.0, 0.0])
+        rotor = Rotor([1.0, 0.0, 0.0, 1.0])
 
         self.assertAlmostEqual(rotor["scalar"], 1.0)
         self.assertAlmostEqual(rotor["e23"], 1.0)
@@ -75,7 +75,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(rotor.angle(), 0.0)
 
     def test_creationFromParameters_withAngle(self):
-        rotor = Rotor([0.7071067812, -0.7071067812, 0.0, 0.0])
+        rotor = Rotor([0.7071067812, 0.0, 0.0, -0.7071067812])
 
         self.assertAlmostEqual(rotor["scalar"], 0.7071067812)
         self.assertAlmostEqual(rotor["e23"], -0.7071067812)
@@ -105,7 +105,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(log.e12(), 0.0)
 
     def test_log_withAngle(self):
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         log = rotor.log()
@@ -131,7 +131,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(quaternion[3], 0.0)
 
     def test_quaternion_withAngle(self):
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         quaternion = rotor.quaternion()
@@ -164,7 +164,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(matrix[2, 2], 1.0)
 
     def test_rotationMatrix_withAngle(self):
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         matrix = rotor.toRotationMatrix()
@@ -183,7 +183,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(matrix[2, 2], 0.0)
 
     def test_applyToPoint_origin(self):
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         point = Point()
@@ -198,7 +198,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(result["ei"], point["ei"])
 
     def test_applyToPoint_other(self):
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         point = Point(1.0, 2.0, 3.0)
@@ -213,7 +213,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(result["ei"], 7.0)
 
     def test_applyToLine(self):
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         p1 = Point()
@@ -232,7 +232,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(result["e03i"], line["e03i"])
 
     def test_applyToPlane(self):
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         p1 = Point(0.0, 0.0, 0.0)
@@ -250,7 +250,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(result["e013i"], plane["e013i"])
 
     def test_applyToSphere(self):
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
         rotor = Rotor(generator, math.pi / 2.0)
 
         center = Point(1.0, 0.0, 0.0)
@@ -273,7 +273,7 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(result.getRadius(), sphere.getRadius())
 
     def test_exponential(self):
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
 
         exp = Rotor.exp(generator)
 

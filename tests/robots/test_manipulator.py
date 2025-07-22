@@ -39,7 +39,7 @@ class TestManipulatorConfiguration1With3Joints(unittest.TestCase):
         config = self.manipulator.getRandomConfiguration()
 
         self.assertTrue(isinstance(config, np.ndarray))
-        self.assertAlmostEqual(config.shape, (3,))
+        self.assertEqual(config.shape, (3,))
 
     def test_getEndEffectorKinematicChain(self):
         chain = self.manipulator.getEEKinematicChain()
@@ -390,31 +390,31 @@ class TestManipulatorConfiguration2(unittest.TestCase):
         link1.setMass(0.1)
         link1.setCenterOfMass(com)
         link1.setInertia(Inertia(0.1, np.eye(3)))
-        link1.setAxis(MotorGenerator([0.0, 0.0, 1.0, 0.0, 0.0, 0.0]))
+        link1.setAxis(MotorGenerator([1.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
 
         link2 = system.createLink("link2")
         link2.setMass(0.1)
         link2.setCenterOfMass(com)
         link2.setInertia(Inertia(0.1, np.eye(3)))
-        link2.setAxis(MotorGenerator([0.0, 0.0, 1.0, 0.0, 0.0, 0.0]))
+        link2.setAxis(MotorGenerator([1.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
 
         link3 = system.createLink("link3")
         link3.setMass(0.1)
         link3.setCenterOfMass(com)
         link3.setInertia(Inertia(0.1, np.eye(3)))
-        link3.setAxis(MotorGenerator([0.0, 0.0, 1.0, 0.0, 0.0, 0.0]))
+        link3.setAxis(MotorGenerator([1.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
 
         link4 = system.createLink("link4")
         link4.setMass(0.1)
         link4.setCenterOfMass(com)
         link4.setInertia(Inertia(0.1, np.eye(3)))
-        link4.setAxis(MotorGenerator([0.0, 0.0, 1.0, 0.0, 0.0, 0.0]))
+        link4.setAxis(MotorGenerator([1.0, 0.0, 0.0, 0.0, 0.0, 0.0]))
 
         # Create some joints
         t = Translator(TranslatorGenerator([0.0, 1.0, 0.0]))
 
         joint1 = system.createRevoluteJoint("joint1")
-        joint1.setAxis(RotorGenerator([0.0, 0.0, 1.0]))
+        joint1.setAxis(RotorGenerator([1.0, 0.0, 0.0]))
         joint1.setFrame(Motor(t))
 
         limits = Joint.Limits()
@@ -426,7 +426,7 @@ class TestManipulatorConfiguration2(unittest.TestCase):
         joint1.setLimits(limits)
 
         joint2 = system.createRevoluteJoint("joint2")
-        joint2.setAxis(RotorGenerator([0.0, 0.0, 1.0]))
+        joint2.setAxis(RotorGenerator([1.0, 0.0, 0.0]))
         joint2.setFrame(Motor(t))
 
         limits = Joint.Limits()

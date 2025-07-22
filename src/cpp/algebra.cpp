@@ -61,46 +61,46 @@ void init_algebra(py::module &m)
 
 
     // Point class
-    py::class_<Point, Multivector_e1e2e3eie0>(m, "Point")
+    py::class_<Point, Multivector_e0e1e2e3ei>(m, "Point")
         .def(py::init<>())
-        .def(py::init<const Multivector_e1e2e3eie0&>())
+        .def(py::init<const Multivector_e0e1e2e3ei&>())
         .def(py::init<const Point::Parameters&>())
         .def(py::init<const double&, const double&, const double&>());
 
 
     // Line class
-    py::class_<Line, Multivector_e12ie13ie23ie01ie02ie03i>(m, "Line")
-        .def(py::init<const Multivector_e12ie13ie23ie01ie02ie03i&>())
+    py::class_<Line, Multivector_e01ie02ie12ie03ie13ie23i>(m, "Line")
+        .def(py::init<const Multivector_e01ie02ie12ie03ie13ie23i&>())
         .def(py::init<const Point&, const Point&>());
 
 
     // PointPair class
-    py::class_<PointPair, Multivector_e23e13e12e1ie2ie3ie01e02e03e0i>(m, "PointPair")
+    py::class_<PointPair, Multivector_e01e02e12e03e13e23e0ie1ie2ie3i>(m, "PointPair")
         .def(py::init<>())
-        .def(py::init<const Multivector_e23e13e12e1ie2ie3ie01e02e03e0i&>())
+        .def(py::init<const Multivector_e01e02e12e03e13e23e0ie1ie2ie3i&>())
         .def(py::init<const Point&, const Point&>())
         .def("getPoint1", &PointPair::getPoint1)
         .def("getPoint2", &PointPair::getPoint2);
 
 
     // Plane class
-    py::class_<Plane, Multivector_e123ie012ie023ie013i>(m, "Plane")
-        .def(py::init<const Multivector_e123ie012ie023ie013i&>())
+    py::class_<Plane, Multivector_e012ie013ie023ie123i>(m, "Plane")
+        .def(py::init<const Multivector_e012ie013ie023ie123i&>())
         .def(py::init<const Point&, const Point&, const Point&>())
         .def("getNormal", &Plane::getNormal);
 
 
     // Circle class
-    py::class_<Circle, Multivector_e123e12ie13ie23ie012e013e023e01ie02ie03i>(m, "Circle")
-        .def(py::init<const Multivector_e123e12ie13ie23ie012e013e023e01ie02ie03i&>())
+    py::class_<Circle, Multivector_e012e013e023e123e01ie02ie12ie03ie13ie23i>(m, "Circle")
+        .def(py::init<const Multivector_e012e013e023e123e01ie02ie12ie03ie13ie23i&>())
         .def(py::init<const Point&, const Point&, const Point&>())
         .def("getCenter", &Circle::getCenter)
         .def("getPlane", &Circle::getPlane);
 
 
     // Sphere class
-    py::class_<Sphere, Multivector_e123ie0123e012ie023ie013i>(m, "Sphere")
-        .def(py::init<const Multivector_e123ie0123e012ie023ie013i&>())
+    py::class_<Sphere, Multivector_e0123e012ie013ie023ie123i>(m, "Sphere")
+        .def(py::init<const Multivector_e0123e012ie013ie023ie123i&>())
         .def(py::init<const Point&, const Point&, const Point&, const Point&>())
         .def(py::init<const Point&, const double&>())
         .def("getRadius", &Sphere::getRadius)
@@ -138,13 +138,13 @@ void init_algebra(py::module &m)
         .def(py::init<>())
         .def(py::init<const Translator::Generator&>())
         .def("log", &Translator::log)
-        .def_static("exp", &Translator::exp);
+        .def_static("exp", static_cast<Translator (*)(const Translator::Generator&)>(&Translator::exp));
 
 
     // Rotor::Generator class
-    py::class_<Rotor::Generator, Multivector_e23e13e12>(m, "RotorGenerator")
+    py::class_<Rotor::Generator, Multivector_e12e13e23>(m, "RotorGenerator")
         .def(py::init<>())
-        .def(py::init<const Multivector_e23e13e12&>())
+        .def(py::init<const Multivector_e12e13e23&>())
         .def(py::init<const Rotor::Generator::Parameters&>())
         .def("e23", &Rotor::Generator::e23)
         .def("e13", &Rotor::Generator::e13)
@@ -167,9 +167,9 @@ void init_algebra(py::module &m)
 
 
     // Motor::Generator
-    py::class_<Motor::Generator, Multivector_e23e13e12e1ie2ie3i>(m, "MotorGenerator")
+    py::class_<Motor::Generator, Multivector_e12e13e23e1ie2ie3i>(m, "MotorGenerator")
         .def(py::init<>())
-        .def(py::init<const Multivector_e23e13e12e1ie2ie3i&>())
+        .def(py::init<const Multivector_e12e13e23e1ie2ie3i&>())
         .def(py::init<const Motor::Generator::Parameters&>())
         .def(py::init<const Eigen::Matrix<double, 3, 1>&, const Eigen::Matrix<double, 3, 1>&>())
         .def("getRotorGenerator", &Motor::Generator::getRotorGenerator)
@@ -190,7 +190,8 @@ void init_algebra(py::module &m)
         .def("get_e12", &Motor::Logarithm::get<gafro::blades::e12>)
         .def("get_e1i", &Motor::Logarithm::get<gafro::blades::e1i>)
         .def("get_e2i", &Motor::Logarithm::get<gafro::blades::e2i>)
-        .def("get_e3i", &Motor::Logarithm::get<gafro::blades::e3i>);
+        .def("get_e3i", &Motor::Logarithm::get<gafro::blades::e3i>)
+        .def_static("jacobian", static_cast<Eigen::Matrix<double, 6, 8> (*)(const Motor&)>(&Motor::Logarithm::getJacobian));
 
 
     // Motor::Exponential

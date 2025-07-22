@@ -66,7 +66,7 @@ class TestMotorGenerator(unittest.TestCase):
         self.assertAlmostEqual(translatorGenerator2.z(), translatorGenerator1.z())
 
     def test_creationFromParameters(self):
-        generator = MotorGenerator([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        generator = MotorGenerator([3.0, 2.0, 1.0, 4.0, 5.0, 6.0])
 
         rotorGenerator = generator.getRotorGenerator()
         translatorGenerator = generator.getTranslatorGenerator()
@@ -80,7 +80,7 @@ class TestMotorGenerator(unittest.TestCase):
         self.assertAlmostEqual(translatorGenerator.z(), 6.0)
 
     def test_creationFromMatrices(self):
-        generator = MotorGenerator([1.0, 2.0, 3.0], [4.0, 5.0, 6.0])
+        generator = MotorGenerator([3.0, 2.0, 1.0], [4.0, 5.0, 6.0])
 
         rotorGenerator = generator.getRotorGenerator()
         translatorGenerator = generator.getTranslatorGenerator()

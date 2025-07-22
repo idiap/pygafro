@@ -74,10 +74,8 @@ namespace py = pybind11;
         output.write("}\n")
 
 
-multivectors = []
-multivectors.extend(helpers.blades)
-multivectors.extend(helpers.multivectors[: helpers.nb_base_multivectors])
-multivectors.append("".join(helpers.blades))
+multivectors = helpers.blades.copy()
+multivectors.extend(helpers.multivectors)
 
 all_permutations = list(itertools.product(multivectors, repeat=2))
 
@@ -132,7 +130,7 @@ generate_index_file(
 )
 
 
-if nb != 23:
+if nb != 24:
     print(
         "The number of generated product files has changed, update the 'scripts/CMakeLists.txt' file!"
     )

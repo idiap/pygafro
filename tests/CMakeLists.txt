@@ -8,7 +8,7 @@
 
 # Run the unit tests
 add_custom_target(run-unittests ALL
-                  PYTHONPATH=${CMAKE_BINARY_DIR}/src python3 main.py
+                  PYTHONPATH=${CMAKE_BINARY_DIR}/src ${_Python_EXECUTABLE} main.py
                   DEPENDS ${LIBRARY_NAME}
                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
                   COMMENT "Unit testing..." VERBATIM

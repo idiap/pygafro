@@ -19,7 +19,7 @@ from pygafro import SingleManipulatorMotorCost
 class TestSingleManipulatorMotorCost(unittest.TestCase):
 
     def setUp(self):
-        self.manipulator = helpers.createManipulatorWith3Joints()
+        self.manipulator = helpers.createManipulatorWith3JointsB()
 
         target_position = [0.0, math.pi / 2.0, 0.0]
         ee_target_motor = self.manipulator.getEEMotor(target_position)
@@ -40,9 +40,9 @@ class TestSingleManipulatorMotorCost(unittest.TestCase):
         self.assertAlmostEqual(error[0], 0.0)
         self.assertAlmostEqual(error[1], 0.0)
         self.assertAlmostEqual(error[2], -1.5708, places=4)
-        self.assertAlmostEqual(error[3], 1.0)
+        self.assertAlmostEqual(error[3], 0.0)
         self.assertAlmostEqual(error[4], -1.0)
-        self.assertAlmostEqual(error[5], 0.0)
+        self.assertAlmostEqual(error[5], -1.0)
 
     def testGetGradientAndHessian(self):
         gradient, hessian = self.cost_function.getGradientAndHessian([0.0, 0.0, 0.0])

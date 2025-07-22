@@ -44,15 +44,23 @@ pybind11_add_module(${LIBRARY_NAME}
 
     cpp/robots.cpp
     cpp/robots/types.h
+    cpp/robots/AnymalC.hpp
     cpp/robots/FixedJoint.hpp
     cpp/robots/FrankaEmikaRobot.hpp
+    cpp/robots/Hand.hpp
     cpp/robots/Joint.hpp
     cpp/robots/KinematicChain.hpp
+    cpp/robots/KukaIIWA7.hpp
+    cpp/robots/KukaIIWA14.hpp
+    cpp/robots/LeapHand.hpp
     cpp/robots/Link.hpp
     cpp/robots/Manipulator.hpp
+    cpp/robots/Planar3DoF.hpp
     cpp/robots/PrismaticJoint.hpp
+    cpp/robots/Quadruped.hpp
     cpp/robots/RevoluteJoint.hpp
     cpp/robots/System.hpp
+    cpp/robots/UFactoryLite6.hpp
     cpp/robots/UR5.hpp
 
     cpp/utils.h

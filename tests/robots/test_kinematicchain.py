@@ -42,7 +42,7 @@ class TestKinematicChainWithJoints(unittest.TestCase):
 
     def setUp(self):
         translator = Motor(Translator(TranslatorGenerator([0.0, 1.0, 0.0])))
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
 
         self.system = System()
 
@@ -238,7 +238,7 @@ class TestKinematicChainWithFixedMotors(unittest.TestCase):
 
     def setUp(self):
         translator = Motor(Translator(TranslatorGenerator([0.0, 1.0, 0.0])))
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
 
         self.system = System()
 
@@ -453,7 +453,7 @@ class TestConstKinematicChainWithJoints(unittest.TestCase):
 
     def setUp(self):
         translator = Motor(Translator(TranslatorGenerator([0.0, 1.0, 0.0])))
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
 
         self.system = System()
 
@@ -598,7 +598,7 @@ class TestConstKinematicChainWithFixedMotors(unittest.TestCase):
 
     def setUp(self):
         translator = Motor(Translator(TranslatorGenerator([0.0, 1.0, 0.0])))
-        generator = RotorGenerator([0.0, 0.0, 1.0])
+        generator = RotorGenerator([1.0, 0.0, 0.0])
 
         self.system = System()
 

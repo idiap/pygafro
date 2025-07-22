@@ -9,6 +9,7 @@
 import numpy as np
 
 from ._pygafro import Motor
+from ._pygafro import MotorLogarithm
 
 
 class SingleManipulatorMotorCost:
@@ -37,9 +38,9 @@ class SingleManipulatorMotorCost:
             pass
 
         error = self.getError(x)
-        jacobian_log = Motor(
+        jacobian_log = MotorLogarithm.jacobian(Motor(
             self.target.reverse() * self.arm.getEEMotor(x)
-        ).logJacobian()
+        ))
         jacobian_ee = self.arm.getEEAnalyticJacobian(x)
 
         embedded = np.ndarray((jacobian_log.shape[1], self.arm.dof))

@@ -52,6 +52,10 @@ def generate_multivector_class(
         data, "BEGIN_DUAL_METHOD", "END_DUAL_METHOD", include_dual_method
     )
 
+    data = helpers.process_section(
+        data, "BEGIN_DOUBLE_CONSTRUCTOR", "END_DOUBLE_CONSTRUCTOR", len(blades) == 1
+    )
+
     return data
 
 
@@ -209,7 +213,7 @@ with open(os.path.join(sys.argv[1], "mv_combinations.py"), "w") as output:
     output.write("combinations = " + json.dumps(helpers.multivectors, indent=4))
 
 
-if nb != 25:
+if nb != 17:
     print(
         "The number of generated 'multivector' files has changed, update the 'scripts/CMakeLists.txt' file!"
     )

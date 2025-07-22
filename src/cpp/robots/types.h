@@ -15,14 +15,21 @@
 #include "RevoluteJoint.hpp"
 #include "PrismaticJoint.hpp"
 #include "FixedJoint.hpp"
+#include "Hand.hpp"
 #include "KinematicChain.hpp"
 #include "Manipulator.hpp"
+#include "Quadruped.hpp"
+#include "AnymalC.hpp"
 #include "FrankaEmikaRobot.hpp"
+#include "KukaIIWA7.hpp"
+#include "KukaIIWA14.hpp"
+#include "LeapHand.hpp"
+#include "Planar3DoF.hpp"
+#include "UFactoryLite6.hpp"
 #include "UR5.hpp"
 
-#include <gafro_robot_descriptions/AnymalC.hpp>
 #include <gafro_robot_descriptions/Atlas.hpp>
-#include <gafro_robot_descriptions/LeapHand.hpp>
+#include <gafro_robot_descriptions/UnitreeG1.hpp>
 
 
 typedef pygafro::Link<double> pyLink;
@@ -34,8 +41,13 @@ typedef pygafro::FixedJoint<double> pyFixedJoint;
 typedef pygafro::KinematicChain<double> pyKinematicChain;
 typedef gafro::System<double> System;
 
-typedef pygafro::FrankaEmikaRobot<double> FrankaEmikaRobot;
-typedef pygafro::UR5<double> UR5;
-typedef gafro::AnymalC<double> AnymalC;
+typedef pygafro::AnymalC<double> AnymalC;
 typedef gafro::Atlas<double> Atlas;
-typedef gafro::LeapHand<double> LeapHand;
+typedef pygafro::FrankaEmikaRobot<double> FrankaEmikaRobot;
+typedef pygafro::KukaIIWA7<double> KukaIIWA7;
+typedef pygafro::KukaIIWA14<double> KukaIIWA14;
+typedef pygafro::LeapHand<double> LeapHand;
+typedef pygafro::Planar3DoF<double> Planar3DoF;
+typedef pygafro::UFactoryLite6<double> UFactoryLite6;
+typedef gafro::UnitreeG1<double> UnitreeG1;
+typedef pygafro::UR5<double> UR5;

@@ -59,7 +59,7 @@ class TestPoint(unittest.TestCase):
         self.assertAlmostEqual(point["e0"], 1.0)
 
     def test_creationFromNumpyArray(self):
-        point = Point(np.array([1.0, 2.0, 3.0, 7.0, 1.0]))
+        point = Point(np.array([1.0, 1.0, 2.0, 3.0, 7.0]))
 
         self.assertAlmostEqual(point["e1"], 1.0)
         self.assertAlmostEqual(point["e2"], 2.0)
@@ -68,7 +68,7 @@ class TestPoint(unittest.TestCase):
         self.assertAlmostEqual(point["e0"], 1.0)
 
     def test_creationFromArray(self):
-        point = Point([1.0, 2.0, 3.0, 7.0, 1.0])
+        point = Point([1.0, 1.0, 2.0, 3.0, 7.0])
 
         self.assertAlmostEqual(point["e1"], 1.0)
         self.assertAlmostEqual(point["e2"], 2.0)

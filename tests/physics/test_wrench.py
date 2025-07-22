@@ -44,7 +44,7 @@ class TestWrenchCreation(unittest.TestCase):
         self.assertAlmostEqual(mv["e03"], 0.0)
 
     def test_fromParameters(self):
-        wrench = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        wrench = Wrench(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
 
         self.assertAlmostEqual(wrench["e23"], 1.0)
         self.assertAlmostEqual(wrench["e13"], 2.0)
@@ -64,16 +64,26 @@ class TestWrenchCreation(unittest.TestCase):
         self.assertAlmostEqual(mv["e02"], 5.0)
         self.assertAlmostEqual(mv["e03"], 6.0)
 
+    def test_fromArray(self):
+        wrench = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+
+        self.assertAlmostEqual(wrench["e01"], 1.0)
+        self.assertAlmostEqual(wrench["e02"], 2.0)
+        self.assertAlmostEqual(wrench["e12"], 3.0)
+        self.assertAlmostEqual(wrench["e03"], 4.0)
+        self.assertAlmostEqual(wrench["e13"], 5.0)
+        self.assertAlmostEqual(wrench["e23"], 6.0)
+
     def test_fromWrench(self):
         wrench1 = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
         wrench2 = Wrench(wrench1)
 
-        self.assertAlmostEqual(wrench2["e23"], 1.0)
-        self.assertAlmostEqual(wrench2["e13"], 2.0)
+        self.assertAlmostEqual(wrench2["e01"], 1.0)
+        self.assertAlmostEqual(wrench2["e02"], 2.0)
         self.assertAlmostEqual(wrench2["e12"], 3.0)
-        self.assertAlmostEqual(wrench2["e01"], 4.0)
-        self.assertAlmostEqual(wrench2["e02"], 5.0)
-        self.assertAlmostEqual(wrench2["e03"], 6.0)
+        self.assertAlmostEqual(wrench2["e03"], 4.0)
+        self.assertAlmostEqual(wrench2["e13"], 5.0)
+        self.assertAlmostEqual(wrench2["e23"], 6.0)
 
     def test_fromMultivector(self):
         mv = Multivector.create(
@@ -93,7 +103,7 @@ class TestWrenchTransformByMotor(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.wrench = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+        cls.wrench = Wrench(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
 
     def test_default(self):
         motor = Motor()
@@ -125,7 +135,7 @@ class TestWrenchTransformByMotor(unittest.TestCase):
         self.assertAlmostEqual(wrench["e03"], 6.0)
 
     def test_withRotation(self):
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor)
 
         wrench = self.wrench.transform(motor)
@@ -141,7 +151,7 @@ class TestWrenchTransformByMotor(unittest.TestCase):
 
     def test_withTranslationAndRotation(self):
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(translator, rotor)
 
         wrench = self.wrench.transform(motor)
@@ -159,8 +169,8 @@ class TestWrenchTransformByMotor(unittest.TestCase):
 class TestWrenchOperations(unittest.TestCase):
 
     def test_addition(self):
-        wrench = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
-        wrench2 = Wrench([10.0, 20.0, 30.0, 40.0, 50.0, 60.0])
+        wrench = Wrench(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
+        wrench2 = Wrench(10.0, 20.0, 30.0, 40.0, 50.0, 60.0)
 
         wrench += wrench2
 
@@ -171,9 +181,9 @@ class TestWrenchOperations(unittest.TestCase):
         self.assertAlmostEqual(wrench["e02"], 55.0)
         self.assertAlmostEqual(wrench["e03"], 66.0)
 
-    def test_isubstration(self):
-        wrench = Wrench([10.0, 20.0, 30.0, 40.0, 50.0, 60.0])
-        wrench2 = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+    def test_isubstraction(self):
+        wrench = Wrench(10.0, 20.0, 30.0, 40.0, 50.0, 60.0)
+        wrench2 = Wrench(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
 
         wrench -= wrench2
 
@@ -184,9 +194,9 @@ class TestWrenchOperations(unittest.TestCase):
         self.assertAlmostEqual(wrench["e02"], 45.0)
         self.assertAlmostEqual(wrench["e03"], 54.0)
 
-    def test_substration(self):
-        wrench1 = Wrench([10.0, 20.0, 30.0, 40.0, 50.0, 60.0])
-        wrench2 = Wrench([1.0, 2.0, 3.0, 4.0, 5.0, 6.0])
+    def test_substraction(self):
+        wrench1 = Wrench(10.0, 20.0, 30.0, 40.0, 50.0, 60.0)
+        wrench2 = Wrench(1.0, 2.0, 3.0, 4.0, 5.0, 6.0)
 
         wrench = wrench1 - wrench2
 

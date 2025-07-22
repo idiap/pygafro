@@ -24,7 +24,7 @@ class TestFrankaEmikaRobot(unittest.TestCase):
         config = robot.getRandomConfiguration()
 
         self.assertTrue(isinstance(config, np.ndarray))
-        self.assertAlmostEqual(config.shape, (7,))
+        self.assertEqual(config.shape, (7,))
 
     def test_setJointLimits_getMin(self):
         robot = FrankaEmikaRobot()

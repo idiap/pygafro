@@ -20,10 +20,10 @@ class TestAnymalC(unittest.TestCase):
     def testRandomConfiguration(self):
         robot = AnymalC()
 
-        config = robot.getRandomConfiguration()
+        config = robot.getSystem().getRandomConfiguration()
 
         self.assertTrue(isinstance(config, np.ndarray))
-        self.assertAlmostEqual(config.shape, (12,))
+        self.assertEqual(config.shape, (12,))
 
 
 if __name__ == "__main__":

@@ -19,8 +19,8 @@ if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 
 
-set(Python3_FIND_STRATEGY "LOCATION")
-find_package(Python3 REQUIRED COMPONENTS Interpreter Development ${_pybind11_quiet})
+set(PYBIND11_FINDPYTHON TRUE)
+set(Python_ARTIFACTS_INTERACTIVE TRUE)
 
 set(PACKAGE_NAME "pygafro")
 set(LIBRARY_NAME "_${PACKAGE_NAME}")

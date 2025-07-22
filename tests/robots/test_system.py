@@ -59,7 +59,7 @@ class TestSystem(unittest.TestCase):
 
         # Create some joints
         joint1 = self.system.createRevoluteJoint("joint1")
-        joint1.setAxis(RotorGenerator([0.0, 0.0, 1.0]))
+        joint1.setAxis(RotorGenerator([1.0, 0.0, 0.0]))
         joint1.setFrame(Motor(Translator(TranslatorGenerator([0.0, 1.0, 0.0]))))
 
         limits = Joint.Limits()
@@ -71,7 +71,7 @@ class TestSystem(unittest.TestCase):
         joint1.setLimits(limits)
 
         joint2 = self.system.createRevoluteJoint("joint2")
-        joint2.setAxis(RotorGenerator([0.0, 0.0, 1.0]))
+        joint2.setAxis(RotorGenerator([1.0, 0.0, 0.0]))
         joint2.setFrame(Motor(Translator(TranslatorGenerator([0.0, 1.0, 0.0]))))
 
         limits = Joint.Limits()
@@ -348,7 +348,7 @@ class TestSystemDynamics(unittest.TestCase):
         t = Translator(TranslatorGenerator([0.0, 1.0, 0.0]))
 
         joint1 = self.system.createRevoluteJoint("joint1")
-        joint1.setAxis(RotorGenerator([0.0, 0.0, 1.0]))
+        joint1.setAxis(RotorGenerator([1.0, 0.0, 0.0]))
         joint1.setFrame(Motor(t))
 
         limits = Joint.Limits()
@@ -360,7 +360,7 @@ class TestSystemDynamics(unittest.TestCase):
         joint1.setLimits(limits)
 
         joint2 = self.system.createRevoluteJoint("joint2")
-        joint2.setAxis(RotorGenerator([0.0, 0.0, 1.0]))
+        joint2.setAxis(RotorGenerator([1.0, 0.0, 0.0]))
         joint2.setFrame(Motor(t))
 
         limits = Joint.Limits()
@@ -372,7 +372,7 @@ class TestSystemDynamics(unittest.TestCase):
         joint2.setLimits(limits)
 
         joint3 = self.system.createRevoluteJoint("joint3")
-        joint3.setAxis(RotorGenerator([0.0, 0.0, 1.0]))
+        joint3.setAxis(RotorGenerator([1.0, 0.0, 0.0]))
         joint3.setFrame(Motor(t))
 
         limits = Joint.Limits()
@@ -596,7 +596,7 @@ class TestSystemWithFixedJoints(unittest.TestCase):
         fixed_joint6.setFrame(Motor(tx))
 
         # Create the revolute joints
-        axis = RotorGenerator([0.0, 0.0, 1.0])
+        axis = RotorGenerator([1.0, 0.0, 0.0])
 
         joint2 = self.system.createRevoluteJoint("joint2")
         joint2.setAxis(axis)
@@ -887,7 +887,7 @@ class TestSystemWith7Joints(unittest.TestCase):
         # Create the revolute joints
         tx = Translator(TranslatorGenerator([1.0, 0.0, 0.0]))
         ty = Translator(TranslatorGenerator([0.0, 1.0, 0.0]))
-        axis = RotorGenerator([0.0, 0.0, 1.0])
+        axis = RotorGenerator([1.0, 0.0, 0.0])
 
         joint1 = self.system.createRevoluteJoint("joint1")
         joint1.setAxis(axis)

@@ -72,7 +72,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         joint = system.createRevoluteJoint("joint")
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, .0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         joint.setFrame(motor)
@@ -136,7 +136,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         system = System()
         joint = system.createRevoluteJoint("joint")
 
-        generator = RotorGenerator([1.0, 2.0, 3.0])
+        generator = RotorGenerator([3.0, 2.0, 1.0])
         joint.setAxis(generator)
 
         axis = joint.getAxis()
@@ -165,7 +165,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         system = System()
         joint = system.createRevoluteJoint("joint")
 
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         joint.setAxis(generator)
 
         rotor = joint.getRotor(math.pi / 2.0)
@@ -205,7 +205,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         system = System()
         joint = system.createRevoluteJoint("joint")
 
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         joint.setAxis(generator)
 
         motor = joint.getMotor(math.pi / 2.0)
@@ -254,7 +254,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         system = System()
         joint = system.createRevoluteJoint("joint")
 
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         joint.setAxis(generator)
 
         motor = joint.getMotorDerivative(math.pi / 2.0)
@@ -281,7 +281,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         joint = system.createRevoluteJoint("joint")
 
         translator2 = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor2 = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor2 = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         frame = Motor(rotor2, translator2)
 
         joint.setFrame(frame)
@@ -309,11 +309,11 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         system = System()
         joint = system.createRevoluteJoint("joint")
 
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         joint.setAxis(generator)
 
         translator2 = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor2 = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor2 = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         frame = Motor(rotor2, translator2)
 
         joint.setFrame(frame)
@@ -364,7 +364,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         joint = system.createRevoluteJoint("joint")
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         axis = joint.getCurrentAxis(motor)
@@ -387,7 +387,7 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         system = System()
         joint = system.createRevoluteJoint("joint")
 
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         joint.setAxis(generator)
 
         motor = Motor()
@@ -412,11 +412,11 @@ class TestDefaultRevoluteJoint(unittest.TestCase):
         system = System()
         joint = system.createRevoluteJoint("joint")
 
-        generator = RotorGenerator([1.0, 0.0, 0.0])
+        generator = RotorGenerator([0.0, 0.0, 1.0])
         joint.setAxis(generator)
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         axis = joint.getCurrentAxis(motor)
@@ -489,7 +489,7 @@ class TestRevoluteJointWith6ParametersFirstConfiguration(unittest.TestCase):
     def test_defaults(self):
         system = System()
         joint = system.createRevoluteJoint(
-            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], 1
+            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], 1
         )
 
         self.assertTrue(joint.getName() == "joint")
@@ -501,7 +501,7 @@ class TestRevoluteJointWith6ParametersFirstConfiguration(unittest.TestCase):
     def test_hasDefaultFrame(self):
         system = System()
         joint = system.createRevoluteJoint(
-            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], 1
+            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], 1
         )
 
         frame = joint.getFrame()
@@ -585,7 +585,7 @@ class TestRevoluteJointWith6ParametersThirdConfiguration(unittest.TestCase):
     def test_hasDefaultFrame(self):
         system = System()
         joint = system.createRevoluteJoint(
-            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], -3
+            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], -3
         )
 
         frame = joint.getFrame()
@@ -610,7 +610,7 @@ class TestRevoluteJointWith6ParametersThirdConfiguration(unittest.TestCase):
     def test_hasDefaultAxis(self):
         system = System()
         joint = system.createRevoluteJoint(
-            "joint", [1.0, 2.0, 3.0, 0.0, 0.0, math.pi / 2.0], -3
+            "joint", [1.0, 2.0, 3.0, math.pi / 2.0, 0.0, 0.0], -3
         )
 
         axis = joint.getAxis()

@@ -42,13 +42,13 @@ class TestRotorGenerator(unittest.TestCase):
     def test_creationFromParameters(self):
         generator = RotorGenerator([1.0, 2.0, 3.0])
 
-        self.assertAlmostEqual(generator.e23(), 1.0)
+        self.assertAlmostEqual(generator.e12(), 1.0)
         self.assertAlmostEqual(generator.e13(), 2.0)
-        self.assertAlmostEqual(generator.e12(), 3.0)
+        self.assertAlmostEqual(generator.e23(), 3.0)
 
-        self.assertAlmostEqual(generator.e23(), generator["e23"])
-        self.assertAlmostEqual(generator.e13(), generator["e13"])
         self.assertAlmostEqual(generator.e12(), generator["e12"])
+        self.assertAlmostEqual(generator.e13(), generator["e13"])
+        self.assertAlmostEqual(generator.e23(), generator["e23"])
 
 
 if __name__ == "__main__":

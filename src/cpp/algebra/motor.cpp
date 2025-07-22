@@ -18,20 +18,20 @@ namespace py = pybind11;
 #include "motor_utils.hpp"
 
 
-void init_motor_apply_methods(py::class_<gafro::Motor<double>, Multivector_scalare23e13e12e1ie2ie3ie123i> &);
+void init_motor_apply_methods(py::class_<gafro::Motor<double>, Multivector_scalare12e13e23e1ie2ie3ie123i> &);
 
 
 void init_motor(py::module &m)
 {
     #include "algebra/types.h"
 
-    py::class_<Motor, Multivector_scalare23e13e12e1ie2ie3ie123i> motor(m, "Motor");
+    py::class_<Motor, Multivector_scalare12e13e23e1ie2ie3ie123i> motor(m, "Motor");
 
     motor.def(py::init<>())
          .def(py::init<const Motor&>())
          .def(py::init<const Motor::Generator&>())
          .def(py::init<const Motor::Parameters&>())
-         .def(py::init<const Multivector_scalare23e13e12e1ie2ie3ie123i&>())
+         .def(py::init<const Multivector_scalare12e13e23e1ie2ie3ie123i&>())
          .def(py::init<const Translator&>())
          .def(py::init<const Translator&, const Rotor&>())
          .def(py::init<const Rotor&, const Translator&>())
@@ -39,7 +39,6 @@ void init_motor(py::module &m)
          .def("getRotor", &Motor::getRotor)
          .def("getTranslator", &Motor::getTranslator)
          .def("log", &Motor::log)
-         .def("logJacobian", &Motor::logJacobian)
          .def_static("Unit", &Motor::Unit)
          .def_static("Random", &Motor::Random)
          .def_static("exp", &Motor::exp)

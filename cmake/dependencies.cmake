@@ -32,7 +32,7 @@ set(GAFRO_PATCH git apply ${CMAKE_CURRENT_SOURCE_DIR}/cmake/patches/gafro.patch)
 FetchContent_Declare(
     gafro
     GIT_REPOSITORY https://github.com/idiap/gafro.git
-    GIT_TAG "031f4e7bb1c3b82bfbcf87116ee01be1768b204b"
+    GIT_TAG "f6a64023b3cc10437f16aa4da48cd410befa46b3"
     PATCH_COMMAND ${GAFRO_PATCH}
     UPDATE_DISCONNECTED 1
 )
@@ -47,7 +47,7 @@ set(GAFRO_ROBOT_DESCRIPTION_PATCH git apply ${CMAKE_CURRENT_SOURCE_DIR}/cmake/pa
 FetchContent_Declare(
     gafro_robot_descriptions
     GIT_REPOSITORY https://github.com/idiap/gafro_robot_descriptions.git
-    GIT_TAG "344735443a5e40fc76e3814a3f933e93c1c2752e"
+    GIT_TAG "1444fca9fc8a04103b52e26ca8f4a2512d0d2299"
     PATCH_COMMAND ${GAFRO_ROBOT_DESCRIPTION_PATCH}
     UPDATE_DISCONNECTED 1
 )

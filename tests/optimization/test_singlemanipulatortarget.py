@@ -21,7 +21,7 @@ from pygafro import Sphere
 class TestSingleManipulatorTargetPointToolPointTarget(unittest.TestCase):
 
     def setUp(self):
-        self.manipulator = helpers.createManipulatorWith3Joints()
+        self.manipulator = helpers.createManipulatorWith3JointsB()
 
         target_position = [0.0, math.pi / 2.0, 0.0]
         ee_target_point = self.manipulator.getEEMotor(target_position).apply(Point())
@@ -52,30 +52,30 @@ class TestSingleManipulatorTargetPointToolPointTarget(unittest.TestCase):
         self.assertEqual(error.shape, (10,))
 
         self.assertAlmostEqual(error[0], 0.0)
-        self.assertAlmostEqual(error[1], 0.0)
-        self.assertAlmostEqual(error[2], -3.0)
-        self.assertAlmostEqual(error[3], -4.5)
-        self.assertAlmostEqual(error[4], 1.5)
-        self.assertAlmostEqual(error[5], 0.0)
-        self.assertAlmostEqual(error[6], 1.0)
-        self.assertAlmostEqual(error[7], 1.0)
-        self.assertAlmostEqual(error[8], 0.0)
-        self.assertAlmostEqual(error[9], 2.0)
+        self.assertAlmostEqual(error[1], 1.0)
+        self.assertAlmostEqual(error[2], 0.0)
+        self.assertAlmostEqual(error[3], -1.0)
+        self.assertAlmostEqual(error[4], 0.0)
+        self.assertAlmostEqual(error[5], -3.0)
+        self.assertAlmostEqual(error[6], 2.0)
+        self.assertAlmostEqual(error[7], 0.0)
+        self.assertAlmostEqual(error[8], 1.5)
+        self.assertAlmostEqual(error[9], 4.5)
 
         error = self.cost_function.getError([0.0, math.pi / 4.0, 0.0])
 
         self.assertEqual(error.shape, (10,))
 
         self.assertAlmostEqual(error[0], 0.0)
-        self.assertAlmostEqual(error[1], 0.0)
-        self.assertAlmostEqual(error[2], -1.29289, places=5)
-        self.assertAlmostEqual(error[3], -2.14645, places=5)
-        self.assertAlmostEqual(error[4], 1.06066, places=5)
-        self.assertAlmostEqual(error[5], 0.0)
-        self.assertAlmostEqual(error[6], 0.292893, places=5)
-        self.assertAlmostEqual(error[7], 0.707107, places=5)
-        self.assertAlmostEqual(error[8], 0.0)
-        self.assertAlmostEqual(error[9], 1.41421, places=5)
+        self.assertAlmostEqual(error[1], 0.707107, places=5)
+        self.assertAlmostEqual(error[2], 0)
+        self.assertAlmostEqual(error[3], -0.292893, places=5)
+        self.assertAlmostEqual(error[4], 0.0)
+        self.assertAlmostEqual(error[5], -1.29289, places=5)
+        self.assertAlmostEqual(error[6], 1.41421, places=5)
+        self.assertAlmostEqual(error[7], 0.0)
+        self.assertAlmostEqual(error[8], 1.06066, places=5)
+        self.assertAlmostEqual(error[9], 2.14645, places=5)
 
         error = self.cost_function.getError([0.0, math.pi / 2.0, 0.0])
 
@@ -99,25 +99,25 @@ class TestSingleManipulatorTargetPointToolPointTarget(unittest.TestCase):
 
         self.assertAlmostEqual(jacobian[0, 0], 0.0)
         self.assertAlmostEqual(jacobian[1, 0], 0.0)
-        self.assertAlmostEqual(jacobian[2, 0], 8.0)
-        self.assertAlmostEqual(jacobian[3, 0], 10.0)
+        self.assertAlmostEqual(jacobian[2, 0], 0.0)
+        self.assertAlmostEqual(jacobian[3, 0], 4.0)
         self.assertAlmostEqual(jacobian[4, 0], 0.0)
-        self.assertAlmostEqual(jacobian[5, 0], 0.0)
-        self.assertAlmostEqual(jacobian[6, 0], -4.0)
+        self.assertAlmostEqual(jacobian[5, 0], 8.0)
+        self.assertAlmostEqual(jacobian[6, 0], 0.0)
         self.assertAlmostEqual(jacobian[7, 0], 0.0)
         self.assertAlmostEqual(jacobian[8, 0], 0.0)
-        self.assertAlmostEqual(jacobian[9, 0], 0.0)
+        self.assertAlmostEqual(jacobian[9, 0], -10.0)
 
         self.assertAlmostEqual(jacobian[0, 1], 0.0)
         self.assertAlmostEqual(jacobian[1, 1], 0.0)
-        self.assertAlmostEqual(jacobian[2, 1], 4.0)
-        self.assertAlmostEqual(jacobian[3, 1], 5.0)
+        self.assertAlmostEqual(jacobian[2, 1], 0.0)
+        self.assertAlmostEqual(jacobian[3, 1], 2.0)
         self.assertAlmostEqual(jacobian[4, 1], 0.0)
-        self.assertAlmostEqual(jacobian[5, 1], 0.0)
-        self.assertAlmostEqual(jacobian[6, 1], -2.0)
+        self.assertAlmostEqual(jacobian[5, 1], 4.0)
+        self.assertAlmostEqual(jacobian[6, 1], 0.0)
         self.assertAlmostEqual(jacobian[7, 1], 0.0)
         self.assertAlmostEqual(jacobian[8, 1], 0.0)
-        self.assertAlmostEqual(jacobian[9, 1], 0.0)
+        self.assertAlmostEqual(jacobian[9, 1], -5.0)
 
         self.assertAlmostEqual(jacobian[0, 2], 0.0)
         self.assertAlmostEqual(jacobian[1, 2], 0.0)
@@ -165,7 +165,7 @@ class TestSingleManipulatorTargetPointToolPointTarget(unittest.TestCase):
 class TestSingleManipulatorTargetPointToolSphereTarget(unittest.TestCase):
 
     def setUp(self):
-        self.manipulator = helpers.createManipulatorWith3Joints()
+        self.manipulator = helpers.createManipulatorWith3JointsB()
 
         target_position = [0.0, math.pi / 2.0, 0.0]
         ee_target_sphere = self.manipulator.getEEMotor(target_position).apply(

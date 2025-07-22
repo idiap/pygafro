@@ -1,6 +1,8 @@
 py::class_<MULTIVECTOR_CLASS_NAME>(m, "MULTIVECTOR_CLASS_NAME")
     .def(py::init<>())
-    .def(py::init<const int&>())
+BEGIN_DOUBLE_CONSTRUCTOR
+    .def(py::init<const double&>())
+END_DOUBLE_CONSTRUCTOR
     .def(py::init<const MULTIVECTOR_CLASS_NAME::Parameters&>())
     .def(py::init<const MULTIVECTOR_CLASS_NAME&>())
 

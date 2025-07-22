@@ -163,6 +163,60 @@ namespace pygafro
             return jacobian;
         }
 
+        std::vector<typename gafro::Motor<T>::Generator> computeKinematicChainGeometricJacobianTimeDerivative(
+            const std::vector<T> &position, const std::vector<T> &velocity, const gafro::Motor<T> &reference
+        ) const
+        {
+            std::vector<typename gafro::Motor<T>::Generator> jacobian = computeGeometricJacobian(position);
+            std::vector<typename gafro::Motor<T>::Generator> jacobian_time_derivative(position.size(), typename gafro::Motor<T>::Generator());
+
+            typename gafro::Motor<T>::Generator twist;
+
+            gafro::Motor<T> reversed_motor = reference.reverse();
+
+            for (int i = position.size() - 1; i > -1; --i)
+            {
+                twist = twist + gafro::Scalar<T>(velocity[i]) * jacobian[i];
+
+                typename gafro::Motor<T>::Generator b1 = jacobian[i];
+                // typename gafro::Motor<T>::Generator b2 = twist;
+
+                jacobian_time_derivative[i] = reversed_motor.apply((b1.commute(twist)).evaluate());
+            }
+
+            return jacobian_time_derivative;
+        }
+
+        Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> computeMassMatrix(const std::vector<T> &position) const
+        {
+            const int dof = position.size();
+
+            Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic> mass_matrix = Eigen::Matrix<T, Eigen::Dynamic, Eigen::Dynamic>::Zero(dof, dof);
+
+            std::vector<typename gafro::Motor<T>::Generator> gj = computeGeometricJacobian(position);
+
+            gafro::Motor<T> m;
+            const auto& actuated_joints = chain->getActuatedJoints();
+            const auto& bodies = chain->getBodies();
+
+            for (int j = 0; j < dof; ++j)
+            {
+                m *= actuated_joints[j]->getMotor(position[j]);
+
+                gafro::Inertia<T> inertia = bodies[j]->getInertia().transform(m * bodies[j]->getCenterOfMass());
+
+                for (int k = 0; k < j + 1; ++k)
+                {
+                    for (int l = 0; l < j + 1; ++l)
+                    {
+                        mass_matrix.coeffRef(k, l) += -(inertia(gj[l]) | gj[k]).template get<gafro::blades::scalar>();
+                    }
+                }
+            }
+
+            return mass_matrix;
+        }
+
         void finalize()
         {
             chain->finalize();

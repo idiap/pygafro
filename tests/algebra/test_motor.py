@@ -16,6 +16,7 @@ import numpy as np
 from pygafro import Line
 from pygafro import Motor
 from pygafro import MotorGenerator
+from pygafro import MotorLogarithm
 from pygafro import Multivector
 from pygafro import Plane
 from pygafro import Point
@@ -59,7 +60,7 @@ class TestDefaultMotor(unittest.TestCase):
         self.assertAlmostEqual(log.get_e3i(), 0.0)
 
     def test_logJacobian(self):
-        jacobian = self.motor.logJacobian()
+        jacobian = MotorLogarithm.jacobian(self.motor)
 
         self.assertTrue(isinstance(jacobian, np.ndarray))
         self.assertEqual(jacobian.shape, (6, 8))
@@ -228,7 +229,7 @@ class TestMotorWithTranslation(unittest.TestCase):
         self.assertAlmostEqual(log.get_e3i(), 1.0)
 
     def test_logJacobian(self):
-        jacobian = self.motor.logJacobian()
+        jacobian = MotorLogarithm.jacobian(self.motor)
 
         self.assertTrue(isinstance(jacobian, np.ndarray))
         self.assertEqual(jacobian.shape, (6, 8))
@@ -270,9 +271,9 @@ class TestMotorWithTranslation(unittest.TestCase):
         self.assertAlmostEqual(jacobian[3, 7], 0.0)
 
         self.assertAlmostEqual(jacobian[4, 0], 0.0)
-        self.assertAlmostEqual(jacobian[4, 1], 1.0)
+        self.assertAlmostEqual(jacobian[4, 1], 0.0)
         self.assertAlmostEqual(jacobian[4, 2], 0.0)
-        self.assertAlmostEqual(jacobian[4, 3], 0.0)
+        self.assertAlmostEqual(jacobian[4, 3], 1.0)
         self.assertAlmostEqual(jacobian[4, 4], 0.0)
         self.assertAlmostEqual(jacobian[4, 5], -2.0)
         self.assertAlmostEqual(jacobian[4, 6], 0.0)
@@ -367,7 +368,7 @@ class TestMotorWithRotation(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        cls.rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         cls.motor = Motor(cls.rotor)
 
     def test_rotor(self):
@@ -397,12 +398,12 @@ class TestMotorWithRotation(unittest.TestCase):
         self.assertAlmostEqual(log.get_e3i(), 0.0)
 
     def test_logJacobian(self):
-        jacobian = self.motor.logJacobian()
+        jacobian = MotorLogarithm.jacobian(self.motor)
 
         self.assertTrue(isinstance(jacobian, np.ndarray))
         self.assertEqual(jacobian.shape, (6, 8))
 
-        self.assertAlmostEqual(jacobian[0, 0], 0.0)
+        self.assertAlmostEqual(jacobian[0, 0], -0.606986, places=5)
         self.assertAlmostEqual(jacobian[0, 1], -2.22144, places=5)
         self.assertAlmostEqual(jacobian[0, 2], 0.0)
         self.assertAlmostEqual(jacobian[0, 3], 0.0)
@@ -420,7 +421,7 @@ class TestMotorWithRotation(unittest.TestCase):
         self.assertAlmostEqual(jacobian[1, 6], 0.0)
         self.assertAlmostEqual(jacobian[1, 7], 0.0)
 
-        self.assertAlmostEqual(jacobian[2, 0], -0.606986, places=5)
+        self.assertAlmostEqual(jacobian[2, 0], 0.0)
         self.assertAlmostEqual(jacobian[2, 1], 0.0)
         self.assertAlmostEqual(jacobian[2, 2], 0.0)
         self.assertAlmostEqual(jacobian[2, 3], -2.22144, places=5)
@@ -537,7 +538,7 @@ class TestMotorWithTranslationAndRotation(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        cls.rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        cls.rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         cls.motor = Motor(cls.translator, cls.rotor)
 
     def test_rotor(self):
@@ -567,12 +568,12 @@ class TestMotorWithTranslationAndRotation(unittest.TestCase):
         self.assertAlmostEqual(log.get_e3i(), 1.0)
 
     def test_logJacobian(self):
-        jacobian = self.motor.logJacobian()
+        jacobian = MotorLogarithm.jacobian(self.motor)
 
         self.assertTrue(isinstance(jacobian, np.ndarray))
         self.assertEqual(jacobian.shape, (6, 8))
 
-        self.assertAlmostEqual(jacobian[0, 0], 0.0)
+        self.assertAlmostEqual(jacobian[0, 0], -0.606986, places=5)
         self.assertAlmostEqual(jacobian[0, 1], -2.22144, places=5)
         self.assertAlmostEqual(jacobian[0, 2], 0.0)
         self.assertAlmostEqual(jacobian[0, 3], 0.0)
@@ -590,7 +591,7 @@ class TestMotorWithTranslationAndRotation(unittest.TestCase):
         self.assertAlmostEqual(jacobian[1, 6], 0.0)
         self.assertAlmostEqual(jacobian[1, 7], 0.0)
 
-        self.assertAlmostEqual(jacobian[2, 0], -0.606986, places=5)
+        self.assertAlmostEqual(jacobian[2, 0], 0.0)
         self.assertAlmostEqual(jacobian[2, 1], 0.0)
         self.assertAlmostEqual(jacobian[2, 2], 0.0)
         self.assertAlmostEqual(jacobian[2, 3], -2.22144, places=5)
@@ -600,27 +601,27 @@ class TestMotorWithTranslationAndRotation(unittest.TestCase):
         self.assertAlmostEqual(jacobian[2, 7], 0.0)
 
         self.assertAlmostEqual(jacobian[3, 0], 0.0)
-        self.assertAlmostEqual(jacobian[3, 1], -0.707107, places=5)
+        self.assertAlmostEqual(jacobian[3, 1], 0.0)
         self.assertAlmostEqual(jacobian[3, 2], 0.707107, places=5)
-        self.assertAlmostEqual(jacobian[3, 3], 0.0)
+        self.assertAlmostEqual(jacobian[3, 3], -0.707107, places=5)
         self.assertAlmostEqual(jacobian[3, 4], -1.41421, places=5)
         self.assertAlmostEqual(jacobian[3, 5], 1.41421, places=5)
         self.assertAlmostEqual(jacobian[3, 6], 0.0)
         self.assertAlmostEqual(jacobian[3, 7], 0.0)
 
         self.assertAlmostEqual(jacobian[4, 0], 0.0)
-        self.assertAlmostEqual(jacobian[4, 1], 0.707107, places=5)
+        self.assertAlmostEqual(jacobian[4, 1], 0.0)
         self.assertAlmostEqual(jacobian[4, 2], 0.707107, places=5)
-        self.assertAlmostEqual(jacobian[4, 3], 0.0)
+        self.assertAlmostEqual(jacobian[4, 3], 0.707107, places=5)
         self.assertAlmostEqual(jacobian[4, 4], -1.41421, places=5)
         self.assertAlmostEqual(jacobian[4, 5], -1.41421, places=5)
         self.assertAlmostEqual(jacobian[4, 6], 0.0)
         self.assertAlmostEqual(jacobian[4, 7], 0.0)
 
         self.assertAlmostEqual(jacobian[5, 0], 0.707107, places=5)
-        self.assertAlmostEqual(jacobian[5, 1], 0.0)
+        self.assertAlmostEqual(jacobian[5, 1], -0.707107, places=5)
         self.assertAlmostEqual(jacobian[5, 2], 0.0)
-        self.assertAlmostEqual(jacobian[5, 3], -0.707107, places=5)
+        self.assertAlmostEqual(jacobian[5, 3], 0.0)
         self.assertAlmostEqual(jacobian[5, 4], 0.0)
         self.assertAlmostEqual(jacobian[5, 5], 0.0)
         self.assertAlmostEqual(jacobian[5, 6], -1.41421, places=5)
@@ -707,7 +708,7 @@ class TestMotorWithRotationAndTranslation(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        cls.rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        cls.rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         cls.motor = Motor(cls.rotor, cls.translator)
 
     def test_rotor(self):
@@ -746,7 +747,7 @@ class TestMotor(unittest.TestCase):
         self.assertAlmostEqual(motor["e123i"], 8.0)
 
     def test_creationFromGenerator(self):
-        generator = MotorGenerator([math.pi / 2.0, 0.0, 0.0, 1.0, 2.0, 3.0])
+        generator = MotorGenerator([0.0, 0.0 ,math.pi / 2.0, 1.0, 2.0, 3.0])
         motor = Motor(generator)
 
         rotor = motor.getRotor()
@@ -764,7 +765,7 @@ class TestMotor(unittest.TestCase):
         self.assertAlmostEqual(translator["e3i"], -1.5)
 
     def test_creationFromMotor(self):
-        generator = MotorGenerator([math.pi / 2.0, 0.0, 0.0, 1.0, 2.0, 3.0])
+        generator = MotorGenerator([0.0, 0.0, math.pi / 2.0, 1.0, 2.0, 3.0])
         motor1 = Motor(generator)
         motor2 = Motor(motor1)
 
@@ -806,7 +807,7 @@ class TestMotor(unittest.TestCase):
         self.assertAlmostEqual(translator["e3i"], 0.0)
 
     def test_exponential(self):
-        generator = MotorGenerator([math.pi / 2.0, 0.0, 0.0, 1.0, 2.0, 3.0])
+        generator = MotorGenerator([0.0, 0.0, math.pi / 2.0, 1.0, 2.0, 3.0])
 
         exp = Motor.exp(generator)
 
@@ -826,7 +827,7 @@ class TestMotorsCombination(unittest.TestCase):
     def setUpClass(cls):
         cls.xTranslator = Translator(TranslatorGenerator([1.0, 0.0, 0.0]))
         cls.yTranslator = Translator(TranslatorGenerator([0.0, 1.0, 0.0]))
-        cls.rotor = Rotor([0.7071067812, -0.7071067812, 0.0, 0.0])
+        cls.rotor = Rotor([0.7071067812, 0.0, 0.0, -0.7071067812])
 
     def test_twoTranslations(self):
         motor = Motor(self.xTranslator)

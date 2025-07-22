@@ -23,7 +23,7 @@ class TestAtlas(unittest.TestCase):
         config = robot.getRandomConfiguration()
 
         self.assertTrue(isinstance(config, np.ndarray))
-        self.assertAlmostEqual(config.shape, (30,))
+        self.assertEqual(config.shape, (30,))
 
 
 if __name__ == "__main__":

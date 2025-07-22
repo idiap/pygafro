@@ -60,7 +60,7 @@ class TestDefaultFixedJoint(unittest.TestCase):
         joint = system.createFixedJoint("joint")
 
         translator = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         motor = Motor(rotor, translator)
 
         joint.setFrame(motor)
@@ -171,7 +171,7 @@ class TestDefaultFixedJoint(unittest.TestCase):
         joint = system.createFixedJoint("joint")
 
         translator2 = Translator(TranslatorGenerator([0.0, 0.0, 1.0]))
-        rotor2 = Rotor(RotorGenerator([0.0, 0.0, 1.0]), math.pi / 2.0)
+        rotor2 = Rotor(RotorGenerator([1.0, 0.0, 0.0]), math.pi / 2.0)
         frame = Motor(rotor2, translator2)
 
         joint.setFrame(frame)

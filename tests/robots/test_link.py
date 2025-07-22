@@ -106,11 +106,11 @@ class TestDefaultLink(unittest.TestCase):
         self.assertTrue(isinstance(tensor, np.ndarray))
         self.assertTrue(tensor.shape == (6, 6))
 
-        self.assertAlmostEqual(tensor[0, 0], 1.0)
+        self.assertAlmostEqual(tensor[0, 0], 10.0)
         self.assertAlmostEqual(tensor[0, 1], 0.0)
         self.assertAlmostEqual(tensor[0, 2], 0.0)
         self.assertAlmostEqual(tensor[1, 0], 0.0)
-        self.assertAlmostEqual(tensor[1, 1], 1.0)
+        self.assertAlmostEqual(tensor[1, 1], 10.0)
         self.assertAlmostEqual(tensor[1, 2], 0.0)
         self.assertAlmostEqual(tensor[2, 0], 0.0)
         self.assertAlmostEqual(tensor[2, 1], 0.0)
@@ -120,11 +120,11 @@ class TestDefaultLink(unittest.TestCase):
         self.assertAlmostEqual(tensor[3, 4], 0.0)
         self.assertAlmostEqual(tensor[3, 5], 0.0)
         self.assertAlmostEqual(tensor[4, 3], 0.0)
-        self.assertAlmostEqual(tensor[4, 4], 10.0)
+        self.assertAlmostEqual(tensor[4, 4], 1.0)
         self.assertAlmostEqual(tensor[4, 5], 0.0)
         self.assertAlmostEqual(tensor[5, 3], 0.0)
         self.assertAlmostEqual(tensor[5, 4], 0.0)
-        self.assertAlmostEqual(tensor[5, 5], 10.0)
+        self.assertAlmostEqual(tensor[5, 5], 1.0)
 
         for i in range(3):
             for j in range(3, 6):

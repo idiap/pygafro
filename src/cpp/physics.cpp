@@ -40,36 +40,42 @@ void init_physics(py::module &m)
         .def_static("Zero", &Inertia::Zero)
         .def("__iadd__", &Inertia::operator+=, py::is_operator())
         .def("__add__", &Inertia::operator+, py::is_operator())
-        .def("__call__", &Inertia::operator(), py::is_operator());
+        .def("__call__", py::overload_cast<const Twist&>(&Inertia::operator(), py::const_), py::is_operator())
+        .def("__call__", py::overload_cast<const Wrench&>(&Inertia::operator(), py::const_), py::is_operator());
 
 
     // Twist class
-    py::class_<Twist, Multivector_e23e13e12e1ie2ie3i>(m, "Twist")
+    py::class_<Twist, Multivector_e12e13e23e1ie2ie3i>(m, "Twist")
         .def(py::init<>())
-        .def(py::init<const Multivector_e23e13e12e1ie2ie3i&>())
-        .def(py::init<const Multivector_e23e13e12e1ie2ie3i::Parameters&>())
+        .def(py::init<const Multivector_e12e13e23e1ie2ie3i&>())
+        .def(py::init<const Multivector_e12e13e23e1ie2ie3i::Parameters&>())
         .def("multivector", [](Twist &self) {
-            return Multivector_e23e13e12e1ie2ie3i(self.multivector());
+            return Multivector_e12e13e23e1ie2ie3i(self.multivector());
         })
         .def("getAngular", &Twist::getAngular)
         .def("getLinear", &Twist::getLinear)
         .def("transform", &Twist::transform)
-        .def("commute", &Twist::commute)
+        .def("commute", [](Twist &a, const Wrench &b) {
+            return a.commute(b).evaluate();
+        })
+        .def("anticommute", [](Twist &a, const Wrench &b) {
+            return a.anticommute(b).evaluate();
+        })
         .def("__iadd__", [](Twist &a, const Twist &b) {
             return a += b;
         }, py::is_operator());
 
 
     // Wrench class
-    py::class_<Wrench, Multivector_e23e13e12e01e02e03>(m, "Wrench")
+    py::class_<Wrench, Multivector_e01e02e12e03e13e23>(m, "Wrench")
         .def(py::init<>())
-        .def(py::init<const Multivector_e23e13e12e01e02e03&>())
-        .def(py::init<const Multivector_e23e13e12e01e02e03::Parameters&>())
+        .def(py::init<const Multivector_e01e02e12e03e13e23&>())
+        .def(py::init<const Multivector_e01e02e12e03e13e23::Parameters&>())
+        .def(py::init<const double&, const double&, const double&, const double&, const double&, const double&>())
         .def("multivector", [](Wrench &self) {
-            return Multivector_e23e13e12e01e02e03(self.multivector());
+            return Multivector_e01e02e12e03e13e23(self.multivector());
         })
         .def("transform", &Wrench::transform)
-        // .def("commute", &Twist::commute)
         .def("__iadd__", [](Wrench &a, const Wrench &b) {
             return a += b;
         }, py::is_operator())
