@@ -3,7 +3,7 @@
 #
 # SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
 #
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: MPL-2.0
 #
 
 from ._pygafro import *  # noqa: we need to discover at runtime which Manipulator classes were compiled

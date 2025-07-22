@@ -1,8 +1,0 @@
-Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: pygafro
-Upstream-Contact: Philip Abbet philip.abbet@idiap.ch
-Source: https://github.com/idiap/pygafro
-
-Files: colcon.pkg
-Copyright: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
-License: GPL-3.0-only

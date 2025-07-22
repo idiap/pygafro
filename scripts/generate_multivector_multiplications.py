@@ -5,7 +5,7 @@
 #
 # SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
 #
-# SPDX-License-Identifier: GPL-3.0-only
+# SPDX-License-Identifier: MPL-2.0
 #
 
 import itertools
