@@ -93,6 +93,8 @@ jobs:
 
     - name: Install (and compile) it
       run: |
+        export CC=/usr/bin/clang
+        export CXX=/usr/bin/clang++
         python3 -m venv /tmp/venv
         source /tmp/venv/bin/activate
         pip install dist/pygafro-${{ steps.strings.outputs.package_version }}.tar.gz

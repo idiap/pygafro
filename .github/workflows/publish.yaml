@@ -62,7 +62,10 @@ jobs:
         pip install twine build
 
     - name: Build the package
-      run: python3 -m build
+      run: |
+        export CC=/usr/bin/clang
+        export CXX=/usr/bin/clang++
+        python3 -m build
 
     - name: Upload to PyPI
       run: twine upload dist/pygafro-*.whl
