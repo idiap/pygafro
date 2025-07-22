@@ -18,11 +18,15 @@ geometric algebra operations.
 
 Please visit https://gitlab.com/gafro in order to find the entire *gafro* software stack.
 
-## Installation using pip
+## Installation using pip (pre-compiled binaries)
 
-Requirements:
+	pip install pygafro
 
-* ```Eigen 3.4+```
+Wheels for Linux (x64_86) and MacOS (arm64) are available (for Python 3.8 to 3.13).
+
+For other platforms, *pygafro* is compiled from sources.
+
+## Installation using pip (compilation from sources)
 
 Due to the template-based nature of *gafro* (see **Differences between *gafro* and *pygafro***
 below), the compilation of pygafro can take a long time. Additionally, **using ```clang```
@@ -49,11 +53,10 @@ Add PyGafro in your colcon workspace and build it with:
 
 ## Installation from source
 
-(works either in a conda or virtual environment)
+(works either in a **conda** or **virtual environment**)
 
 Requirements:
 
-* ```Eigen 3.4+```
 * ```numpy```
 
 Due to the template-based nature of *gafro* (see **Differences between *gafro* and *pygafro***
