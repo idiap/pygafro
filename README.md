@@ -22,7 +22,7 @@ Please visit https://gitlab.com/gafro in order to find the entire *gafro* softwa
 
 	pip install pygafro
 
-Wheels for Linux (x64_86) and MacOS (arm64) are available (for Python 3.8 to 3.13).
+Wheels for Linux (x64_86 & arm64) and MacOS (arm64) are available (for Python 3.8 to 3.13).
 
 For other platforms, *pygafro* is compiled from sources.
 

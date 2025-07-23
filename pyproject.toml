@@ -15,7 +15,7 @@ build-backend = "scikit_build_core.build"
 
 [project]
 name = "pygafro"
-version = "1.1.0"
+version = "1.1.1"
 description="Geometric algebra tools targeted towards robotics applications"
 readme = "README.md"
 authors = [
@@ -50,6 +50,7 @@ sdist.exclude = [
   ".git",
   ".pre-commit-config.yaml",
 ]
+cmake.define = {"COMPILING_FROM_PIP"=1}
 
 
 [tool.isort]

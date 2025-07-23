@@ -8,12 +8,12 @@ SPDX-License-Identifier: MPL-2.0
 
 <package format="2">
   <name>pygafro</name>
-  <version>1.0.2</version>
+  <version>1.1.1</version>
   <description>pygafro package</description>
   <maintainer email="philip.abbet@idiap.ch">Philip Abbet</maintainer>
   <author email="philip.abbet@idiap.ch">Philip Abbet</author>
 
-  <license>GPLv3</license>
+  <license>MPL 2.0</license>
 
   <buildtool_depend>ament_cmake_python</buildtool_depend>
 
