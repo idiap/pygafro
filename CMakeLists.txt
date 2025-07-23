@@ -25,8 +25,13 @@ find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module ${_pybin
 
 set(PACKAGE_NAME "pygafro")
 set(LIBRARY_NAME "_${PACKAGE_NAME}")
-SET(PYTHON_MODULE_EXTENSION ".so")
-set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${Python3_SITEARCH}")
+set(PYTHON_MODULE_EXTENSION ".so")
+
+if (DEFINED COMPILING_FROM_PIP)
+  set(PYTHON_SITE_PACKAGES_INSTALL_DIR "")
+else()
+  set(PYTHON_SITE_PACKAGES_INSTALL_DIR "${Python3_SITEARCH}/")
+endif()
 
 
 if(DEFINED ENV{USE_COLCON})
@@ -47,7 +52,9 @@ if(DEFINED ENV{USE_COLCON})
   file(WRITE ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/python_path.dsv "prepend-non-duplicate;PYTHONPATH;${PYTHON_SITE_PACKAGES_REL_INSTALL_DIR}")
   install(FILES ${CMAKE_CURRENT_BINARY_DIR}/share/${PROJECT_NAME}/hook/python_path.dsv DESTINATION share/${PROJECT_NAME}/hook)
 else()
+  if (PYTHON_SITE_PACKAGES_INSTALL_DIR STREQUAL "")
     message(STATUS "Python package will be installed in: ${PYTHON_SITE_PACKAGES_INSTALL_DIR}")
+  endif()
 endif()
 
 

@@ -8,10 +8,14 @@
 name: Build
 run-name: Build and test of commit "${{ github.event.head_commit.message }}"
 
+# on:
+#   push:
+#     branches:
+#       - "*"
+
 on:
-  push:
-    branches:
-      - "*"
+  release:
+    types: [published]
 
 jobs:
   build-using-cmake:
