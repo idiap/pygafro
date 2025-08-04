@@ -62,7 +62,8 @@ class TestDefaultLink(unittest.TestCase):
         self.assertAlmostEqual(translatorGenerator.y(), 0.0)
         self.assertAlmostEqual(translatorGenerator.z(), 0.0)
 
-        # self.assertTrue(link.getVisual() is None)
+        self.assertFalse(link.hasVisual())
+        self.assertTrue(link.getVisual() is None)
 
     def test_mass(self):
         system = System()

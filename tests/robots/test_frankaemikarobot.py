@@ -14,6 +14,7 @@ import numpy as np
 
 from pygafro import FrankaEmikaRobot
 from pygafro import Point
+from pygafro import visual as Visual
 
 
 class TestFrankaEmikaRobot(unittest.TestCase):
@@ -282,6 +283,19 @@ class TestFrankaEmikaRobot(unittest.TestCase):
             self.assertAlmostEqual(acceleration[4], acceleration_computed[4])
             self.assertAlmostEqual(acceleration[5], acceleration_computed[5])
             self.assertAlmostEqual(acceleration[6], acceleration_computed[6])
+
+    def testVisual(self):
+        robot = FrankaEmikaRobot()
+        link = robot.getLink('panda_link6')
+
+        self.assertTrue(link.hasVisual())
+
+        visual = link.getVisual()
+
+        self.assertTrue(visual is not None)
+        self.assertTrue(isinstance(visual, Visual.Mesh))
+        self.assertEqual(visual.getType(), Visual.MESH)
+
 
 
 if __name__ == "__main__":

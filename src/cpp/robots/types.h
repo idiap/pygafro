@@ -30,6 +30,7 @@
 
 #include <gafro_robot_descriptions/Atlas.hpp>
 #include <gafro_robot_descriptions/UnitreeG1.hpp>
+#include <gafro_robot_descriptions/serialization/Visual.hpp>
 
 
 typedef pygafro::Link<double> pyLink;
@@ -40,6 +41,11 @@ typedef pygafro::PrismaticJoint<double> pyPrismaticJoint;
 typedef pygafro::FixedJoint<double> pyFixedJoint;
 typedef pygafro::KinematicChain<double> pyKinematicChain;
 typedef gafro::System<double> System;
+typedef gafro::visual::Visual Visual;
+typedef gafro::visual::Sphere VisualSphere;
+typedef gafro::visual::Mesh VisualMesh;
+typedef gafro::visual::Cylinder VisualCylinder;
+typedef gafro::visual::Box VisualBox;
 
 typedef pygafro::AnymalC<double> AnymalC;
 typedef gafro::Atlas<double> Atlas;

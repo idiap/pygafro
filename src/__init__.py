@@ -7,6 +7,7 @@
 #
 
 from ._pygafro import *  # noqa: we want to import all exported symbols from the shared library
+from ._pygafro import visual as visual  # noqa
 from .manipulator import createManipulator  # noqa
 from .multivector import Multivector  # noqa
 from .singlemanipulatordualtarget import SingleManipulatorDualTarget  # noqa

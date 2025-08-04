@@ -61,8 +61,8 @@ void init_robots(py::module &m)
         .def("getParentJoint", &pyLink::getParentJoint)
         .def("getChildJoints", &pyLink::getChildJoints)
         .def("getAxis", &pyLink::getAxis)
-        // .def("getVisual", &Link::getVisual)
-        ;
+        .def("hasVisual", &pyLink::hasVisual)
+        .def("getVisual", &pyLink::getVisual);
 
 
     // Joint class
@@ -234,4 +234,37 @@ void init_robots(py::module &m)
     // UR5 class
     py::class_<UR5, Manipulator_6>(m, "UR5")
         .def(py::init());
+
+
+    // Visual module
+    py::module m_visual = m.def_submodule("visual");
+
+    py::class_<Visual> visual(m_visual, "Visual");
+    visual.def("getType", &Visual::getType)
+          .def("getTransform", &Visual::getTransform);
+
+    py::enum_<Visual::Type>(m_visual, "Type")
+        .value("SPHERE", Visual::Type::SPHERE)
+        .value("MESH", Visual::Type::MESH)
+        .value("CYLINDER", Visual::Type::CYLINDER)
+        .value("BOX", Visual::Type::BOX)
+        .export_values();
+
+    py::class_<VisualSphere, Visual>(m_visual, "Sphere")
+        .def("getRadius", &VisualSphere::getRadius);
+
+    py::class_<VisualMesh, Visual>(m_visual, "Mesh")
+        .def("getFilename", &VisualMesh::getFilename)
+        .def("getScaleX", &VisualMesh::getScaleX)
+        .def("getScaleY", &VisualMesh::getScaleY)
+        .def("getScaleZ", &VisualMesh::getScaleZ);
+
+    py::class_<VisualCylinder, Visual>(m_visual, "Cylinder")
+        .def("getLength", &VisualCylinder::getLength)
+        .def("getRadius", &VisualCylinder::getRadius);
+
+    py::class_<VisualBox, Visual>(m_visual, "Box")
+        .def("getDimX", &VisualBox::getDimX)
+        .def("getDimY", &VisualBox::getDimY)
+        .def("getDimZ", &VisualBox::getDimZ);
 }

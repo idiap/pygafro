@@ -13,6 +13,7 @@
 #include "RevoluteJoint.hpp"
 #include "FixedJoint.hpp"
 #include "Link.hpp"
+#include <gafro_robot_descriptions/serialization/Visual.hpp>
 
 namespace pygafro
 {
@@ -142,6 +143,21 @@ namespace pygafro
         {
             return link;
         }
+
+        inline bool hasVisual() const
+        {
+            return link->hasVisual();
+        }
+
+        std::unique_ptr<gafro::LinkVisual> getVisual() const
+        {
+            auto v = link->getVisual();
+            if (v)
+                return v->copy();
+
+            return nullptr;
+        }
+
 
       private:
         gafro::System<T>* system;
