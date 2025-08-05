@@ -19,7 +19,7 @@ using namespace gafro;
 
 void init_multivectors(py::module &);
 void init_algebra(py::module &);
-// void init_optimization(py::module &);
+void init_singlemanipulatortargets(py::module &);
 void init_physics(py::module &);
 void init_robots(py::module &);
 void init_geometric_products(py::module &);
@@ -74,7 +74,6 @@ PYBIND11_MODULE(_pygafro, m) {
     // Bindings of each sections
     init_multivectors(m);
     init_algebra(m);
-    // init_optimization(m);
     init_physics(m);
     init_robots(m);
 
@@ -85,4 +84,5 @@ PYBIND11_MODULE(_pygafro, m) {
     init_geometric_products(m_internals);
     init_inner_products(m_internals);
     init_outer_products(m_internals);
+    init_singlemanipulatortargets(m_internals);
 }

@@ -343,6 +343,90 @@ add_custom_target(generate_hands DEPENDS ${HANDS_SRCS})
 add_dependencies(generate_hands make_generated_directory)
 
 
+# SingleManipulatorTargets
+set(SINGLEMANIPULATORTARGETS_SRCS
+    ${OUTPUT_DIR}/singlemanipulatortargets.h
+    ${OUTPUT_DIR}/singlemanipulatortargets.cpp
+
+    ${OUTPUT_DIR}/singlemanipulatortargets_0.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_1.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_2.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_3.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_4.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_5.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_6.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_7.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_8.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_9.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_10.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_11.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_12.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_13.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_14.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_15.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_16.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_17.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_18.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_19.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_20.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_21.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_22.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_23.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_24.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_25.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_26.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_27.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_28.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_29.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_30.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_31.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_32.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_33.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_34.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_35.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_36.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_37.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_38.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_39.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_40.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_41.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_42.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_43.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_44.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_45.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_46.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_47.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_48.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_49.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_50.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_51.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_52.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_53.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_54.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_55.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_56.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_57.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_58.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_59.cpp
+    ${OUTPUT_DIR}/singlemanipulatortargets_60.cpp
+
+    CACHE INTERNAL "SINGLEMANIPULATORTARGETS_SRCS"
+)
+
+add_custom_command(
+    OUTPUT ${SINGLEMANIPULATORTARGETS_SRCS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_singlemanipulatortargets.py ${OUTPUT_DIR}
+    DEPENDS generate_singlemanipulatortargets.py helpers.py templates/singlemanipulatortargets.h
+            templates/singlemanipulatortargets.hpp templates/singlemanipulatortargets_functions.hpp
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generation of the SingleManipulatorTarget bindings"
+    VERBATIM
+)
+
+add_custom_target(generate_singlemanipulatortargets DEPENDS ${SINGLEMANIPULATORTARGETS_SRCS})
+add_dependencies(generate_singlemanipulatortargets make_generated_directory)
+
+
 add_custom_target(generate_bindings)
 add_dependencies(generate_bindings
     generate_geometric_product_caley_table
@@ -355,4 +439,5 @@ add_dependencies(generate_bindings
     generate_multivector_multiplications
     generate_outer_product_caley_table
     generate_rotor_apply_methods
+    generate_singlemanipulatortargets
 )

@@ -27,6 +27,77 @@ set(PYTHON_SRCS
 )
 
 
+set(PRECOMPILED_HEADERS
+    cpp/algebra/types.h
+    cpp/physics_types.h
+    cpp/robots/types.h
+    ${GENERATED_DIR}/manipulators.h
+    ${GENERATED_DIR}/multivectors.h
+)
+
+
+set(INCLUDE_DIRS
+    ${CMAKE_BINARY_DIR}/generated
+    ${FETCHCONTENT_BASE_DIR}/gafro-src/src
+    ${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src
+    ${FETCHCONTENT_BASE_DIR}/eigen3-src/
+    cpp
+)
+
+
+get_source_file_property(IS_GENERATED ${GENERATED_DIR}/motor_apply_methods.cpp GENERATED)
+if(NOT IS_GENERATED)
+    set_source_files_properties(${MANIPULATORS_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${MOTOR_APPLY_METHODS_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${MULTIVECTOR_PRODUCTS_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${MULTIVECTOR_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${ROTOR_APPLY_METHODS_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${SINGLEMANIPULATORTARGETS_SRCS} PROPERTIES GENERATED TRUE)
+endif()
+
+
+if (CMAKE_CXX_COMPILER_ID MATCHES "(C|c?)lang")
+    add_compile_options("-Wall" "-Wno-unused-local-typedef" "-Wno-unused-command-line-argument")
+elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    add_compile_options("-Wall" "-Wno-unused-local-typedefs" "-Wno-class-memaccess")
+endif()
+
+add_compile_options("-Wno-unused-but-set-variable")
+
+set_source_files_properties(cpp/robots.cpp PROPERTIES COMPILE_FLAGS "-Wno-array-bounds")
+
+
+###########################################################
+# Build a static library with the optimization classes
+add_library(pygafro-optimization STATIC ${SINGLEMANIPULATORTARGETS_SRCS})
+
+target_include_directories(pygafro-optimization
+    PRIVATE
+        ${INCLUDE_DIRS}
+        ${PYBIND11_INCLUDE_DIR}
+        ${PYTHON_INCLUDE_DIRS}
+
+    PUBLIC
+        ${yaml-cpp_SOURCE_DIR}
+        ${yaml-cpp_BINARY_DIR}
+)
+
+target_link_libraries(pygafro-optimization
+    PRIVATE
+        gafro
+        yaml-cpp::yaml-cpp
+)
+
+target_precompile_headers(pygafro-optimization
+    PRIVATE
+        ${PRECOMPILED_HEADERS}
+        ${GENERATED_DIR}/singlemanipulatortargets.h
+)
+
+add_dependencies(pygafro-optimization generate_bindings)
+
+
+###########################################################
 # Build the module
 pybind11_add_module(${LIBRARY_NAME}
     cpp/algebra.cpp
@@ -80,40 +151,12 @@ pybind11_add_module(${LIBRARY_NAME}
 
 target_precompile_headers(${LIBRARY_NAME}
     PRIVATE
-        cpp/algebra/types.h
-        cpp/physics_types.h
-        cpp/robots/types.h
-        ${GENERATED_DIR}/manipulators.h
-        ${GENERATED_DIR}/multivectors.h
+        ${PRECOMPILED_HEADERS}
 )
 
-
-get_source_file_property(IS_GENERATED ${GENERATED_DIR}/motor_apply_methods.cpp GENERATED)
-if(NOT IS_GENERATED)
-    set_source_files_properties(${MANIPULATORS_SRCS} PROPERTIES GENERATED TRUE)
-    set_source_files_properties(${MOTOR_APPLY_METHODS_SRCS} PROPERTIES GENERATED TRUE)
-    set_source_files_properties(${MULTIVECTOR_PRODUCTS_SRCS} PROPERTIES GENERATED TRUE)
-    set_source_files_properties(${MULTIVECTOR_SRCS} PROPERTIES GENERATED TRUE)
-    set_source_files_properties(${ROTOR_APPLY_METHODS_SRCS} PROPERTIES GENERATED TRUE)
-endif()
-
-
-if (CMAKE_CXX_COMPILER_ID MATCHES "(C|c?)lang")
-    target_compile_options(${LIBRARY_NAME} PUBLIC "-Wall" "-Wno-unused-local-typedef" "-Wno-unused-command-line-argument")
-elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-    target_compile_options(${LIBRARY_NAME} PUBLIC "-Wall" "-Wno-unused-local-typedefs" "-Wno-class-memaccess")
-endif()
-
-set_source_files_properties(cpp/robots.cpp PROPERTIES COMPILE_FLAGS "-Wno-array-bounds")
-
-message(STATUS ${gafro_USE_YAML_CPP})
 target_include_directories(${LIBRARY_NAME}
     PRIVATE
-        ${CMAKE_BINARY_DIR}/generated
-        ${FETCHCONTENT_BASE_DIR}/gafro-src/src
-        ${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src
-        ${FETCHCONTENT_BASE_DIR}/eigen3-src/
-        cpp
+        ${INCLUDE_DIRS}
 
     PUBLIC
         ${yaml-cpp_SOURCE_DIR}
@@ -124,6 +167,7 @@ target_link_libraries(${LIBRARY_NAME}
     PRIVATE
         gafro
         yaml-cpp::yaml-cpp
+        pygafro-optimization
 )
 
 add_dependencies(${LIBRARY_NAME} generate_bindings)
@@ -132,6 +176,8 @@ set_target_properties(${LIBRARY_NAME}
                       PROPERTIES LIBRARY_OUTPUT_DIRECTORY "${DEST_DIR}"
 )
 
+
+###########################################################
 
 add_custom_target(copy-python-files ALL
                   ${CMAKE_COMMAND} -E copy ${PYTHON_SRCS} ${DEST_DIR}/
