@@ -20,7 +20,7 @@ set(PYTHON_SRCS
     singlemanipulatordualtarget.py
     singlemanipulatormotorcost.py
     utils.py
-    ${CMAKE_BINARY_DIR}/generated/mv_combinations.py
+    ${CMAKE_BINARY_DIR}/generated/algebra/mv_combinations.py
     ${CMAKE_BINARY_DIR}/generated/geometricproductcayleytable.py
     ${CMAKE_BINARY_DIR}/generated/innerproductcayleytable.py
     ${CMAKE_BINARY_DIR}/generated/outerproductcayleytable.py
@@ -31,13 +31,15 @@ set(PRECOMPILED_HEADERS
     cpp/algebra/types.h
     cpp/physics_types.h
     cpp/robots/types.h
-    ${GENERATED_DIR}/manipulators.h
-    ${GENERATED_DIR}/multivectors.h
+    ${GENERATED_DIR}/algebra/multivectors.h
 )
 
 
 set(INCLUDE_DIRS
     ${CMAKE_BINARY_DIR}/generated
+    ${CMAKE_BINARY_DIR}/generated/algebra
+    ${CMAKE_BINARY_DIR}/generated/optimization
+    ${CMAKE_BINARY_DIR}/generated/robots
     ${FETCHCONTENT_BASE_DIR}/gafro-src/src
     ${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src
     ${FETCHCONTENT_BASE_DIR}/eigen3-src/
@@ -97,30 +99,18 @@ target_link_libraries(pygafro-optimization
 target_precompile_headers(pygafro-optimization
     PRIVATE
         ${PRECOMPILED_HEADERS}
-        ${GENERATED_DIR}/singlemanipulatortargets.h
-        ${GENERATED_DIR}/singlemanipulatormotorcosts.h
-        ${GENERATED_DIR}/singlemanipulatordualtargets.h
+        ${GENERATED_DIR}/robots/manipulators.h
+        ${GENERATED_DIR}/optimization/singlemanipulatortargets.h
+        ${GENERATED_DIR}/optimization/singlemanipulatormotorcosts.h
+        ${GENERATED_DIR}/optimization/singlemanipulatordualtargets.h
 )
 
 add_dependencies(pygafro-optimization generate_bindings)
 
 
 ###########################################################
-# Build the module
-pybind11_add_module(${LIBRARY_NAME}
-    cpp/algebra.cpp
-    cpp/algebra/motor.cpp
-    cpp/algebra/motor_utils.hpp
-    cpp/algebra/multivector_utils.hpp
-    cpp/algebra/products_utils.hpp
-    cpp/algebra/rotor.cpp
-    cpp/algebra/rotor_utils.hpp
-    cpp/algebra/types.h
-
-    cpp/bindings.cpp
-    cpp/physics.cpp
-    cpp/physics_types.h
-
+# Build a static library with the robot classes
+add_library(pygafro-robots STATIC
     cpp/robots.cpp
     cpp/robots/types.h
     cpp/robots/AnymalC.hpp
@@ -142,10 +132,54 @@ pybind11_add_module(${LIBRARY_NAME}
     cpp/robots/UFactoryLite6.hpp
     cpp/robots/UR5.hpp
 
+    ${MANIPULATORS_SRCS}
+)
+
+target_include_directories(pygafro-robots
+    PRIVATE
+        ${INCLUDE_DIRS}
+        ${PYBIND11_INCLUDE_DIR}
+        ${PYTHON_INCLUDE_DIRS}
+
+    PUBLIC
+        ${yaml-cpp_SOURCE_DIR}
+        ${yaml-cpp_BINARY_DIR}
+)
+
+target_link_libraries(pygafro-robots
+    PRIVATE
+        gafro
+        yaml-cpp::yaml-cpp
+)
+
+target_precompile_headers(pygafro-robots
+    PRIVATE
+        ${PRECOMPILED_HEADERS}
+        ${GENERATED_DIR}/robots/manipulators.h
+)
+
+add_dependencies(pygafro-robots generate_bindings)
+
+
+###########################################################
+# Build the module
+pybind11_add_module(${LIBRARY_NAME}
+    cpp/algebra.cpp
+    cpp/algebra/motor.cpp
+    cpp/algebra/motor_utils.hpp
+    cpp/algebra/multivector_utils.hpp
+    cpp/algebra/products_utils.hpp
+    cpp/algebra/rotor.cpp
+    cpp/algebra/rotor_utils.hpp
+    cpp/algebra/types.h
+
+    cpp/bindings.cpp
+    cpp/physics.cpp
+    cpp/physics_types.h
+
     cpp/utils.h
     cpp/utils.cpp
 
-    ${MANIPULATORS_SRCS}
     ${MOTOR_APPLY_METHODS_SRCS}
     ${MULTIVECTOR_PRODUCTS_SRCS}
     ${MULTIVECTOR_SRCS}
@@ -176,6 +210,7 @@ target_link_libraries(${LIBRARY_NAME}
         gafro
         yaml-cpp::yaml-cpp
         pygafro-optimization
+        pygafro-robots
 )
 
 add_dependencies(${LIBRARY_NAME} generate_bindings)

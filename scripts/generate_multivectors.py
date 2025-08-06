@@ -113,7 +113,7 @@ namespace py = pybind11;
 """
         )
 
-        for i in range(0, count, N):
+        for i in range(0, count):
             output.write(f"void {function_name}_{i}(py::module &);\n")
 
         output.write("\n\n")
@@ -121,7 +121,7 @@ namespace py = pybind11;
         output.write(f"void {function_name}(py::module &m)\n")
         output.write("{\n")
 
-        for i in range(0, count, N):
+        for i in range(0, count):
             output.write(f"    {function_name}_{i}(m);\n")
 
         output.write("}\n")
@@ -195,8 +195,8 @@ template = helpers.load_template("multivectors.hpp")
 nb = 0
 for i in range(0, count, N):
     generate_file(
-        os.path.join(sys.argv[1], f"multivectors_{i}.cpp"),
-        f"init_multivectors_{i}",
+        os.path.join(sys.argv[1], f"multivectors_{nb}.cpp"),
+        f"init_multivectors_{nb}",
         template,
         entries[i : i + N],
     )
@@ -204,7 +204,7 @@ for i in range(0, count, N):
 
 
 generate_index_file(
-    os.path.join(sys.argv[1], "multivectors.cpp"), "init_multivectors", count
+    os.path.join(sys.argv[1], "multivectors.cpp"), "init_multivectors", nb
 )
 
 

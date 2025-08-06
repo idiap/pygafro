@@ -59,7 +59,7 @@ using namespace gafro;
 """
         )
 
-        for i in range(0, count, N):
+        for i in range(0, count):
             output.write(
                 f"void {function_name}_{i}(py::class_<gafro::Rotor<double>, Multivector_scalare12e13e23> &);\n"
             )
@@ -71,7 +71,7 @@ using namespace gafro;
         )
         output.write("{\n")
 
-        for i in range(0, count, N):
+        for i in range(0, count):
             output.write(f"    {function_name}_{i}(c);\n")
 
         output.write("}\n")
@@ -90,9 +90,9 @@ for i in range(0, count, N):
         helpers.get_multivector_class_name(blades) for blades in multivectors[i : i + N]
     ]
     generate_file(
-        os.path.join(sys.argv[1], f"rotor_apply_methods_{i}.cpp"),
+        os.path.join(sys.argv[1], f"rotor_apply_methods_{nb}.cpp"),
         mvs,
-        f"init_rotor_apply_methods_{i}",
+        f"init_rotor_apply_methods_{nb}",
     )
     nb += 1
 
@@ -100,7 +100,7 @@ for i in range(0, count, N):
 generate_index_file(
     os.path.join(sys.argv[1], "rotor_apply_methods.cpp"),
     "init_rotor_apply_methods",
-    count,
+    nb,
 )
 
 
