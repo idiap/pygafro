@@ -53,6 +53,8 @@ if(NOT IS_GENERATED)
     set_source_files_properties(${MULTIVECTOR_SRCS} PROPERTIES GENERATED TRUE)
     set_source_files_properties(${ROTOR_APPLY_METHODS_SRCS} PROPERTIES GENERATED TRUE)
     set_source_files_properties(${SINGLEMANIPULATORTARGETS_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${SINGLEMANIPULATORMOTORCOSTS_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${SINGLEMANIPULATORDUALTARGETS_SRCS} PROPERTIES GENERATED TRUE)
 endif()
 
 
@@ -62,14 +64,18 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     add_compile_options("-Wall" "-Wno-unused-local-typedefs" "-Wno-class-memaccess")
 endif()
 
-add_compile_options("-Wno-unused-but-set-variable")
+add_compile_options("-Wno-unused-but-set-variable" "-fPIC")
 
 set_source_files_properties(cpp/robots.cpp PROPERTIES COMPILE_FLAGS "-Wno-array-bounds")
 
 
 ###########################################################
 # Build a static library with the optimization classes
-add_library(pygafro-optimization STATIC ${SINGLEMANIPULATORTARGETS_SRCS})
+add_library(pygafro-optimization STATIC
+    ${SINGLEMANIPULATORTARGETS_SRCS}
+    ${SINGLEMANIPULATORMOTORCOSTS_SRCS}
+    ${SINGLEMANIPULATORDUALTARGETS_SRCS}
+)
 
 target_include_directories(pygafro-optimization
     PRIVATE
@@ -92,6 +98,8 @@ target_precompile_headers(pygafro-optimization
     PRIVATE
         ${PRECOMPILED_HEADERS}
         ${GENERATED_DIR}/singlemanipulatortargets.h
+        ${GENERATED_DIR}/singlemanipulatormotorcosts.h
+        ${GENERATED_DIR}/singlemanipulatordualtargets.h
 )
 
 add_dependencies(pygafro-optimization generate_bindings)

@@ -10,9 +10,10 @@ import numpy as np
 
 from .innerproductcayleytable import table as innerproductcayleytable
 from .utils import _getProductBlades
+from ._pygafro import internals
 
 
-class SingleManipulatorDualTarget:
+class _SingleManipulatorDualTarget:
 
     def __init__(self, arm, tool, target):
         self.arm = arm
@@ -82,3 +83,12 @@ class SingleManipulatorDualTarget:
             )
 
         return jacobian
+
+
+def SingleManipulatorDualTarget(arm, tool, target):
+    name = 'SingleManipulatorDualTarget_' + str(arm.dof) + '_' + type(tool).__name__ + '_' + type(target).__name__
+
+    if hasattr(internals, name):
+        return getattr(internals, name)(arm, tool, target)
+
+    return _SingleManipulatorDualTarget(arm, tool, target)

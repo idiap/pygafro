@@ -427,6 +427,112 @@ add_custom_target(generate_singlemanipulatortargets DEPENDS ${SINGLEMANIPULATORT
 add_dependencies(generate_singlemanipulatortargets make_generated_directory)
 
 
+# SingleManipulatorMotorCosts
+set(SINGLEMANIPULATORMOTORCOSTS_SRCS
+    ${OUTPUT_DIR}/singlemanipulatormotorcosts.h
+    ${OUTPUT_DIR}/singlemanipulatormotorcosts.cpp
+
+    CACHE INTERNAL "SINGLEMANIPULATORMOTORCOSTS_SRCS"
+)
+
+add_custom_command(
+    OUTPUT ${SINGLEMANIPULATORMOTORCOSTS_SRCS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_singlemanipulatormotorcosts.py ${OUTPUT_DIR}
+    DEPENDS generate_singlemanipulatormotorcosts.py helpers.py templates/singlemanipulatormotorcosts.h
+            templates/singlemanipulatormotorcosts.hpp templates/singlemanipulatormotorcosts_functions.hpp
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generation of the SingleManipulatorMotoCost bindings"
+    VERBATIM
+)
+
+add_custom_target(generate_singlemanipulatormotorcosts DEPENDS ${SINGLEMANIPULATORMOTORCOSTS_SRCS})
+add_dependencies(generate_singlemanipulatormotorcosts make_generated_directory)
+
+
+# SingleManipulatorDualTargets
+set(SINGLEMANIPULATORDUALTARGETS_SRCS
+    ${OUTPUT_DIR}/singlemanipulatordualtargets.h
+    ${OUTPUT_DIR}/singlemanipulatordualtargets.cpp
+
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_0.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_1.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_2.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_3.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_4.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_5.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_6.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_7.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_8.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_9.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_10.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_11.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_12.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_13.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_14.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_15.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_16.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_17.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_18.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_19.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_20.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_21.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_22.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_23.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_24.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_25.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_26.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_27.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_28.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_29.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_30.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_31.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_32.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_33.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_34.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_35.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_36.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_37.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_38.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_39.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_40.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_41.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_42.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_43.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_44.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_45.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_46.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_47.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_48.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_49.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_50.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_51.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_52.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_53.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_54.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_55.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_56.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_57.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_58.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_59.cpp
+    ${OUTPUT_DIR}/singlemanipulatordualtargets_60.cpp
+
+    CACHE INTERNAL "SINGLEMANIPULATORDUALTARGETS_SRCS"
+)
+
+add_custom_command(
+    OUTPUT ${SINGLEMANIPULATORDUALTARGETS_SRCS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_singlemanipulatordualtargets.py ${OUTPUT_DIR}
+    DEPENDS generate_singlemanipulatordualtargets.py helpers.py templates/singlemanipulatordualtargets.h
+            templates/singlemanipulatordualtargets.hpp templates/singlemanipulatordualtargets_functions.hpp
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generation of the SingleManipulatorDualTarget bindings"
+    VERBATIM
+)
+
+add_custom_target(generate_singlemanipulatordualtargets DEPENDS ${SINGLEMANIPULATORDUALTARGETS_SRCS})
+add_dependencies(generate_singlemanipulatordualtargets make_generated_directory)
+
+
 add_custom_target(generate_bindings)
 add_dependencies(generate_bindings
     generate_geometric_product_caley_table
@@ -440,4 +546,6 @@ add_dependencies(generate_bindings
     generate_outer_product_caley_table
     generate_rotor_apply_methods
     generate_singlemanipulatortargets
+    generate_singlemanipulatormotorcosts
+    generate_singlemanipulatordualtargets
 )

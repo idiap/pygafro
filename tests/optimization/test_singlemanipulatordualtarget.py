@@ -68,11 +68,11 @@ class TestSingleManipulatorDualTargetPointToolPointTarget(unittest.TestCase):
     def testGetJacobian(self):
         jacobian = self.cost_function.getJacobian([0.0, 0.0, 0.0])
 
-        self.assertEqual(jacobian.shape, (1, 3))
+        self.assertEqual(jacobian.shape, (3,))
 
-        self.assertAlmostEqual(jacobian[0, 0], -4.0)
-        self.assertAlmostEqual(jacobian[0, 1], -2.0)
-        self.assertAlmostEqual(jacobian[0, 2], 0.0)
+        self.assertAlmostEqual(jacobian[0], -4.0)
+        self.assertAlmostEqual(jacobian[1], -2.0)
+        self.assertAlmostEqual(jacobian[2], 0.0)
 
     def testGetGradient(self):
         gradient = self.cost_function.getGradient([0.0, 0.0, 0.0])

@@ -10,9 +10,10 @@ import numpy as np
 
 from ._pygafro import Motor
 from ._pygafro import MotorLogarithm
+from ._pygafro import internals
 
 
-class SingleManipulatorMotorCost:
+class _SingleManipulatorMotorCost:
 
     def __init__(self, arm, target):
         self.arm = arm
@@ -54,3 +55,13 @@ class SingleManipulatorMotorCost:
         hessian = jacobian.T @ jacobian
 
         return (gradient, hessian)
+
+
+
+def SingleManipulatorMotorCost(arm, target):
+    name = 'SingleManipulatorMotorCost_' + str(arm.dof)
+
+    if hasattr(internals, name):
+        return getattr(internals, name)(arm, target)
+
+    return _SingleManipulatorMotorCost(arm, target)
