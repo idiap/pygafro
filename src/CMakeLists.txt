@@ -9,7 +9,14 @@
 set(DEST_DIR "${CMAKE_CURRENT_BINARY_DIR}/pygafro")
 set(GENERATED_DIR ${CMAKE_BINARY_DIR}/generated)
 
-file(COPY "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/assets/" DESTINATION "${DEST_DIR}/assets/")
+file(
+    COPY "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/assets/"
+    DESTINATION "${DEST_DIR}/assets/"
+    FILES_MATCHING
+        PATTERN "*.yaml"
+        PATTERN "meshes" EXCLUDE
+        PATTERN "materials" EXCLUDE
+)
 
 
 set(PYTHON_SRCS

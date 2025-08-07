@@ -26,6 +26,15 @@ Wheels for Linux (x64_86 & arm64) and MacOS (arm64) are available (for Python 3.
 
 For other platforms, *pygafro* is compiled from sources.
 
+Should you want to have access to mesh and texture files for the robots, you can install the
+optional package *pygafro-assets* by running either one of those commands:
+
+	pip install pygafro-assets
+	pip install pygafro[assets]
+
+Note that *pygafro* doesn't provide any rendering functions, it only indicates which mesh file
+to use for each link.
+
 ## Installation using pip (compilation from sources)
 
 Due to the template-based nature of *gafro* (see **Differences between *gafro* and *pygafro***
@@ -153,7 +162,7 @@ You can find the accompanying article [here](http://arxiv.org/abs/2212.07237) an
 
 ## How to cite
 
-If you use *gafro* in your research, please cite the
+If you use *gafro* in your research, please cite:
 
 	@article{loewGeometricAlgebraOptimal2023,
 	  title = {Geometric {{Algebra}} for {{Optimal Control}} with {{Applications}} in {{Manipulation Tasks}}},
