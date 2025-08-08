@@ -1,0 +1,127 @@
+# SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
+#
+# SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+
+name: publish-wheels
+run-name: Publish wheels on PyPI
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish-wheels-on-pypi:
+    name: Publish ${{ matrix.os }} ${{ matrix.variant }} / py${{ matrix.python }}
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-24.04, ubuntu-24.04-arm, macos-15]
+        variant: [manylinux, musllinux]
+        python: [38, 39, 310, 311, 312, 313]
+        exclude:
+          - os: macos-15
+            variant: musllinux
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          submodules: 'true'
+
+      - name: Configuration
+        id: configuration
+        run: |
+          # The build setting for cibuildwheel
+          if [ "${{ matrix.os }}" != "macos-15" ]; then
+            BUILD_VARIANT="cp${{ matrix.python }}-${{ matrix.variant }}_*"
+          else
+            BUILD_VARIANT="cp${{ matrix.python }}-*"
+          fi
+          echo "build_variant=$BUILD_VARIANT" >> $GITHUB_OUTPUT
+          
+          # The script to run to install dependencies in the platform-specific cibuildwheel container
+          if [ "${{ matrix.os }}" == "ubuntu-24.04-arm" ]; then
+            if [ "${{ matrix.variant }}" == "manylinux" ]; then
+              BEFORE_BUILD="yum install -y clang clang-tools-extra"
+            else
+              BEFORE_BUILD="apk add clang clang-extra-tools"
+            fi
+          else
+            BEFORE_BUILD=""
+          fi
+          echo "before_build=$BEFORE_BUILD" >> $GITHUB_OUTPUT
+
+          # The package version
+          VERSION=$(grep '^version *= *' pyproject.toml | sed -E 's/version *= *"(.*)"/\1/')
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if the wheel exists on PyPI
+        id: check_pypi
+        run: |
+          PACKAGE_NAME="pygafro"
+          VERSION="${{ steps.configuration.outputs.version }}"
+
+          EXPECTED_PYTHON_VERSION="cp${{ matrix.python }}"
+
+          if [ "${{ matrix.os }}" != "macos-15" ]; then
+            EXPECTED_VARIANT="${{ matrix.variant }}"
+          else
+            EXPECTED_VARIANT="macosx"
+          fi
+
+          if [ "${{ matrix.os }}" == "macos-15" ]; then
+            EXPECTED_ARCH="arm64"
+          else
+            if [ "${{ matrix.os }}" == "ubuntu-24.04" ]; then
+              EXPECTED_ARCH="x86_64"
+            else
+              EXPECTED_ARCH="aarch64"
+            fi
+          fi
+
+          DESCRIPTION="${PACKAGE_NAME}-${VERSION}-${EXPECTED_PYTHON_VERSION}-*-${EXPECTED_VARIANT}_*_${EXPECTED_ARCH}.whl"
+
+          echo "Looking for '$DESCRIPTION' on PyPI..."
+          FOUND=$(curl -s https://pypi.org/pypi/${PACKAGE_NAME}/json | \
+            jq -r --arg v "$VERSION" '.releases[$v][]? | select(.packagetype=="bdist_wheel") | .filename' | \
+            grep "\-${EXPECTED_PYTHON_VERSION}\-" | grep "\-${EXPECTED_VARIANT}_" | grep "_${EXPECTED_ARCH}" || true)
+
+          if [ -n "$FOUND" ]; then
+            echo "Exact wheel '$FOUND' already exists on PyPI. Skipping build & publish."
+            echo "skip_publish=true" >> $GITHUB_OUTPUT
+          else
+            echo "Wheel not found — will build & publish."
+            echo "skip_publish=false" >> $GITHUB_OUTPUT
+          fi
+
+      - uses: actions/setup-python@v5
+        if: steps.check_pypi.outputs.skip_publish == 'false'
+        with:
+          python-version: '3.13' 
+
+      - name: Install Python tools
+        if: steps.check_pypi.outputs.skip_publish == 'false'
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install cibuildwheel==3.0.1 twine
+
+      - name: Build the wheel
+        if: steps.check_pypi.outputs.skip_publish == 'false'
+        run: python -m cibuildwheel --output-dir wheelhouse
+        env:
+          CIBW_BUILD: ${{ steps.configuration.outputs.build_variant }}
+          CIBW_ENVIRONMENT: 'CXX="clang++" CC="clang"'
+          CIBW_BEFORE_BUILD: ${{ steps.configuration.outputs.before_build }}
+
+      - name: Upload to PyPI
+        if: steps.check_pypi.outputs.skip_publish == 'false'
+        run: twine upload --skip-existing wheelhouse/pygafro-*.whl
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_KEY }}

@@ -1,0 +1,67 @@
+# SPDX-FileCopyrightText: Copyright © 2024 Idiap Research Institute <contact@idiap.ch>
+#
+# SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
+#
+# SPDX-License-Identifier: MPL-2.0
+
+
+name: publish-source-package
+run-name: Publish source package on PyPI
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  publish-source-on-pypi:
+    name: Publish source package on PyPI
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        submodules: 'true'
+
+    - name: Configuration
+      id: configuration
+      run: |
+        # The package version
+        VERSION=$(grep '^version *= *' pyproject.toml | sed -E 's/version *= *"(.*)"/\1/')
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+    - name: Check if the archive exists on PyPI
+      id: check_pypi
+      run: |
+        PACKAGE_NAME="pygafro"
+        VERSION="${{ steps.configuration.outputs.version }}"
+
+        echo "Looking for '${PACKAGE_NAME}-${VERSION}.tar.gz' on PyPI..."
+        FOUND=$(curl -s https://pypi.org/pypi/${PACKAGE_NAME}/json | \
+          jq -r --arg v "$VERSION" '.releases[$v][]? | select(.packagetype=="sdist") | .filename' || true)
+
+        if [ -n "$FOUND" ]; then
+          echo "Exact archive '$FOUND' already exists on PyPI. Skipping build & publish."
+          echo "skip_publish=true" >> $GITHUB_OUTPUT
+        else
+          echo "Archive not found — will build & publish."
+          echo "skip_publish=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Install the Python dependencies
+      if: steps.check_pypi.outputs.skip_publish == 'false'
+      run: |
+        python -m pip install --upgrade pip
+        pip install twine build
+
+    - name: Build the source package
+      if: steps.check_pypi.outputs.skip_publish == 'false'
+      run: python3 -m build --sdist
+
+    - name: Upload to PyPI
+      if: steps.check_pypi.outputs.skip_publish == 'false'
+      run: twine upload --skip-existing dist/pygafro-*.tar.gz
+      env:
+        TWINE_USERNAME: __token__
+        TWINE_PASSWORD: ${{ secrets.PYPI_API_KEY }}
