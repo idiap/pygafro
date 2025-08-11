@@ -282,6 +282,10 @@ class TestRotor(unittest.TestCase):
         self.assertAlmostEqual(exp["e13"], 0.0)
         self.assertAlmostEqual(exp["e12"], 0.0)
 
+    def test_dual(self):
+        rotor = Rotor()
+        result = rotor.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

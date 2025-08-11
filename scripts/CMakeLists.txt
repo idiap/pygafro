@@ -39,6 +39,8 @@ set(MULTIVECTOR_SRCS
     ${OUTPUT_DIR}/algebra/multivectors_14.cpp
     ${OUTPUT_DIR}/algebra/multivectors_15.cpp
     ${OUTPUT_DIR}/algebra/multivectors_16.cpp
+    ${OUTPUT_DIR}/algebra/multivectors_17.cpp
+    ${OUTPUT_DIR}/algebra/multivectors_18.cpp
 
     CACHE INTERNAL "MULTIVECTOR_SRCS"
 )
@@ -92,6 +94,14 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/algebra/geometric_products_27.cpp
     ${OUTPUT_DIR}/algebra/geometric_products_28.cpp
     ${OUTPUT_DIR}/algebra/geometric_products_29.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_30.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_31.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_32.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_33.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_34.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_35.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_36.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_37.cpp
 
     ${OUTPUT_DIR}/algebra/inner_products_0.cpp
     ${OUTPUT_DIR}/algebra/inner_products_1.cpp
@@ -123,6 +133,14 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/algebra/inner_products_27.cpp
     ${OUTPUT_DIR}/algebra/inner_products_28.cpp
     ${OUTPUT_DIR}/algebra/inner_products_29.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_30.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_31.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_32.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_33.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_34.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_35.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_36.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_37.cpp
 
     ${OUTPUT_DIR}/algebra/outer_products_0.cpp
     ${OUTPUT_DIR}/algebra/outer_products_1.cpp
@@ -154,6 +172,14 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/algebra/outer_products_27.cpp
     ${OUTPUT_DIR}/algebra/outer_products_28.cpp
     ${OUTPUT_DIR}/algebra/outer_products_29.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_30.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_31.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_32.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_33.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_34.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_35.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_36.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_37.cpp
 
     CACHE INTERNAL "MULTIVECTOR_PRODUCTS_SRCS"
 )
@@ -232,6 +258,9 @@ set(MOTOR_APPLY_METHODS_SRCS
     ${OUTPUT_DIR}/algebra/motor_apply_methods_13.cpp
     ${OUTPUT_DIR}/algebra/motor_apply_methods_14.cpp
     ${OUTPUT_DIR}/algebra/motor_apply_methods_15.cpp
+    ${OUTPUT_DIR}/algebra/motor_apply_methods_16.cpp
+    ${OUTPUT_DIR}/algebra/motor_apply_methods_17.cpp
+    ${OUTPUT_DIR}/algebra/motor_apply_methods_18.cpp
 
     CACHE INTERNAL "MOTOR_APPLY_METHODS_SRCS"
 )
@@ -268,6 +297,9 @@ set(ROTOR_APPLY_METHODS_SRCS
     ${OUTPUT_DIR}/algebra/rotor_apply_methods_13.cpp
     ${OUTPUT_DIR}/algebra/rotor_apply_methods_14.cpp
     ${OUTPUT_DIR}/algebra/rotor_apply_methods_15.cpp
+    ${OUTPUT_DIR}/algebra/rotor_apply_methods_16.cpp
+    ${OUTPUT_DIR}/algebra/rotor_apply_methods_17.cpp
+    ${OUTPUT_DIR}/algebra/rotor_apply_methods_18.cpp
 
     CACHE INTERNAL "ROTOR_APPLY_METHODS_SRCS"
 )

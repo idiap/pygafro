@@ -39,6 +39,11 @@ void init_motor(py::module &m)
          .def("getRotor", &Motor::getRotor)
          .def("getTranslator", &Motor::getTranslator)
          .def("log", &Motor::log)
+
+         .def("toTransformationMatrix", &Motor::toTransformationMatrix)
+         .def("toAdjointMatrix", &Motor::toAdjointMatrix)
+         .def("toDualAdjointMatrix", &Motor::toDualAdjointMatrix)
+
          .def_static("Unit", &Motor::Unit)
          .def_static("Random", &Motor::Random)
          .def_static("exp", &Motor::exp)

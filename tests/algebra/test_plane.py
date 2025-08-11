@@ -164,6 +164,15 @@ class TestPlane(unittest.TestCase):
         self.assertAlmostEqual(plane["e023i"], -2.0)
         self.assertAlmostEqual(plane["e013i"], 3.0)
 
+    def test_dual(self):
+        p1 = Point(0.0, 0.0, 0.0)
+        p2 = Point(0.0, 1.0, 0.0)
+        p3 = Point(0.0, 0.0, 1.0)
+
+        plane = Plane(p1, p2, p3)
+
+        result = plane.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

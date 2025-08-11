@@ -45,6 +45,10 @@ class TestTranslator(unittest.TestCase):
         self.assertAlmostEqual(log.y(), 2.0)
         self.assertAlmostEqual(log.z(), 3.0)
 
+    def test_dual(self):
+        translator = Translator()
+        result = translator.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -194,6 +194,9 @@ class TestDefaultMotor(unittest.TestCase):
 
         self.assertAlmostEqual(result.getRadius(), sphere.getRadius())
 
+    def test_dual(self):
+        result = self.motor.dual()
+
 
 class TestMotorWithTranslation(unittest.TestCase):
 

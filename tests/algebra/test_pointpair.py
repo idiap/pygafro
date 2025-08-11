@@ -247,6 +247,10 @@ class TestPointPair(unittest.TestCase):
         self.assertAlmostEqual(pair["e03"], -27.0)
         self.assertAlmostEqual(pair["e0i"], -3118.5)
 
+    def test_dual(self):
+        pair = PointPair()
+        result = pair.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

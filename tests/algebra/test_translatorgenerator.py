@@ -50,6 +50,10 @@ class TestTranslatorGenerator(unittest.TestCase):
         self.assertAlmostEqual(generator.y(), generator["e2i"])
         self.assertAlmostEqual(generator.z(), generator["e3i"])
 
+    def test_dual(self):
+        generator = TranslatorGenerator()
+        result = generator.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

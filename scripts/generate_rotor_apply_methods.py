@@ -104,7 +104,7 @@ generate_index_file(
 )
 
 
-if nb != 16:
+if nb != 19:
     print(
         "The number of 'rotor apply methods' files has changed, update the 'scripts/CMakeLists.txt' file!"
     )

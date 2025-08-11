@@ -142,7 +142,7 @@ generate_index_file(
 )
 
 
-if len(groups) != 30:
+if len(groups) != 38:
     print(
         "The number of generated product files has changed, update the 'scripts/CMakeLists.txt' file!"
     )

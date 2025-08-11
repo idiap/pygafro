@@ -149,6 +149,7 @@ exclusion_norm_methods = [
 
 multivectors_without_norm_methods = [
     ["e1i", "e2i", "e3i"],
+    ["e12i", "e13i", "e23i"],
 ]
 
 
@@ -213,7 +214,7 @@ with open(os.path.join(sys.argv[1], "mv_combinations.py"), "w") as output:
     output.write("combinations = " + json.dumps(helpers.multivectors, indent=4))
 
 
-if nb != 17:
+if nb != 19:
     print(
         "The number of generated 'multivector' files has changed, update the 'scripts/CMakeLists.txt' file!"
     )

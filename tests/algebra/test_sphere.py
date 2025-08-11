@@ -177,6 +177,11 @@ class TestSphere(unittest.TestCase):
         self.assertAlmostEqual(sphere["e023i"], 1.0)
         self.assertAlmostEqual(sphere["e013i"], 0.0)
 
+    def test_dual(self):
+        center = Point(0.0, 0.0, 0.0)
+        sphere = Sphere(center, 1.0)
+        result = sphere.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

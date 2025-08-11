@@ -65,13 +65,24 @@ void init_algebra(py::module &m)
         .def(py::init<>())
         .def(py::init<const Multivector_e0e1e2e3ei&>())
         .def(py::init<const Point::Parameters&>())
-        .def(py::init<const double&, const double&, const double&>());
+        .def(py::init<const double&, const double&, const double&>())
+        .def("getEmbeddingJacobian", &Point::getEmbeddingJacobian)
+        .def("getEuclideanPoint", &Point::getEuclideanPoint)
+        .def_static("X", static_cast<Point (*)(const double&)>(&Point::X))
+        .def_static("Y", static_cast<Point (*)(const double&)>(&Point::Y))
+        .def_static("Z", static_cast<Point (*)(const double&)>(&Point::Z))
+        .def_static("Random", static_cast<Point (*)()>(&Point::Random));
 
 
     // Line class
     py::class_<Line, Multivector_e01ie02ie12ie03ie13ie23i>(m, "Line")
         .def(py::init<const Multivector_e01ie02ie12ie03ie13ie23i&>())
-        .def(py::init<const Point&, const Point&>());
+        .def(py::init<const Point&, const Point&>())
+        .def("getMotor", &Line::getMotor)
+        .def_static("X", static_cast<Line (*)()>(&Line::X))
+        .def_static("Y", static_cast<Line (*)()>(&Line::Y))
+        .def_static("Z", static_cast<Line (*)()>(&Line::Z))
+        .def_static("Random", static_cast<Line (*)()>(&Line::Random));
 
 
     // PointPair class
@@ -87,7 +98,12 @@ void init_algebra(py::module &m)
     py::class_<Plane, Multivector_e012ie013ie023ie123i>(m, "Plane")
         .def(py::init<const Multivector_e012ie013ie023ie123i&>())
         .def(py::init<const Point&, const Point&, const Point&>())
-        .def("getNormal", &Plane::getNormal);
+        .def("getNormal", &Plane::getNormal)
+        .def("getMotor", &Plane::getMotor)
+        .def_static("XY", static_cast<Plane (*)(const double&)>(&Plane::XY))
+        .def_static("XZ", static_cast<Plane (*)(const double&)>(&Plane::XZ))
+        .def_static("YZ", static_cast<Plane (*)(const double&)>(&Plane::YZ))
+        .def_static("Random", static_cast<Plane (*)()>(&Plane::Random));
 
 
     // Circle class
@@ -95,7 +111,11 @@ void init_algebra(py::module &m)
         .def(py::init<const Multivector_e012e013e023e123e01ie02ie12ie03ie13ie23i&>())
         .def(py::init<const Point&, const Point&, const Point&>())
         .def("getCenter", &Circle::getCenter)
-        .def("getPlane", &Circle::getPlane);
+        .def("getPlane", &Circle::getPlane)
+        .def("getRadius", &Circle::getRadius)
+        .def("getMotor", &Circle::getMotor)
+        .def_static("Random", static_cast<Circle (*)()>(&Circle::Random))
+        .def_static("Unit", static_cast<Circle (*)(const Motor&, const double&)>(&Circle::Unit));
 
 
     // Sphere class
@@ -104,7 +124,8 @@ void init_algebra(py::module &m)
         .def(py::init<const Point&, const Point&, const Point&, const Point&>())
         .def(py::init<const Point&, const double&>())
         .def("getRadius", &Sphere::getRadius)
-        .def("getCenter", &Sphere::getCenter);
+        .def("getCenter", &Sphere::getCenter)
+        .def_static("Random", static_cast<Sphere (*)()>(&Sphere::Random));
 
 
     // Vector class
@@ -138,6 +159,8 @@ void init_algebra(py::module &m)
         .def(py::init<>())
         .def(py::init<const Translator::Generator&>())
         .def("log", &Translator::log)
+        .def("toTranslationVector", &Translator::toTranslationVector)
+        .def("toSkewSymmetricMatrix", &Translator::toSkewSymmetricMatrix)
         .def_static("exp", static_cast<Translator (*)(const Translator::Generator&)>(&Translator::exp));
 
 
@@ -206,5 +229,6 @@ void init_algebra(py::module &m)
         .def("get_e1i", &Motor::Exponential::get<gafro::blades::e1i>)
         .def("get_e2i", &Motor::Exponential::get<gafro::blades::e2i>)
         .def("get_e3i", &Motor::Exponential::get<gafro::blades::e3i>)
-        .def("get_e123i", &Motor::Exponential::get<gafro::blades::e123i>);
+        .def("get_e123i", &Motor::Exponential::get<gafro::blades::e123i>)
+        .def_static("jacobian", static_cast<Eigen::Matrix<double, 8, 6> (*)(const Motor::Generator&)>(&Motor::Exponential::getJacobian));
 }

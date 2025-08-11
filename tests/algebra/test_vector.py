@@ -110,6 +110,10 @@ class TestVector(unittest.TestCase):
         self.assertAlmostEqual(vector["e2"], 18.0)
         self.assertAlmostEqual(vector["e3"], 27.0)
 
+    def test_dual(self):
+        vector = Vector()
+        result = vector.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

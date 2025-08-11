@@ -93,6 +93,10 @@ class TestMotorGenerator(unittest.TestCase):
         self.assertAlmostEqual(translatorGenerator.y(), 5.0)
         self.assertAlmostEqual(translatorGenerator.z(), 6.0)
 
+    def test_dual(self):
+        generator = MotorGenerator([3.0, 2.0, 1.0], [4.0, 5.0, 6.0])
+        result = generator.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

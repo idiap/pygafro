@@ -36,6 +36,11 @@ class TestPoint(unittest.TestCase):
         self.assertAlmostEqual(point["ei"], 7.0)
         self.assertAlmostEqual(point["e0"], 1.0)
 
+        euclidian = point.getEuclideanPoint()
+        self.assertAlmostEqual(euclidian[0], 1.0)
+        self.assertAlmostEqual(euclidian[1], 2.0)
+        self.assertAlmostEqual(euclidian[2], 3.0)
+
     def test_creationFromPoint(self):
         point = Point(1.0, 2.0, 3.0)
         point2 = Point(point)
@@ -135,6 +140,10 @@ class TestPoint(unittest.TestCase):
         self.assertAlmostEqual(point["e3"], 27.0)
         self.assertAlmostEqual(point["ei"], 693.0)
         self.assertAlmostEqual(point["e0"], 0.0)
+
+    def test_dual(self):
+        point = Point()
+        result = point.dual()
 
 
 if __name__ == "__main__":

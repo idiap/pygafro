@@ -234,6 +234,15 @@ class TestCircle(unittest.TestCase):
         self.assertAlmostEqual(circle["e02i"], 0.0)
         self.assertAlmostEqual(circle["e03i"], 0.0)
 
+    def test_dual(self):
+        p1 = Point(1.0, 0.0, 0.0)
+        p2 = Point(0.0, 1.0, 0.0)
+        p3 = Point(-1.0, 0.0, 0.0)
+
+        circle = Circle(p1, p2, p3)
+
+        result = circle.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

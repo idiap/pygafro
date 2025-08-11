@@ -29,6 +29,45 @@ void init_inner_products(py::module &);
 void init_outer_products(py::module &);
 
 
+int grade(short blade) {
+    static const int GRADES[] = {
+        0, // scalar
+        1, // e0
+        1, // e1
+        2, // e01
+        1, // e2
+        2, // e02
+        2, // e12
+        3, // e012
+        1, // e3
+        2, // e03
+        2, // e13
+        3, // e013
+        2, // e23
+        3, // e023
+        3, // e123
+        4, // e0123
+        1, // ei
+        2, // e0i
+        2, // e1i
+        3, // e01i
+        2, // e2i
+        3, // e02i
+        3, // e12i
+        4, // e012i
+        2, // e3i
+        3, // e03i
+        3, // e13i
+        4, // e013i
+        3, // e23i
+        4, // e023i
+        4, // e123i
+        5, // e0123i
+    };
+
+    return GRADES[blade];
+}
+
 
 PYBIND11_MODULE(_pygafro, m) {
 
@@ -71,6 +110,10 @@ PYBIND11_MODULE(_pygafro, m) {
     m_blades.attr("e013i") = blades::e013i;
 
     m_blades.attr("e0123i") = blades::e0123i;
+
+
+    // The grade() function
+    m.def("grade", &grade);
 
 
     // Bindings of each sections

@@ -50,6 +50,10 @@ class TestRotorGenerator(unittest.TestCase):
         self.assertAlmostEqual(generator.e13(), generator["e13"])
         self.assertAlmostEqual(generator.e23(), generator["e23"])
 
+    def test_dual(self):
+        generator = RotorGenerator()
+        result = generator.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

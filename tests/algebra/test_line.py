@@ -156,6 +156,14 @@ class TestLine(unittest.TestCase):
         self.assertAlmostEqual(line["e02i"], 27.0)
         self.assertAlmostEqual(line["e03i"], 27.0)
 
+    def test_dual(self):
+        p1 = Point(0.0, 0.0, 0.0)
+        p2 = Point(1.0, 2.0, 3.0)
+
+        line = Line(p1, p2)
+
+        result = line.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

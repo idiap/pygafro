@@ -110,6 +110,10 @@ class TestDirectionVector(unittest.TestCase):
         self.assertAlmostEqual(vector["e2i"], 18.0)
         self.assertAlmostEqual(vector["e3i"], 27.0)
 
+    def test_dual(self):
+        vector = DirectionVector()
+        result = vector.dual()
+
 
 if __name__ == "__main__":
     unittest.main()

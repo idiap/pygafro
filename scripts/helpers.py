@@ -11,37 +11,37 @@ import os
 
 # Note: the order is very important here
 blades = [
-    "scalar",
+    "scalar",   # 0
     "e0",
     "e1",
     "e01",
     "e2",
-    "e02",
+    "e02",      # 5
     "e12",
     "e012",
     "e3",
     "e03",
-    "e13",
+    "e13",      # 10
     "e013",
     "e23",
     "e023",
     "e123",
-    "e0123",
+    "e0123",    # 15
     "ei",
     "e0i",
     "e1i",
     "e01i",
-    "e2i",
+    "e2i",      # 20
     "e02i",
     "e12i",
     "e012i",
     "e3i",
-    "e03i",
+    "e03i",     # 25
     "e13i",
     "e013i",
     "e23i",
     "e023i",
-    "e123i",
+    "e123i",    # 30
     "e0123i",
 ]
 
@@ -62,6 +62,13 @@ multivectors = [
     ["scalar", "e12", "e13", "e23", "e1i", "e2i", "e3i", "e123i"],
     ["scalar", "e23", "e13", "e12"],
     ["scalar", "e01", "e02", "e12", "e03", "e13", "e23", "e0123", "e0i", "e1i", "e2i", "e012i", "e3i", "e013i", "e023i", "e123i"],
+    ["e012i", "e013i", "e023i"],
+    ["e12i", "e13i", "e23i"],
+    ["e12i", "e13i", "e23i", "e0123i"],
+    ["e01i", "e02i", "e03i"],
+    ["e01i", "e02i", "e03i", "e0123i"],
+    ["e1", "e2", "e3", "ei"],
+    ["ei", "e01i", "e02i", "e12i", "e03i", "e13i", "e23i", "e0123i"],
 ]
 
 multivectors.append(blades.copy())
