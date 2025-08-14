@@ -16,6 +16,8 @@ as well as optimal control.
 It is based on *gafro*, a C++ library relying on templates to efficiently implement the
 geometric algebra operations.
 
+**Note that only the Conformal Geometric Algebra part of *gafro* is available in *pygafro***.
+
 Please visit https://gitlab.com/gafro in order to find the entire *gafro* software stack.
 
 ## Installation using pip (pre-compiled binaries)

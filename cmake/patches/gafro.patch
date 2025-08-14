@@ -1,3 +1,10 @@
+#
+# SPDX-FileCopyrightText: Copyright © 2025 Idiap Research Institute <contact@idiap.ch>
+#
+# SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
+#
+# SPDX-License-Identifier: MPL-2.0
+#
 diff --git i/CMakeLists.txt w/CMakeLists.txt
 index 44ce06f..a99228d 100644
 --- i/CMakeLists.txt
