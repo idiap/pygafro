@@ -1,5 +1,6 @@
 py::class_<Manipulator_DOF>(m, "Manipulator_DOF")
     .def(py::init<const gafro::System<double>&, const std::string&>())
+    .def(py::init<const std::string&, const std::string&>())
     .def_property_readonly_static("dof", [](py::object) { return DOF; })
     .def("getSystem", &Manipulator_DOF::getSystem, py::return_value_policy::reference)
     .def("getLink", &Manipulator_DOF::getLink)

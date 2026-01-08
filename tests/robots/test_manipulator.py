@@ -10,6 +10,7 @@
 
 import math
 import unittest
+import os
 
 import helpers
 import numpy as np
@@ -25,6 +26,7 @@ from pygafro import System
 from pygafro import Translator
 from pygafro import TranslatorGenerator
 from pygafro import createManipulator
+from pygafro import __path__ as pygafro_path
 
 
 class TestManipulatorConfiguration1With3Joints(unittest.TestCase):
@@ -632,6 +634,38 @@ class TestManipulatorConfiguration2(unittest.TestCase):
 
         self.assertAlmostEqual(acceleration[0], -0.2, places=4)
         self.assertAlmostEqual(acceleration[1], 0.8, places=4)
+
+
+class TestManipulatorCreationFromYAML(unittest.TestCase):
+
+    def testConfiguration(self):
+        manipulator = createManipulator(
+            os.path.join(pygafro_path[0], 'assets', 'robots', 'panda', 'panda.yaml'), 7, 'panda_endeffector_joint'
+        )
+
+        configuration = [0.5, -0.3, 0.0, -1.8, 0.0, 1.5, 1.0]
+
+        ee_motor = manipulator.getEEMotor(configuration)
+
+        ee_point = ee_motor.apply(Point(0.0, 0.0, 0.0))
+
+        self.assertAlmostEqual(ee_point["e0"], 1.0)
+        self.assertAlmostEqual(ee_point["e1"], 0.3954677774)
+        self.assertAlmostEqual(ee_point["e2"], 0.2160450314)
+        self.assertAlmostEqual(ee_point["e3"], 0.5583231694)
+        self.assertAlmostEqual(ee_point["ei"], 0.25739749)
+
+    def testUnknownFileName(self):
+        with self.assertRaises(ValueError):
+            manipulator = createManipulator(
+                os.path.join(pygafro_path[0], 'assets', 'robots', 'panda', 'unknown.yaml'), 7, 'panda_endeffector_joint'
+            )
+
+    def testInvalidYAMLFile(self):
+        with self.assertRaises(RuntimeError):
+            manipulator = createManipulator(
+                'main.py', 7, 'panda_endeffector_joint'
+            )
 
 
 if __name__ == "__main__":

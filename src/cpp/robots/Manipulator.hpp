@@ -9,6 +9,8 @@
 #pragma once
 
 #include <gafro/robot/Manipulator.hpp>
+#include <gafro_robot_descriptions/serialization/FilePath.hpp>
+#include <gafro_robot_descriptions/serialization/SystemSerialization.hpp>
 #include "utils.hpp"
 #include "KinematicChain.hpp"
 
@@ -36,6 +38,14 @@ namespace pygafro
                 copySystem<T>(system, system2);
 
                 manipulator = new gafro::Manipulator<T, dof>(std::move(system2), ee_joint_name);
+            }
+
+            Manipulator(const std::string &yaml_file_path, const std::string &ee_joint_name = "endeffector")
+            : manipulator(nullptr)
+            {
+                manipulator = new gafro::Manipulator<T, dof>(
+                    std::move(gafro::SystemSerialization(gafro::FilePath(yaml_file_path)).load().cast<T>()), ee_joint_name
+                );
             }
 
             virtual ~Manipulator()
