@@ -46,7 +46,7 @@ jobs:
           echo "build_variant=$BUILD_VARIANT" >> $GITHUB_OUTPUT
           
           # The script to run to install dependencies in the platform-specific cibuildwheel container
-          if [ "${{ matrix.os }}" == "ubuntu-24.04-arm" ]; then
+          if [ "${{ matrix.os }}" != "macos-15" ]; then
             if [ "${{ matrix.variant }}" == "manylinux" ]; then
               BEFORE_BUILD="yum install -y clang clang-tools-extra"
             else
