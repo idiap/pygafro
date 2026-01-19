@@ -173,3 +173,7 @@ If you use *gafro* in your research, please cite:
 	  journal = {IEEE Transactions on Robotics},
 	  doi = {10.1109/TRO.2023.3277282}
 	}
+
+## Acknowledgments
+
+The development of pygafro is actively supported by the [Idiap Research Institute](https://www.idiap.ch).
