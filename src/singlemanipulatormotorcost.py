@@ -39,6 +39,19 @@ class _SingleManipulatorMotorCost:
             pass
 
         error = self.getError(x)
+
+        jacobian = self.getJacobian(x);
+        gradient = jacobian.T @ error
+        hessian = jacobian.T @ jacobian
+
+        return (gradient, hessian)
+
+    def getJacobian(self, x):
+        try:
+            x = x.tolist()
+        except AttributeError:
+            pass
+
         jacobian_log = MotorLogarithm.jacobian(Motor(
             self.target.reverse() * self.arm.getEEMotor(x)
         ))
@@ -49,12 +62,7 @@ class _SingleManipulatorMotorCost:
         for i in range(0, self.arm.dof):
             embedded[:, i] = (self.target.reverse() * jacobian_ee[i]).vector()
 
-        jacobian = jacobian_log @ embedded
-
-        gradient = jacobian.T @ error
-        hessian = jacobian.T @ jacobian
-
-        return (gradient, hessian)
+        return jacobian_log @ embedded
 
 
 

@@ -44,6 +44,32 @@ class TestSingleManipulatorMotorCost(unittest.TestCase):
         self.assertAlmostEqual(error[4], -1.0)
         self.assertAlmostEqual(error[5], -1.0)
 
+    def testGetJacobian(self):
+        jacobian = self.cost_function.getJacobian([0.0, 0.0, 0.0])
+
+        self.assertEqual(jacobian.shape, (6, 3))
+
+        self.assertAlmostEqual(jacobian[0, 0], 0.0)
+        self.assertAlmostEqual(jacobian[1, 0], 0.0)
+        self.assertAlmostEqual(jacobian[2, 0], 1.0)
+        self.assertAlmostEqual(jacobian[3, 0], 0.0)
+        self.assertAlmostEqual(jacobian[4, 0], 2.0)
+        self.assertAlmostEqual(jacobian[5, 0], 0.0)
+
+        self.assertAlmostEqual(jacobian[0, 1], 0.0)
+        self.assertAlmostEqual(jacobian[1, 1], 0.0)
+        self.assertAlmostEqual(jacobian[2, 1], 1.0)
+        self.assertAlmostEqual(jacobian[3, 1], 0.0)
+        self.assertAlmostEqual(jacobian[4, 1], 1.0)
+        self.assertAlmostEqual(jacobian[5, 1], 0.0)
+
+        self.assertAlmostEqual(jacobian[0, 2], 0.0)
+        self.assertAlmostEqual(jacobian[1, 2], 0.0)
+        self.assertAlmostEqual(jacobian[2, 2], 1.0)
+        self.assertAlmostEqual(jacobian[3, 2], 0.0)
+        self.assertAlmostEqual(jacobian[4, 2], 0.0)
+        self.assertAlmostEqual(jacobian[5, 2], 0.0)
+
     def testGetGradientAndHessian(self):
         gradient, hessian = self.cost_function.getGradientAndHessian([0.0, 0.0, 0.0])
 
