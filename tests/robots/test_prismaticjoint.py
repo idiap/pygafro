@@ -229,7 +229,22 @@ class TestDefaultPrismaticJoint(unittest.TestCase):
         system = System()
         joint = system.createPrismaticJoint("joint")
 
-        self.assertRaises(RuntimeError, joint.getMotorDerivative, math.pi / 2.0)
+        derivative = joint.getMotorDerivative(math.pi / 2.0)
+
+        translator = derivative.getTranslator()
+
+        self.assertAlmostEqual(translator["scalar"], 0.0)
+        self.assertAlmostEqual(translator["e1i"], 0.0)
+        self.assertAlmostEqual(translator["e2i"], 0.0)
+        self.assertAlmostEqual(translator["e3i"], 0.0)
+
+        rotor = derivative.getRotor()
+
+        self.assertAlmostEqual(rotor.scalar(), 0.0)
+        self.assertAlmostEqual(rotor.e23(), 0.0)
+        self.assertAlmostEqual(rotor.e13(), 0.0)
+        self.assertAlmostEqual(rotor.e12(), 0.0)
+        self.assertAlmostEqual(rotor.angle(), math.pi)
 
     def test_getCurrentAxis_withDefaultAxisAndMotor(self):
         system = System()

@@ -115,7 +115,7 @@ void init_algebra(py::module &m)
         .def("getRadius", &Circle::getRadius)
         .def("getMotor", &Circle::getMotor)
         .def_static("Random", static_cast<Circle (*)()>(&Circle::Random))
-        .def_static("Unit", static_cast<Circle (*)(const Motor&, const double&)>(&Circle::Unit));
+        .def_static("Unit", static_cast<Circle (*)()>(&Circle::Unit));
 
 
     // Sphere class

@@ -1,12 +1,5 @@
-#
-# SPDX-FileCopyrightText: Copyright © 2025 Idiap Research Institute <contact@idiap.ch>
-#
-# SPDX-FileContributor: Philip Abbet <philip.abbet@idiap.ch>
-#
-# SPDX-License-Identifier: MPL-2.0
-#
 diff --git i/CMakeLists.txt w/CMakeLists.txt
-index 44ce06f..a99228d 100644
+index 434cb6d..e93f6e0 100644
 --- i/CMakeLists.txt
 +++ w/CMakeLists.txt
 @@ -21,7 +21,7 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
@@ -17,8 +10,8 @@ index 44ce06f..a99228d 100644
 +# find_package(Eigen3 3.4 REQUIRED)
  
  add_subdirectory(src/${PROJECT_NAME})
- add_subdirectory(src/${PROJECT_NAME}_control)
-@@ -46,33 +46,33 @@ write_basic_package_version_file(
+ 
+@@ -45,33 +45,33 @@ write_basic_package_version_file(
  
  configure_file(cmake/${PROJECT_NAME}-packages.cmake "${CMAKE_CURRENT_BINARY_DIR}/${PROJECT_NAME}-packages.cmake")
  
@@ -79,11 +72,12 @@ index 44ce06f..a99228d 100644
 -export(PACKAGE gafro)
 \ No newline at end of file
 +# export(PACKAGE gafro)
+\ No newline at end of file
 diff --git i/src/gafro/CMakeLists.txt w/src/gafro/CMakeLists.txt
-index e36f406..03f2b04 100644
+index 198ec98..0851fa2 100644
 --- i/src/gafro/CMakeLists.txt
 +++ w/src/gafro/CMakeLists.txt
-@@ -61,17 +61,17 @@ target_link_libraries(${PROJECT_NAME}
+@@ -63,19 +63,19 @@ target_link_libraries(${PROJECT_NAME}
  # Only do that when using the gafro source code directly, not from a submodule
  # if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
  
@@ -95,6 +89,8 @@ index e36f406..03f2b04 100644
 -            robot.hpp
 -            physics.hpp
 -            optimization.hpp
+-            groups.hpp
+-            autodiff.hpp
 -        DESTINATION
 -            ${GAFRO_PREFIX_INCLUDE}/gafro
 -        COMPONENT
@@ -108,6 +104,8 @@ index e36f406..03f2b04 100644
 +    #         robot.hpp
 +    #         physics.hpp
 +    #         optimization.hpp
++    #         groups.hpp
++    #         autodiff.hpp
 +    #     DESTINATION
 +    #         ${GAFRO_PREFIX_INCLUDE}/gafro
 +    #     COMPONENT

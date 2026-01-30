@@ -34,7 +34,7 @@ class TestPlane(unittest.TestCase):
 
         self.assertTrue(isinstance(normal, Multivector_e1e2e3))
 
-        self.assertAlmostEqual(normal["e1"], 1.0)
+        self.assertAlmostEqual(normal["e1"], -1.0)
         self.assertAlmostEqual(normal["e2"], 0.0)
         self.assertAlmostEqual(normal["e3"], 0.0)
 
@@ -54,9 +54,9 @@ class TestPlane(unittest.TestCase):
 
         self.assertTrue(isinstance(normal, Multivector_e1e2e3))
 
-        self.assertAlmostEqual(normal["e1"], 3.0)
-        self.assertAlmostEqual(normal["e2"], 3.0)
-        self.assertAlmostEqual(normal["e3"], -1.0)
+        self.assertAlmostEqual(normal["e1"], -3.0)
+        self.assertAlmostEqual(normal["e2"], -3.0)
+        self.assertAlmostEqual(normal["e3"], 1.0)
 
     def test_creationFromPlane(self):
         p1 = Point(0.0, 0.0, 0.0)

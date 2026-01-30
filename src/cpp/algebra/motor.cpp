@@ -46,7 +46,7 @@ void init_motor(py::module &m)
 
          .def_static("Unit", &Motor::Unit)
          .def_static("Random", &Motor::Random)
-         .def_static("exp", &Motor::exp)
+         .def_static("exp", static_cast<Motor::Exponential (*)(const Motor::Generator &)>(&Motor::exp))
 
          .def("__imul__", [](Motor &a, const Motor &b) {
              return a *= b;

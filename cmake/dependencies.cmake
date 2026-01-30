@@ -32,7 +32,7 @@ set(GAFRO_PATCH git apply ${CMAKE_CURRENT_SOURCE_DIR}/cmake/patches/gafro.patch)
 FetchContent_Declare(
     gafro
     GIT_REPOSITORY https://github.com/idiap/gafro.git
-    GIT_TAG "f6a64023b3cc10437f16aa4da48cd410befa46b3"
+    GIT_TAG "5a8a5ec2cfd0d80b74017565f50824b9571a7e69"
     PATCH_COMMAND ${GAFRO_PATCH}
     UPDATE_DISCONNECTED 1
 )

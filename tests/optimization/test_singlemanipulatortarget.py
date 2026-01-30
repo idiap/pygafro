@@ -197,21 +197,21 @@ class TestSingleManipulatorTargetPointToolSphereTarget(unittest.TestCase):
 
         self.assertEqual(error.shape, (1,))
 
-        self.assertAlmostEqual(error[0], -0.995)
+        self.assertAlmostEqual(error[0], 0.995)
 
     def testGetJacobian(self):
         jacobian = self.cost_function.getJacobian([0.0, 0.0, 0.0])
 
         self.assertEqual(jacobian.shape, (3,))
 
-        self.assertAlmostEqual(jacobian[0], 4.0)
-        self.assertAlmostEqual(jacobian[1], 2.0)
+        self.assertAlmostEqual(jacobian[0], -4.0)
+        self.assertAlmostEqual(jacobian[1], -2.0)
         self.assertAlmostEqual(jacobian[2], 0.0)
 
         jacobian = self.cost_function.getJacobian([0.0, math.pi / 4.0, 0.0])
 
-        self.assertAlmostEqual(jacobian[0], 2.0)
-        self.assertAlmostEqual(jacobian[1], 1.41421, places=5)
+        self.assertAlmostEqual(jacobian[0], -2.0)
+        self.assertAlmostEqual(jacobian[1], -1.41421, places=5)
         self.assertAlmostEqual(jacobian[2], 0.0)
 
         jacobian = self.cost_function.getJacobian([0.0, math.pi / 2.0, 0.0])

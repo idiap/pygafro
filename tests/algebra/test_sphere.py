@@ -22,8 +22,8 @@ class TestSphere(unittest.TestCase):
 
         sphere = Sphere(center, 1.0)
 
-        self.assertAlmostEqual(sphere["e123i"], 0.5)
-        self.assertAlmostEqual(sphere["e0123"], -1.0)
+        self.assertAlmostEqual(sphere["e123i"], -0.5)
+        self.assertAlmostEqual(sphere["e0123"], 1.0)
         self.assertAlmostEqual(sphere["e012i"], 0.0)
         self.assertAlmostEqual(sphere["e023i"], 0.0)
         self.assertAlmostEqual(sphere["e013i"], 0.0)
@@ -43,11 +43,11 @@ class TestSphere(unittest.TestCase):
 
         sphere = Sphere(center, 2.0)
 
-        self.assertAlmostEqual(sphere["e123i"], -5.0)
-        self.assertAlmostEqual(sphere["e0123"], -1.0)
-        self.assertAlmostEqual(sphere["e012i"], -3.0)
-        self.assertAlmostEqual(sphere["e023i"], -1.0)
-        self.assertAlmostEqual(sphere["e013i"], 2.0)
+        self.assertAlmostEqual(sphere["e123i"], 5.0)
+        self.assertAlmostEqual(sphere["e0123"], 1.0)
+        self.assertAlmostEqual(sphere["e012i"], 3.0)
+        self.assertAlmostEqual(sphere["e023i"], 1.0)
+        self.assertAlmostEqual(sphere["e013i"], -2.0)
 
         self.assertAlmostEqual(sphere.getRadius(), 2.0)
 
@@ -89,8 +89,8 @@ class TestSphere(unittest.TestCase):
         sphere = Sphere(center, 1.0)
         sphere2 = Sphere(sphere)
 
-        self.assertAlmostEqual(sphere2["e123i"], 0.5)
-        self.assertAlmostEqual(sphere2["e0123"], -1.0)
+        self.assertAlmostEqual(sphere2["e123i"], -0.5)
+        self.assertAlmostEqual(sphere2["e0123"], 1.0)
         self.assertAlmostEqual(sphere2["e012i"], 0.0)
         self.assertAlmostEqual(sphere2["e023i"], 0.0)
         self.assertAlmostEqual(sphere2["e013i"], 0.0)
@@ -118,10 +118,10 @@ class TestSphere(unittest.TestCase):
 
         self.assertTrue(isinstance(sphere, Sphere))
 
-        self.assertAlmostEqual(sphere["e123i"], 2.0)
-        self.assertAlmostEqual(sphere["e0123"], -2.0)
+        self.assertAlmostEqual(sphere["e123i"], -2.0)
+        self.assertAlmostEqual(sphere["e0123"], 2.0)
         self.assertAlmostEqual(sphere["e012i"], 0.0)
-        self.assertAlmostEqual(sphere["e023i"], -1.0)
+        self.assertAlmostEqual(sphere["e023i"], 1.0)
         self.assertAlmostEqual(sphere["e013i"], 0.0)
 
     def test_addition2(self):
@@ -129,17 +129,17 @@ class TestSphere(unittest.TestCase):
         sphere1 = Sphere(center1, 1.0)
 
         mv = Multivector.create(
-            ["e123i", "e0123", "e012i", "e023i", "e013i"], [1.5, -1.0, 0.0, -1.0, 0.0]
+            ["e123i", "e0123", "e012i", "e023i", "e013i"], [-1.5, 1.0, 0.0, 1.0, 0.0]
         )
 
         sphere = sphere1 + mv
 
         self.assertTrue(isinstance(sphere, Sphere))
 
-        self.assertAlmostEqual(sphere["e123i"], 2.0)
-        self.assertAlmostEqual(sphere["e0123"], -2.0)
+        self.assertAlmostEqual(sphere["e123i"], -2.0)
+        self.assertAlmostEqual(sphere["e0123"], 2.0)
         self.assertAlmostEqual(sphere["e012i"], 0.0)
-        self.assertAlmostEqual(sphere["e023i"], -1.0)
+        self.assertAlmostEqual(sphere["e023i"], 1.0)
         self.assertAlmostEqual(sphere["e013i"], 0.0)
 
     def test_substraction(self):
@@ -153,10 +153,10 @@ class TestSphere(unittest.TestCase):
 
         self.assertTrue(isinstance(sphere, Sphere))
 
-        self.assertAlmostEqual(sphere["e123i"], -1.0)
+        self.assertAlmostEqual(sphere["e123i"], 1.0)
         self.assertAlmostEqual(sphere["e0123"], 0.0)
         self.assertAlmostEqual(sphere["e012i"], 0.0)
-        self.assertAlmostEqual(sphere["e023i"], 1.0)
+        self.assertAlmostEqual(sphere["e023i"], -1.0)
         self.assertAlmostEqual(sphere["e013i"], 0.0)
 
     def test_substraction2(self):
@@ -164,17 +164,17 @@ class TestSphere(unittest.TestCase):
         sphere1 = Sphere(center1, 1.0)
 
         mv = Multivector.create(
-            ["e123i", "e0123", "e012i", "e023i", "e013i"], [1.5, -1.0, 0.0, -1.0, 0.0]
+            ["e123i", "e0123", "e012i", "e023i", "e013i"], [-1.5, 1.0, 0.0, 1.0, 0.0]
         )
 
         sphere = sphere1 - mv
 
         self.assertTrue(isinstance(sphere, Sphere))
 
-        self.assertAlmostEqual(sphere["e123i"], -1.0)
+        self.assertAlmostEqual(sphere["e123i"], 1.0)
         self.assertAlmostEqual(sphere["e0123"], 0.0)
         self.assertAlmostEqual(sphere["e012i"], 0.0)
-        self.assertAlmostEqual(sphere["e023i"], 1.0)
+        self.assertAlmostEqual(sphere["e023i"], -1.0)
         self.assertAlmostEqual(sphere["e013i"], 0.0)
 
     def test_dual(self):

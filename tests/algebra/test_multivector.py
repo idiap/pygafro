@@ -478,11 +478,11 @@ class TestMultivector(unittest.TestCase):
 
         self.assertTrue(isinstance(dual, Multivector_e0123e012ie013ie023ie123i))
 
-        self.assertAlmostEqual(dual["e123i"], -5.0)
-        self.assertAlmostEqual(dual["e0123"], -1.0)
-        self.assertAlmostEqual(dual["e012i"], -4.0)
-        self.assertAlmostEqual(dual["e023i"], -2.0)
-        self.assertAlmostEqual(dual["e013i"], 3.0)
+        self.assertAlmostEqual(dual["e123i"], 5.0)
+        self.assertAlmostEqual(dual["e0123"], 1.0)
+        self.assertAlmostEqual(dual["e012i"], 4.0)
+        self.assertAlmostEqual(dual["e023i"], 2.0)
+        self.assertAlmostEqual(dual["e013i"], -3.0)
 
     def test_setBlade(self):
         mv = Multivector_e0e1e2e3ei()
@@ -883,10 +883,10 @@ class TestMultivectorWrapper(unittest.TestCase):
         self.assertTrue(isinstance(dual, Multivector))
 
         self.assertEqual(dual.size(), 4)
-        self.assertAlmostEqual(dual["e0i"], 4.0)
-        self.assertAlmostEqual(dual["e012i"], -3.0)
-        self.assertAlmostEqual(dual["e023i"], -1.0)
-        self.assertAlmostEqual(dual["e013i"], 2.0)
+        self.assertAlmostEqual(dual["e0i"], -4.0)
+        self.assertAlmostEqual(dual["e012i"], 3.0)
+        self.assertAlmostEqual(dual["e023i"], 1.0)
+        self.assertAlmostEqual(dual["e013i"], -2.0)
 
     def test_setBlade(self):
         mv = Multivector.create(["e1", "e2", "e3", "e123"])
