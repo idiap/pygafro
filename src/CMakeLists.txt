@@ -61,6 +61,7 @@ if(NOT IS_GENERATED)
     set_source_files_properties(${MULTIVECTOR_PRODUCTS_SRCS} PROPERTIES GENERATED TRUE)
     set_source_files_properties(${MULTIVECTOR_SRCS} PROPERTIES GENERATED TRUE)
     set_source_files_properties(${ROTOR_APPLY_METHODS_SRCS} PROPERTIES GENERATED TRUE)
+    set_source_files_properties(${SIMILARITY_APPLY_METHODS_SRCS} PROPERTIES GENERATED TRUE)
     set_source_files_properties(${SINGLEMANIPULATORTARGETS_SRCS} PROPERTIES GENERATED TRUE)
     set_source_files_properties(${SINGLEMANIPULATORMOTORCOSTS_SRCS} PROPERTIES GENERATED TRUE)
     set_source_files_properties(${SINGLEMANIPULATORDUALTARGETS_SRCS} PROPERTIES GENERATED TRUE)
@@ -174,6 +175,8 @@ pybind11_add_module(${LIBRARY_NAME}
     cpp/algebra.cpp
     cpp/algebra/motor.cpp
     cpp/algebra/motor_utils.hpp
+    cpp/algebra/similarity_transformation.cpp
+    cpp/algebra/similarity_transformation_utils.hpp
     cpp/algebra/multivector_utils.hpp
     cpp/algebra/products_utils.hpp
     cpp/algebra/rotor.cpp
@@ -191,6 +194,7 @@ pybind11_add_module(${LIBRARY_NAME}
     ${MULTIVECTOR_PRODUCTS_SRCS}
     ${MULTIVECTOR_SRCS}
     ${ROTOR_APPLY_METHODS_SRCS}
+    ${SIMILARITY_APPLY_METHODS_SRCS}
 
     "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src/gafro_robot_descriptions/serialization/FilePath.cpp"
     "${FETCHCONTENT_BASE_DIR}/gafro_robot_descriptions-src/src/gafro_robot_descriptions/serialization/SystemSerialization.cpp"
