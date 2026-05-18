@@ -41,6 +41,7 @@ set(MULTIVECTOR_SRCS
     ${OUTPUT_DIR}/algebra/multivectors_16.cpp
     ${OUTPUT_DIR}/algebra/multivectors_17.cpp
     ${OUTPUT_DIR}/algebra/multivectors_18.cpp
+    ${OUTPUT_DIR}/algebra/multivectors_19.cpp
 
     CACHE INTERNAL "MULTIVECTOR_SRCS"
 )
@@ -102,6 +103,10 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/algebra/geometric_products_35.cpp
     ${OUTPUT_DIR}/algebra/geometric_products_36.cpp
     ${OUTPUT_DIR}/algebra/geometric_products_37.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_38.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_39.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_40.cpp
+    ${OUTPUT_DIR}/algebra/geometric_products_41.cpp
 
     ${OUTPUT_DIR}/algebra/inner_products_0.cpp
     ${OUTPUT_DIR}/algebra/inner_products_1.cpp
@@ -141,6 +146,10 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/algebra/inner_products_35.cpp
     ${OUTPUT_DIR}/algebra/inner_products_36.cpp
     ${OUTPUT_DIR}/algebra/inner_products_37.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_38.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_39.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_40.cpp
+    ${OUTPUT_DIR}/algebra/inner_products_41.cpp
 
     ${OUTPUT_DIR}/algebra/outer_products_0.cpp
     ${OUTPUT_DIR}/algebra/outer_products_1.cpp
@@ -180,6 +189,10 @@ set(MULTIVECTOR_PRODUCTS_SRCS
     ${OUTPUT_DIR}/algebra/outer_products_35.cpp
     ${OUTPUT_DIR}/algebra/outer_products_36.cpp
     ${OUTPUT_DIR}/algebra/outer_products_37.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_38.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_39.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_40.cpp
+    ${OUTPUT_DIR}/algebra/outer_products_41.cpp
 
     CACHE INTERNAL "MULTIVECTOR_PRODUCTS_SRCS"
 )
@@ -316,6 +329,44 @@ add_custom_command(
 add_custom_target(generate_rotor_apply_methods DEPENDS ${ROTOR_APPLY_METHODS_SRCS})
 add_dependencies(generate_rotor_apply_methods make_generated_directory)
 
+
+# SimilarityTransformation apply methods
+set(SIMILARITY_APPLY_METHODS_SRCS
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_0.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_1.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_2.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_3.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_4.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_5.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_6.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_7.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_8.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_9.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_10.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_11.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_12.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_13.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_14.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_15.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_16.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_17.cpp
+    ${OUTPUT_DIR}/algebra/similarity_apply_methods_18.cpp
+
+    CACHE INTERNAL "SIMILARITY_APPLY_METHODS_SRCS"
+)
+
+add_custom_command(
+    OUTPUT ${SIMILARITY_APPLY_METHODS_SRCS}
+    COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/generate_similarity_apply_methods.py ${OUTPUT_DIR}/algebra
+    DEPENDS generate_similarity_apply_methods.py helpers.py
+    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    COMMENT "Generation of the similarity apply methods"
+    VERBATIM
+)
+
+add_custom_target(generate_similarity_apply_methods DEPENDS ${SIMILARITY_APPLY_METHODS_SRCS})
+add_dependencies(generate_similarity_apply_methods make_generated_directory)
 
 # Manipulators
 set(MANIPULATORS_SRCS
@@ -582,6 +633,7 @@ add_dependencies(generate_bindings
     generate_multivector_multiplications
     generate_outer_product_caley_table
     generate_rotor_apply_methods
+    generate_similarity_apply_methods
     generate_singlemanipulatortargets
     generate_singlemanipulatormotorcosts
     generate_singlemanipulatordualtargets
