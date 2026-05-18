@@ -61,15 +61,13 @@ using namespace gafro;
 
         for i in range(0, count):
             output.write(
-                f"void {function_name}_{
-                    i}(py::class_<gafro::SimilarityTransformation<double>, Multivector_scalare12e13e23e0ie1ie2ie012ie3ie013ie023ie123i> &);\n"
+                f"void {function_name}_{i}(py::class_<gafro::SimilarityTransformation<double>, Multivector_scalare12e13e23e0ie1ie2ie012ie3ie013ie023ie123i> &);\n"
             )
 
         output.write("\n\n")
 
         output.write(
-            f"void {
-                function_name}(py::class_<gafro::SimilarityTransformation<double>, Multivector_scalare12e13e23e0ie1ie2ie012ie3ie013ie023ie123i> &c)\n"
+            f"void {function_name}(py::class_<gafro::SimilarityTransformation<double>, Multivector_scalare12e13e23e0ie1ie2ie012ie3ie013ie023ie123i> &c)\n"
         )
         output.write("{\n")
 
