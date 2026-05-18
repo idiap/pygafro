@@ -35,18 +35,14 @@ def generate_multivector_class(
     multivector_get_methods = ""
     for blade in blades:
         multivector_set_methods += (
-            f"    DECLARE_MULTIVECTOR_SET_METHOD({multivector_class_name}, {
-                blade})\n"
+            f"    DECLARE_MULTIVECTOR_SET_METHOD({multivector_class_name}, {blade})\n"
         )
         multivector_get_methods += (
-            f"    DECLARE_MULTIVECTOR_GET_METHOD({multivector_class_name}, {
-                blade})\n"
+            f"    DECLARE_MULTIVECTOR_GET_METHOD({multivector_class_name}, {blade})\n"
         )
 
-    data = data.replace("    MULTIVECTOR_SET_METHODS\n",
-                        multivector_set_methods)
-    data = data.replace("    MULTIVECTOR_GET_METHODS\n",
-                        multivector_get_methods)
+    data = data.replace("    MULTIVECTOR_SET_METHODS\n", multivector_set_methods)
+    data = data.replace("    MULTIVECTOR_GET_METHODS\n", multivector_get_methods)
 
     data = helpers.process_section(
         data, "BEGIN_NORM_METHODS", "END_NORM_METHODS", include_norm_methods
@@ -57,8 +53,7 @@ def generate_multivector_class(
     )
 
     data = helpers.process_section(
-        data, "BEGIN_DOUBLE_CONSTRUCTOR", "END_DOUBLE_CONSTRUCTOR", len(
-            blades) == 1
+        data, "BEGIN_DOUBLE_CONSTRUCTOR", "END_DOUBLE_CONSTRUCTOR", len(blades) == 1
     )
 
     return data
@@ -217,8 +212,7 @@ generate_index_file(
 
 with open(os.path.join(sys.argv[1], "mv_combinations.py"), "w") as output:
     output.write("# This file is auto-generated\n\n")
-    output.write("combinations = " +
-                 json.dumps(helpers.multivectors, indent=4))
+    output.write("combinations = " + json.dumps(helpers.multivectors, indent=4))
 
 
 if nb != 20:
